@@ -52,6 +52,7 @@ FOTMOB_LEAGUE_NAMES = {"premier league", "premierleague", "epl"}
 # Season → (start, end) sweep window. Wide enough to catch pre-season openers and any
 # rescheduled final-round games; extra empty days just cost a cheap HTTP request.
 SEASON_WINDOWS: dict[str, tuple[str, str]] = {
+    "2024-25": ("2024-08-01", "2025-06-30"),
     "2025-26": ("2025-08-01", "2026-06-15"),
     "2026-27": ("2026-08-01", "2027-06-15"),
 }
@@ -96,7 +97,7 @@ def _is_epl(league) -> bool:
     if lid == str(FOTMOB_LEAGUE_ID):
         return True
     # id can drift between seasons; fall back to the exact name (excludes the Championship).
-    return name in FOTMOB_LEAGUE_NAMES
+    return name in FOTMOB_LEAGUE_NAMES and str(league.get("ccode", "")).strip().upper() in ("ENG", "ENGLAND", "GB-ENG")
 
 
 def build_schedule(season: str, start: str | None = None, end: str | None = None,

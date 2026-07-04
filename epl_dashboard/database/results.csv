@@ -1,0 +1,150 @@
+match_id,date,stage,venue,home,away,home_score,away_score,home_xg,away_xg,xg_estimated
+4813374,2025-08-15,,,Liverpool,AFC Bournemouth,4,2,,,0
+4813375,2025-08-16,,,Aston Villa,Newcastle United,0,0,,,0
+4813376,2025-08-16,,,Brighton & Hove Albion,Fulham,1,1,,,0
+4813378,2025-08-16,,,Sunderland,West Ham United,3,0,,,0
+4813379,2025-08-16,,,Tottenham Hotspur,Burnley,3,0,,,0
+4813380,2025-08-16,,,Wolverhampton Wanderers,Manchester City,0,4,,,0
+4813377,2025-08-17,,,Nottingham Forest,Brentford,3,1,,,0
+4813381,2025-08-17,,,Chelsea,Crystal Palace,0,0,,,0
+4813382,2025-08-17,,,Manchester United,Arsenal,0,1,,,0
+4813383,2025-08-18,,,Leeds United,Everton,1,0,,,0
+4813394,2025-08-22,,,West Ham United,Chelsea,1,5,,,0
+4813392,2025-08-23,,,Manchester City,Tottenham Hotspur,0,2,,,0
+4813385,2025-08-23,,,AFC Bournemouth,Wolverhampton Wanderers,1,0,,,0
+4813387,2025-08-23,,,Brentford,Aston Villa,1,0,,,0
+4813388,2025-08-23,,,Burnley,Sunderland,2,0,,,0
+4813386,2025-08-23,,,Arsenal,Leeds United,5,0,,,0
+4813389,2025-08-24,,,Crystal Palace,Nottingham Forest,1,1,,,0
+4813390,2025-08-24,,,Everton,Brighton & Hove Albion,2,0,,,0
+4813391,2025-08-24,,,Fulham,Manchester United,1,1,,,0
+4813393,2025-08-25,,,Newcastle United,Liverpool,2,3,,,0
+4813397,2025-08-30,,,Chelsea,Fulham,2,0,,,0
+4813400,2025-08-30,,,Manchester United,Burnley,3,2,,,0
+4813402,2025-08-30,,,Sunderland,Brentford,2,1,,,0
+4813403,2025-08-30,,,Tottenham Hotspur,AFC Bournemouth,0,1,,,0
+4813404,2025-08-30,,,Wolverhampton Wanderers,Everton,2,3,,,0
+4813398,2025-08-30,,,Leeds United,Newcastle United,0,0,,,0
+4813396,2025-08-31,,,Brighton & Hove Albion,Manchester City,2,1,,,0
+4813401,2025-08-31,,,Nottingham Forest,West Ham United,0,3,,,0
+4813399,2025-08-31,,,Liverpool,Arsenal,1,0,,,0
+4813395,2025-08-31,,,Aston Villa,Crystal Palace,0,3,,,0
+4813406,2025-09-13,,,Arsenal,Nottingham Forest,3,0,,,0
+4813405,2025-09-13,,,AFC Bournemouth,Brighton & Hove Albion,2,1,,,0
+4813409,2025-09-13,,,Crystal Palace,Sunderland,0,0,,,0
+4813410,2025-09-13,,,Everton,Aston Villa,0,0,,,0
+4813411,2025-09-13,,,Fulham,Leeds United,1,0,,,0
+4813413,2025-09-13,,,Newcastle United,Wolverhampton Wanderers,1,0,,,0
+4813414,2025-09-13,,,West Ham United,Tottenham Hotspur,0,3,,,0
+4813407,2025-09-13,,,Brentford,Chelsea,2,2,,,0
+4813408,2025-09-14,,,Burnley,Liverpool,0,1,,,0
+4813412,2025-09-14,,,Manchester City,Manchester United,3,0,,,0
+4813420,2025-09-20,,,Liverpool,Everton,2,1,,,0
+4813417,2025-09-20,,,Brighton & Hove Albion,Tottenham Hotspur,2,2,,,0
+4813418,2025-09-20,,,Burnley,Nottingham Forest,1,1,,,0
+4813423,2025-09-20,,,West Ham United,Crystal Palace,1,2,,,0
+4813424,2025-09-20,,,Wolverhampton Wanderers,Leeds United,1,3,,,0
+4813421,2025-09-20,,,Manchester United,Chelsea,2,1,,,0
+4813419,2025-09-20,,,Fulham,Brentford,3,1,,,0
+4813415,2025-09-21,,,AFC Bournemouth,Newcastle United,0,0,,,0
+4813422,2025-09-21,,,Sunderland,Aston Villa,1,1,,,0
+4813416,2025-09-21,,,Arsenal,Manchester City,1,1,,,0
+4813426,2025-09-27,,,Brentford,Manchester United,3,1,,,0
+4813427,2025-09-27,,,Chelsea,Brighton & Hove Albion,1,3,,,0
+4813428,2025-09-27,,,Crystal Palace,Liverpool,2,1,,,0
+4813430,2025-09-27,,,Leeds United,AFC Bournemouth,2,2,,,0
+4813431,2025-09-27,,,Manchester City,Burnley,5,1,,,0
+4813433,2025-09-27,,,Nottingham Forest,Sunderland,0,1,,,0
+4813434,2025-09-27,,,Tottenham Hotspur,Wolverhampton Wanderers,1,1,,,0
+4813425,2025-09-28,,,Aston Villa,Fulham,3,1,,,0
+4813432,2025-09-28,,,Newcastle United,Arsenal,1,2,,,0
+4813429,2025-09-29,,,Everton,West Ham United,1,1,,,0
+4813435,2025-10-03,,,AFC Bournemouth,Fulham,3,1,,,0
+4813441,2025-10-04,,,Leeds United,Tottenham Hotspur,1,2,,,0
+4813436,2025-10-04,,,Arsenal,West Ham United,2,0,,,0
+4813442,2025-10-04,,,Manchester United,Sunderland,2,0,,,0
+4813439,2025-10-04,,,Chelsea,Liverpool,2,1,,,0
+4813437,2025-10-05,,,Aston Villa,Burnley,2,1,,,0
+4813440,2025-10-05,,,Everton,Crystal Palace,2,1,,,0
+4813443,2025-10-05,,,Newcastle United,Nottingham Forest,2,0,,,0
+4813444,2025-10-05,,,Wolverhampton Wanderers,Brighton & Hove Albion,1,1,,,0
+4813438,2025-10-05,,,Brentford,Manchester City,0,1,,,0
+4813451,2025-10-18,,,Nottingham Forest,Chelsea,0,3,,,0
+4813445,2025-10-18,,,Brighton & Hove Albion,Newcastle United,2,1,,,0
+4813446,2025-10-18,,,Burnley,Leeds United,2,0,,,0
+4813447,2025-10-18,,,Crystal Palace,AFC Bournemouth,3,3,,,0
+4813450,2025-10-18,,,Manchester City,Everton,2,0,,,0
+4813452,2025-10-18,,,Sunderland,Wolverhampton Wanderers,2,0,,,0
+4813448,2025-10-18,,,Fulham,Arsenal,0,1,,,0
+4813453,2025-10-19,,,Tottenham Hotspur,Aston Villa,1,2,,,0
+4813449,2025-10-19,,,Liverpool,Manchester United,1,2,,,0
+4813454,2025-10-20,,,West Ham United,Brentford,0,2,,,0
+4813461,2025-10-24,,,Leeds United,West Ham United,2,1,,,0
+4813459,2025-10-25,,,Chelsea,Sunderland,1,2,,,0
+4813463,2025-10-25,,,Newcastle United,Fulham,2,1,,,0
+4813462,2025-10-25,,,Manchester United,Brighton & Hove Albion,4,2,,,0
+4813458,2025-10-25,,,Brentford,Liverpool,3,2,,,0
+4813455,2025-10-26,,,AFC Bournemouth,Nottingham Forest,2,0,,,0
+4813456,2025-10-26,,,Arsenal,Crystal Palace,1,0,,,0
+4813457,2025-10-26,,,Aston Villa,Manchester City,1,0,,,0
+4813464,2025-10-26,,,Wolverhampton Wanderers,Burnley,2,3,,,0
+4813460,2025-10-26,,,Everton,Tottenham Hotspur,0,3,,,0
+4813465,2025-11-01,,,Brighton & Hove Albion,Leeds United,3,0,,,0
+4813466,2025-11-01,,,Burnley,Arsenal,0,2,,,0
+4813467,2025-11-01,,,Crystal Palace,Brentford,2,0,,,0
+4813468,2025-11-01,,,Fulham,Wolverhampton Wanderers,3,0,,,0
+4813471,2025-11-01,,,Nottingham Forest,Manchester United,2,2,,,0
+4813473,2025-11-01,,,Tottenham Hotspur,Chelsea,0,1,,,0
+4813469,2025-11-01,,,Liverpool,Aston Villa,2,0,,,0
+4813474,2025-11-02,,,West Ham United,Newcastle United,3,1,,,0
+4813470,2025-11-02,,,Manchester City,AFC Bournemouth,3,1,,,0
+4813472,2025-11-03,,,Sunderland,Everton,1,1,,,0
+4813483,2025-11-08,,,Tottenham Hotspur,Manchester United,2,2,,,0
+4813479,2025-11-08,,,Everton,Fulham,2,0,,,0
+4813484,2025-11-08,,,West Ham United,Burnley,3,2,,,0
+4813482,2025-11-08,,,Sunderland,Arsenal,2,2,,,0
+4813477,2025-11-08,,,Chelsea,Wolverhampton Wanderers,3,0,,,0
+4813475,2025-11-09,,,Aston Villa,AFC Bournemouth,4,0,,,0
+4813476,2025-11-09,,,Brentford,Newcastle United,3,1,,,0
+4813478,2025-11-09,,,Crystal Palace,Brighton & Hove Albion,0,0,,,0
+4813481,2025-11-09,,,Nottingham Forest,Leeds United,3,1,,,0
+4813480,2025-11-09,,,Manchester City,Liverpool,3,0,,,0
+4813488,2025-11-22,,,Burnley,Chelsea,0,2,,,0
+4813485,2025-11-22,,,AFC Bournemouth,West Ham United,2,2,,,0
+4813487,2025-11-22,,,Brighton & Hove Albion,Brentford,2,1,,,0
+4813489,2025-11-22,,,Fulham,Sunderland,1,0,,,0
+4813491,2025-11-22,,,Liverpool,Nottingham Forest,0,3,,,0
+4813494,2025-11-22,,,Wolverhampton Wanderers,Crystal Palace,0,2,,,0
+4813493,2025-11-22,,,Newcastle United,Manchester City,2,1,,,0
+4813490,2025-11-23,,,Leeds United,Aston Villa,1,2,,,0
+4813486,2025-11-23,,,Arsenal,Tottenham Hotspur,4,1,,,0
+4813492,2025-11-24,,,Manchester United,Everton,0,1,,,0
+4813496,2025-11-29,,,Brentford,Burnley,3,1,,,0
+4813500,2025-11-29,,,Manchester City,Leeds United,3,2,,,0
+4813502,2025-11-29,,,Sunderland,AFC Bournemouth,3,2,,,0
+4813499,2025-11-29,,,Everton,Newcastle United,1,4,,,0
+4813503,2025-11-29,,,Tottenham Hotspur,Fulham,1,2,,,0
+4813498,2025-11-30,,,Crystal Palace,Manchester United,1,2,,,0
+4813495,2025-11-30,,,Aston Villa,Wolverhampton Wanderers,1,0,,,0
+4813501,2025-11-30,,,Nottingham Forest,Brighton & Hove Albion,0,2,,,0
+4813504,2025-11-30,,,West Ham United,Liverpool,0,2,,,0
+4813497,2025-11-30,,,Chelsea,Arsenal,1,1,,,0
+4813505,2025-12-02,,,AFC Bournemouth,Everton,0,1,,,0
+4813509,2025-12-02,,,Fulham,Manchester City,4,5,,,0
+4813513,2025-12-02,,,Newcastle United,Tottenham Hotspur,2,2,,,0
+4813506,2025-12-03,,,Arsenal,Brentford,2,0,,,0
+4813507,2025-12-03,,,Brighton & Hove Albion,Aston Villa,3,4,,,0
+4813508,2025-12-03,,,Burnley,Crystal Palace,0,1,,,0
+4813514,2025-12-03,,,Wolverhampton Wanderers,Nottingham Forest,0,1,,,0
+4813510,2025-12-03,,,Leeds United,Chelsea,3,1,,,0
+4813511,2025-12-03,,,Liverpool,Sunderland,1,1,,,0
+4813512,2025-12-04,,,Manchester United,West Ham United,1,1,,,0
+4813516,2025-12-06,,,Aston Villa,Arsenal,2,1,,,0
+4813515,2025-12-06,,,AFC Bournemouth,Chelsea,0,0,,,0
+4813518,2025-12-06,,,Everton,Nottingham Forest,3,0,,,0
+4813521,2025-12-06,,,Manchester City,Sunderland,3,0,,,0
+4813522,2025-12-06,,,Newcastle United,Burnley,2,1,,,0
+4813523,2025-12-06,,,Tottenham Hotspur,Brentford,2,0,,,0
+4813520,2025-12-06,,,Leeds United,Liverpool,3,3,,,0
+4813517,2025-12-07,,,Brighton & Hove Albion,West Ham United,1,1,,,0
+4813519,2025-12-07,,,Fulham,Crystal Palace,1,2,,,0
