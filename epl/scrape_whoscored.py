@@ -32,19 +32,35 @@ SCHED_DIR = _REPO / "epl" / "schedules"
 MATCH_DIR = _REPO / "epl" / "matches"
 
 
+# WhoScored's matchCentre names are often SHORTER than FotMob's schedule names, and not
+# always a substring of them, so plain contains-matching silently drops those fixtures:
+# "Man City" ⊄ "manchestercity", "Man Utd" ⊄ "manchesterunited", "Spurs" ⊄ "tottenhamhotspur",
+# "Wolves" ⊄ "wolverhamptonwanderers", "Nott'm Forest" → "nottmforest". Map each variant to the
+# schedule's canonical key so both sides collapse to the same token. Crucially this keeps the two
+# Manchester clubs (and the two Sheffield clubs) on DISTINCT canonicals — never collapse to a bare
+# city — the EPL analogue of the two-Madrid rule.
+_ALIASES = {
+    "mancity": "manchestercity",
+    "manutd": "manchesterunited", "manunited": "manchesterunited", "manchesterutd": "manchesterunited",
+    "spurs": "tottenhamhotspur", "tottenham": "tottenhamhotspur",
+    "wolves": "wolverhamptonwanderers", "wolverhampton": "wolverhamptonwanderers",
+    "nottmforest": "nottinghamforest", "nottinghamforest": "nottinghamforest",
+    "sheffutd": "sheffieldunited", "sheffieldutd": "sheffieldunited",
+    "sheffwed": "sheffieldwednesday", "sheffieldwed": "sheffieldwednesday",
+    "westbrom": "westbromwichalbion", "spursfc": "tottenhamhotspur",
+}
+
+
 def _key(name: str) -> str:
-    # Accent-fold + lowercase, strip SAFE club-suffix noise, alnum only. Critically do NOT
-    # strip the DISCRIMINATING tokens that separate same-city clubs: "united"/"city" keep
-    # "Manchester United" vs "Manchester City" (and "Sheffield United" vs "Sheffield Wednesday")
-    # distinct — collapsing either to "manchester" would scramble the two Manchester clubs, the
-    # EPL analogue of the two-Madrid collision. So only club-agnostic noise is stripped here.
-    # Contains-matching still handles short/long variants (WhoScored "Wolves"/"Spurs"/"Brighton"
-    # vs schedule "Wolverhampton Wanderers"/"Tottenham Hotspur"/"Brighton & Hove Albion").
+    # Accent-fold + lowercase, strip SAFE club-suffix noise, alnum only, then canonicalise known
+    # short/nickname variants (see _ALIASES above). Do NOT strip the DISCRIMINATING tokens
+    # "united"/"city" that keep "Manchester United" vs "Manchester City" distinct.
     s = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode().lower()
     s = s.replace("&", " and ")
     for j in ("afc ", " afc", " fc", "f.c.", "association football club"):
         s = s.replace(j, " ")
-    return re.sub(r"[^a-z0-9]", "", s)
+    k = re.sub(r"[^a-z0-9]", "", s)
+    return _ALIASES.get(k, k)
 
 
 def _exact_match(ws_h, ws_a, sc_h, sc_a):
