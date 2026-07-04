@@ -52,6 +52,7 @@ FOTMOB_LEAGUE_NAMES = {"premier league", "premierleague", "epl"}
 # Season → (start, end) sweep window. Wide enough to catch pre-season openers and any
 # rescheduled final-round games; extra empty days just cost a cheap HTTP request.
 SEASON_WINDOWS: dict[str, tuple[str, str]] = {
+    "2024-25": ("2024-08-01", "2025-06-15"),
     "2025-26": ("2025-08-01", "2026-06-15"),
     "2026-27": ("2026-08-01", "2027-06-15"),
 }
@@ -93,10 +94,15 @@ def _parse_utc(time_str: str) -> str:
 def _is_epl(league) -> bool:
     lid = str(league.get("id", ""))
     name = league.get("name", "").strip().lower()
+    ccode = (league.get("ccode", "") or "").strip().upper()
     if lid == str(FOTMOB_LEAGUE_ID):
         return True
-    # id can drift between seasons; fall back to the exact name (excludes the Championship).
-    return name in FOTMOB_LEAGUE_NAMES
+    # id can drift between seasons; fall back to the exact name — but ONLY for the English
+    # entry. At least a dozen countries run a league literally named "Premier League" (RUS,
+    # EGY, WAL, CAN, KAZ, UKR, BLR, AZE, …), so the name alone pulls in thousands of foreign
+    # matches. Gate the fallback on the England country code (still excludes the Championship,
+    # and "Premier League 2"/"U18" are excluded by the exact-name set).
+    return name in FOTMOB_LEAGUE_NAMES and ccode == "ENG"
 
 
 def build_schedule(season: str, start: str | None = None, end: str | None = None,
