@@ -1959,7 +1959,7 @@
     return n + " " + w[0] + " · " + ok + " " + w[1] + " · " + (n - ok) + " " + w[2] + " · " + (n ? Math.round(100 * ok / n) : 0) + "%";
   }
 
-  function plEvents(team, name) { var t = (window.LL_PLAYERLAB || {})[team] || {}; return t[name] || { shots: [], dribbles: [], passes: [] }; }
+  function plEvents(team, name) { var t = ((window.LL_PLAYERLAB || {})[team] || {})[season] || {}; return t[name] || { shots: [], dribbles: [], passes: [] }; }
   function plDataFor(ev, kind) { return kind === "prog" ? (ev.passes || []).filter(function (q) { return q[5]; }) : (ev[kind] || []); }
   function plLoadTeam(team, cb) {
     if ((window.LL_PLAYERLAB || {})[team]) { cb(); return; }
@@ -1971,6 +1971,7 @@
   function plDrawMaps(main, pc, cmpTeam) {
     var ea = plEvents(main.team, main.name), eb = pc ? plEvents(cmpTeam, pc.name) : null;
     var cols = pc ? "1fr 1fr" : "1fr", host = document.getElementById("plHeatGrid");
+    host.classList.toggle("compare", !!pc);   // comparing → stack the 4 maps one per row
     host.innerHTML = PL_MAPS.map(function (mt, i) {
       var sumA = '<div class="pl-map-sum" style="color:' + PL_ACC + '">' + (pc ? "<b>" + esc(main.name) + "</b> · " : "") + plMapSummary(plDataFor(ea, mt[0]), mt[0], ea.passes) + "</div>";
       var sumB = pc ? '<div class="pl-map-sum" style="color:' + PL_BLUE + '"><b>' + esc(pc.name) + "</b> · " + plMapSummary(plDataFor(eb, mt[0]), mt[0], eb.passes) + "</div>" : "";
