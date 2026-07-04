@@ -152,15 +152,19 @@ def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     payload = _load_data_js()
     # data.js is season-keyed now; export the default (current) season's tables.
-    data = payload["seasons"][payload["defaultSeason"]]
+    season = payload["defaultSeason"]
+    data = payload["seasons"][season]
     data["generated"] = payload.get("generated", "")
+    # Rich per-match JSONs live in matches/<season>/ subdirs; scope the player exports to the
+    # default season's dir (the bare functions default to the empty top-level matches/).
+    season_dir = os.path.join(MATCH_DIR, season)
 
     results = list(results_rows(data))
     team_stats = list(team_match_stat_rows(data))
     team_stats_src = list(team_match_stat_by_source_rows(data))
     standings = list(standings_rows(data))
-    player_match = list(build_players.per_match_rows())
-    players = build_players.aggregate()
+    player_match = list(build_players.per_match_rows(season_dir))
+    players = build_players.aggregate(season_dir)
 
     counts = {
         "results.csv": _write_csv("results.csv", results),
