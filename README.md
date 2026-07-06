@@ -7,6 +7,9 @@ Cloned from the La Liga (XLALIGA) system; shares the same `xg_core/` model.
 
 **Live dashboard:** `epl_dashboard/index.html` (root `index.html` redirects there).
 
+**Ships with:** the **2024/25 and 2025/26** seasons — both complete (380/380 matches each) with the
+full rich xG/shot/player layer. `2026/27` fills in once FotMob releases the fixtures.
+
 ## How it works
 Two data layers:
 1. **Schedule spine (token-free):** `epl/build_schedule.py` sweeps FotMob's public feed for the

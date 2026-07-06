@@ -9,18 +9,22 @@
   `team_logos/epl/` crests, `epl_png/` published PNGs.
 
 ## CURRENT STATE
-- **Pipeline-ready, EMPTY.** `epl/schedules/SCHEDULE_2025-26.json` is an empty placeholder and the
-  shipped `epl_dashboard/{data.js,players.js,shots.js}` are valid-but-empty. Fill it on a machine
-  with network + Chrome (the scrapers need FotMob/WhoScored, which are firewalled in some CI/cloud
-  environments):
+- **Populated — both seasons complete.** `2024-25` and `2025-26` are fully scraped (**380/380**
+  matches each): schedule spines in `epl/schedules/`, raw scrapes in `epl/matches/<season>/`, and
+  the shipped `epl_dashboard/{data.js,players.js,shots.js}` + `matches_detail/*.js` carry the full
+  rich xG/shot/player layer. `epl/schedules/SCHEDULE_2026-27.json` is an empty placeholder awaiting
+  FotMob's 2026/27 fixture release.
+- **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need
+  FotMob/WhoScored, which are firewalled in some CI/cloud environments). Swap the `--season` value
+  (e.g. `2026-27` once fixtures drop):
   ```bash
-  py epl/build_schedule.py --season 2025-26            # FotMob 47 → standings/results spine
+  py epl/build_schedule.py --season 2026-27            # FotMob 47 → standings/results spine
   py epl/download_crests.py                             # crests → team_logos/epl/
-  py epl/scrape_whoscored.py --season 2025-26           # ~1h, Chrome (rich xG/shot/player layer)
+  py epl/scrape_whoscored.py --season 2026-27           # ~1h, Chrome (rich xG/shot/player layer)
   py epl_dashboard/build_match_details.py && py epl_dashboard/build_players.py \
     && py epl_dashboard/build_database.py && py epl_dashboard/build_shots.py \
     && py epl_dashboard/build_data.py
-  git add -A && git commit -m "EPL 2025/26 data" && git push
+  git add -A && git commit -m "EPL 2026/27 data" && git push
   ```
 
 ## Config
