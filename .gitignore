@@ -8,6 +8,9 @@ epl/matches/**/match_*_cache.json
 # Private configuration / credentials
 .env
 
+# Local Claude Code config (preview launch.json + machine-local settings)
+.claude/
+
 # Python caching
 __pycache__/
 *.py[cod]
