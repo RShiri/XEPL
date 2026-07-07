@@ -113,11 +113,23 @@ def build_matches(season, schedule):
             xg_home, xg_away = stats["xg"][0], stats["xg"][1]
             sources = rich.get("_sources", [])
             has_events = bool(rich.get("events"))
-            # Rich file is authoritative for the score if the schedule lacked it.
-            if hs is None:
-                hs = rich.get("home", {}).get("score")
-            if as_ is None:
-                as_ = rich.get("away", {}).get("score")
+            # WhoScored is authoritative for the score whenever we have its event data. FotMob's
+            # schedule feed reports 0-0 for a chunk of older-season games (17 in 2022-23, 9 in
+            # 2023-24, 1 in 2024-25) and null for fixtures still unplayed when the spine was built —
+            # both wrong once the match is scraped. The rich fulltime score matches the event-derived
+            # score for every match in every season, so trust it when events exist; else fall back
+            # to the schedule (and fill a missing schedule score from the rich file if we have one).
+            rhs, ras = rich.get("home", {}).get("score"), rich.get("away", {}).get("score")
+            if rich.get("events"):
+                if rhs is not None:
+                    hs = rhs
+                if ras is not None:
+                    as_ = ras
+            else:
+                if hs is None:
+                    hs = rhs
+                if as_ is None:
+                    as_ = ras
             if (xg_home is None or xg_away is None) and rich.get("events"):
                 ch, ca = team_xg_from_events(rich)
                 if ch is not None:
@@ -231,7 +243,7 @@ def build_season(season):
 
 def main():
     seasons = {}
-    for season in ("2024-25", "2025-26", "2026-27"):
+    for season in ("2022-23", "2023-24", "2024-25", "2025-26", "2026-27"):
         s = build_season(season)
         if s is not None:
             seasons[season] = s

@@ -9,11 +9,11 @@
   `team_logos/epl/` crests, `epl_png/` published PNGs.
 
 ## CURRENT STATE
-- **Populated — both seasons complete.** `2024-25` and `2025-26` are fully scraped (**380/380**
-  matches each): schedule spines in `epl/schedules/`, raw scrapes in `epl/matches/<season>/`, and
-  the shipped `epl_dashboard/{data.js,players.js,shots.js}` + `matches_detail/*.js` carry the full
-  rich xG/shot/player layer. `epl/schedules/SCHEDULE_2026-27.json` is an empty placeholder awaiting
-  FotMob's 2026/27 fixture release.
+- **Populated — four seasons complete.** `2022-23`, `2023-24`, `2024-25` and `2025-26` are fully
+  scraped (**380/380** matches each, 1,520 total): schedule spines in `epl/schedules/`, raw scrapes
+  in `epl/matches/<season>/`, and the shipped `epl_dashboard/{data.js,players.js,shots.js}` +
+  `matches_detail/*.js` carry the full rich xG/shot/player layer. `epl/schedules/SCHEDULE_2026-27.json`
+  is an empty placeholder awaiting FotMob's 2026/27 fixture release.
 - **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need
   FotMob/WhoScored, which are firewalled in some CI/cloud environments). Swap the `--season` value
   (e.g. `2026-27` once fixtures drop):
@@ -23,7 +23,7 @@
   py epl/scrape_whoscored.py --season 2026-27           # ~1h, Chrome (rich xG/shot/player layer)
   py epl_dashboard/build_match_details.py && py epl_dashboard/build_players.py \
     && py epl_dashboard/build_database.py && py epl_dashboard/build_shots.py \
-    && py epl_dashboard/build_data.py
+    && py epl_dashboard/build_player_lab.py && py epl_dashboard/build_data.py
   git add -A && git commit -m "EPL 2026/27 data" && git push
   ```
 
@@ -33,9 +33,11 @@ FotMob league **47** (`EPL_FOTMOB_LEAGUE_ID`); WhoScored
 crests `team_logos/epl/`; PNGs `epl_png/` (`EPL_PNG_SUBDIR`); raw scrapes `epl/matches/`
 (`EPL_MATCH_DIR` for rebuilds in a clean clone).
 
-## European zones (2025/26-accurate)
-Top **5** → Champions League, 6th → Europa, 7th → Conference, bottom 3 → relegation. Lives in
-`epl_dashboard/app.js` `zoneOf()` AND the projection Monte-Carlo — edit both if you change it.
+## European zones (season-aware)
+UCL cut is **top 5** for 2024/25 & 2025/26 (England's coefficient-earned 5th place), **top 4** for
+earlier seasons; then Europa, Conference play-off, bottom 3 relegation. Lives in
+`epl_dashboard/app.js` `zoneOf()`/`uclSpots()` AND the projection Monte-Carlo — edit both if you
+change it.
 
 ## Gotchas
 - **Team-matcher must NOT strip "united"/"city"** — `epl/scrape_whoscored._key` keeps them so the
@@ -45,3 +47,7 @@ Top **5** → Champions League, 6th → Europa, 7th → Conference, bottom 3 →
 - **Raw match JSONs are gitignored** (`epl/matches/20*/*.json`, ~2 MB each). The dashboard ships
   the derived `epl_dashboard/matches_detail/*.js` instead.
 - **players.js fields are `g`/`a`/`xg`/`mp`** (not `goals`/`assists`); `app.js` reads those.
+- **Scores come from WhoScored, not the FotMob schedule** — FotMob's historical/mid-season feed
+  reports `0-0` for some games (17 in 2022-23, 9 in 2023-24, 1 in 2024-25) and null for unplayed
+  fixtures. `build_data` prefers the rich WhoScored score whenever a match has scraped events (it
+  matches the event-derived score for every match, every season); the schedule is only the fallback.

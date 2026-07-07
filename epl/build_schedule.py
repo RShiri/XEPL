@@ -30,6 +30,7 @@ import time
 import argparse
 import urllib.request
 import xml.etree.ElementTree as ET
+from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -52,6 +53,8 @@ FOTMOB_LEAGUE_NAMES = {"premier league", "premierleague", "epl"}
 # Season → (start, end) sweep window. Wide enough to catch pre-season openers and any
 # rescheduled final-round games; extra empty days just cost a cheap HTTP request.
 SEASON_WINDOWS: dict[str, tuple[str, str]] = {
+    "2022-23": ("2022-08-01", "2023-06-15"),
+    "2023-24": ("2023-08-01", "2024-06-15"),
     "2024-25": ("2024-08-01", "2025-06-15"),
     "2025-26": ("2025-08-01", "2026-06-15"),
     "2026-27": ("2026-08-01", "2027-06-15"),
@@ -166,7 +169,38 @@ def build_schedule(season: str, start: str | None = None, end: str | None = None
                 if prev is None or (rec["finished"] and not prev["finished"]):
                     by_id[mid_i] = rec
 
-    matches = sorted(by_id.values(), key=lambda r: (r["matchday"] or 99,
+    # FotMob occasionally returns an inconsistent NAME string for a club on a single date
+    # (2023-24 sent "Brighton" once but "Brighton & Hove Albion" 37×; likewise
+    # "Bournemouth"/"AFC Bournemouth" and "Wolverhampton"/"Wolverhampton Wanderers"). The
+    # team *id* is stable, so canonicalise every record to the majority name for its id —
+    # otherwise the club splits into phantom extra rows in the standings and its name stops
+    # matching WhoScored's fixtures.
+    id_names: dict[str, Counter] = defaultdict(Counter)
+    for r in by_id.values():
+        for side in ("home", "away"):
+            if r[f"{side}_id"]:
+                id_names[r[f"{side}_id"]][r[side]] += 1
+    canon = {tid: c.most_common(1)[0][0] for tid, c in id_names.items()}
+    for r in by_id.values():
+        for side in ("home", "away"):
+            if r[f"{side}_id"] in canon:
+                r[side] = canon[r[f"{side}_id"]]
+
+    # Collapse abandoned/void duplicates: in a completed season each ordered (home,away)
+    # leg is played exactly once, so a repeated pair means the earlier game was abandoned or
+    # postponed and the later date is the official replay (2023-24 Bournemouth v Luton:
+    # abandoned 1-1 on 2023-12-16, replayed 4-3 on 2024-03-13 — both matchday 17). Keep the
+    # latest kickoff per ordered pair; records missing an id are keyed individually so they
+    # never collapse together.
+    best_by_pair: dict[tuple, dict] = {}
+    for r in by_id.values():
+        key = ((r["home_id"], r["away_id"]) if r["home_id"] and r["away_id"]
+               else ("_uniq_", r["fotmob_id"]))
+        prev = best_by_pair.get(key)
+        if prev is None or (r["kickoff_utc"] or "") > (prev["kickoff_utc"] or ""):
+            best_by_pair[key] = r
+
+    matches = sorted(best_by_pair.values(), key=lambda r: (r["matchday"] or 99,
                                                     r["kickoff_utc"] or "", r["fotmob_id"]))
     return matches
 

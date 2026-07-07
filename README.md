@@ -7,8 +7,9 @@ Cloned from the La Liga (XLALIGA) system; shares the same `xg_core/` model.
 
 **Live dashboard:** `epl_dashboard/index.html` (root `index.html` redirects there).
 
-**Ships with:** the **2024/25 and 2025/26** seasons — both complete (380/380 matches each) with the
-full rich xG/shot/player layer. `2026/27` fills in once FotMob releases the fixtures.
+**Ships with:** four complete seasons — **2022/23, 2023/24, 2024/25 and 2025/26** (380/380 matches
+each, 1,520 total) with the full rich xG/shot/player layer. `2026/27` fills in once FotMob releases
+the fixtures.
 
 ## How it works
 Two data layers:
@@ -33,14 +34,14 @@ Rich per-match data — the workhorse is the WhoScored crawler (needs Chrome; ~1
 py epl/scrape_whoscored.py --season 2025-26     # scrape every match's events
 py epl_dashboard/build_match_details.py && py epl_dashboard/build_players.py \
   && py epl_dashboard/build_database.py && py epl_dashboard/build_shots.py \
-  && py epl_dashboard/build_data.py
+  && py epl_dashboard/build_player_lab.py && py epl_dashboard/build_data.py
 git add -A && git commit -m "refresh data" && git push
 ```
 
-## European zones (2025/26)
-Top **5** → Champions League, 6th → Europa, 7th → Conference, bottom 3 → relegation (England had
-a fifth CL place via its UEFA coefficient that season). Encoded in `epl_dashboard/app.js`
-`zoneOf()` and the projection Monte-Carlo.
+## European zones (season-aware)
+UCL cut is **top 5** for 2024/25 & 2025/26 (England's coefficient-earned fifth CL place), **top 4**
+for 2022/23 & 2023/24; then Europa, Conference play-off, bottom 3 relegation. Encoded in
+`epl_dashboard/app.js` `zoneOf()`/`uclSpots()` and the projection Monte-Carlo.
 
 ## Layout
 `epl/` pipeline · `epl_dashboard/` static site + builders · `epl_png/` published PNGs ·

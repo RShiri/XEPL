@@ -15,13 +15,17 @@
   var PLAYERS = PLAYERS_ALL[season] || [];
   var tooltip = document.getElementById("tooltip");
 
-  /* European / relegation zones (Premier League 2025/26): UCL top 5 (England earned a
-     fifth Champions League place via its UEFA coefficient that season), Europa 6,
-     Conference play-off 7, relegation bottom 3. Purely cosmetic shading + a legend. */
+  /* European / relegation zones. England had a FIFTH Champions League place in 2024-25 and
+     2025-26 (earned via UEFA coefficient performance); earlier seasons (2022-23, 2023-24) had
+     four. Below the UCL cut: Europa next, Conference play-off after that, relegation bottom 3.
+     Purely cosmetic shading + a legend — the exact Europa/Conference split can shift with cup
+     winners, but the UCL cut is the one that visibly differs by season. */
+  function uclSpots(s) { return (s === "2024-25" || s === "2025-26") ? 5 : 4; }
   function zoneOf(rank, total) {
-    if (rank <= 5) return "z-ucl";
-    if (rank === 6) return "z-uel";
-    if (rank === 7) return "z-uecl";
+    var ucl = uclSpots(season);
+    if (rank <= ucl) return "z-ucl";
+    if (rank === ucl + 1) return "z-uel";
+    if (rank === ucl + 2) return "z-uecl";
     if (rank > total - 3) return "z-rel";
     return "";
   }
@@ -1656,7 +1660,9 @@
       }
       exp[m.home] += 3 * pH + pD; exp[m.away] += 3 * pA + pD;
     });
-    // Monte-Carlo for title / top-5 (UCL) / top-7 (European) / relegation probabilities.
+    // Monte-Carlo for title / UCL / European / relegation probabilities. UCL cut is season-aware
+    // (5 in 2024-25 & 2025-26, else 4) to match zoneOf; "European" = UCL + Europa + Conference.
+    var uclN = uclSpots(season);
     var N = 3000, tally = {};
     teams.forEach(function (t) { tally[t] = { title: 0, top5: 0, europe: 0, rel: 0, ptsSum: 0 }; });
     var gd0 = {}; (D.standings || []).forEach(function (r) { gd0[r.team] = r.GD; });
@@ -1676,8 +1682,8 @@
         var rk = idx + 1;
         tally[t].ptsSum += pts[t];
         if (rk === 1) tally[t].title++;
-        if (rk <= 5) tally[t].top5++;
-        if (rk <= 7) tally[t].europe++;
+        if (rk <= uclN) tally[t].top5++;
+        if (rk <= uclN + 2) tally[t].europe++;
         if (rk > teams.length - 3) tally[t].rel++;
       });
     }
@@ -1692,6 +1698,7 @@
   function pct(x) { return x <= 0 ? "–" : x >= 0.995 ? "99%+" : (x * 100).toFixed(x < 0.1 ? 1 : 0) + "%"; }
   function bar(x, cls) { return '<div class="pbar"><span class="' + cls + '" style="width:' + Math.max(2, x * 100).toFixed(0) + '%"></span><em>' + pct(x) + "</em></div>"; }
   function renderProjection() {
+    var uclN = uclSpots(season);
     var host = document.getElementById("projTable");
     var banner = document.getElementById("projChamp");
     if (D.status === "not_started") {
@@ -1717,7 +1724,7 @@
     }).join("");
     host.innerHTML =
       "<table class='proj'><thead><tr><th>#</th><th class='team'>Team</th><th>Pts now</th><th>Proj pts</th>" +
-      "<th>Title</th><th>Top 5</th><th>Top 7</th><th>Relegated</th></tr></thead><tbody>" + body + "</tbody></table>" +
+      "<th>Title</th><th>Top " + uclN + "</th><th>Top " + (uclN + 2) + "</th><th>Relegated</th></tr></thead><tbody>" + body + "</tbody></table>" +
       "<p class='hint'>Poisson model on this season's goals (home/away attack &amp; defence strengths, shrunk toward league average), " +
       "Monte-Carlo over the " + (D.matches.filter(function (m) { return !m.played; }).length) + " remaining fixtures (3,000 sims).</p>";
   }

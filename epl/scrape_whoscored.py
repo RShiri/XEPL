@@ -84,6 +84,14 @@ def _plain_driver():
     if os.environ.get("EPL_VISIBLE") != "1":
         o.add_argument("--headless=new")
     for a in ("--no-sandbox", "--disable-dev-shm-usage", "--window-size=1600,1000",
+              # Stability + speed on WhoScored's ad/image-heavy pages: no GPU process to crash,
+              # no images/extensions/background chatter. matchCentreData is server-rendered into
+              # the HTML, so none of this affects what we extract — it just stops headless Chrome
+              # from dying every ~minute (the connection-refused deaths that stalled the scrape).
+              "--disable-gpu", "--disable-extensions", "--disable-crash-reporter",
+              "--disable-background-networking", "--mute-audio",
+              "--blink-settings=imagesEnabled=false",
+              "--disable-features=Translate,MediaRouter,OptimizationHints",
               "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
               "(KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"):
         o.add_argument(a)
