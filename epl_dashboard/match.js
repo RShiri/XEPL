@@ -814,28 +814,56 @@
     var note = document.getElementById("nwNote");
     var NS = "http://www.w3.org/2000/svg";
 
-    // Standard pass network: the starting XI, using passes up to the first
-    // substitution (the window in which all 11 were on the pitch together).
-    function cutoffFor(side) {
-      var subs = D.lineups[side].subs;
-      return (subs && subs.length && subs[0].on != null) ? subs[0].on : (D.maxMin || 90);
-    }
-
     function compute() {
+      var maxMin = D.maxMin || 90;
+      var transitionSet = { 0: true };
+      transitionSet[maxMin] = true;
+      ["home", "away"].forEach(function (sd) {
+        if (D.lineups[sd] && D.lineups[sd].subs) {
+          D.lineups[sd].subs.forEach(function (sub) {
+            if (sub.on != null) {
+              transitionSet[sub.on] = true;
+            }
+          });
+        }
+      });
+      var transitions = Object.keys(transitionSet).map(Number).sort(function (a, b) { return a - b; });
+
+      var longestInterval = { start: 0, end: maxMin };
+      var maxDuration = -1;
+      for (var i = 0; i < transitions.length - 1; i++) {
+        var start = transitions[i];
+        var end = transitions[i + 1];
+        var duration = end - start;
+        if (duration > maxDuration) {
+          maxDuration = duration;
+          longestInterval = { start: start, end: end };
+        }
+      }
+
+      var mid = (longestInterval.start + longestInterval.end) / 2;
+      var active11 = {};
+      var side = state.side;
+      var allPlayers = D.lineups[side].starters.concat(D.lineups[side].subs);
+      allPlayers.forEach(function (p) {
+        var on = p.on != null ? p.on : 0;
+        var off = p.off != null ? p.off : maxMin;
+        if (on <= mid && off >= mid) {
+          active11[p.name] = true;
+        }
+      });
+
       var nodes = {}; // name -> {sx,sy,n, passes}
       var links = {}; // "a|b" -> count
-      var starter = {};
-      D.lineups[state.side].starters.forEach(function (p) { starter[p.name] = true; });
-      var cutoff = cutoffFor(state.side);
       function node(name) {
         return nodes[name] || (nodes[name] = { name: name, x: 0, y: 0, n: 0, passes: 0 });
       }
       D.passes.forEach(function (p) {
-        if (p.team !== state.side || !p.ok || p.min > cutoff) return;
-        if (!starter[p.player]) return;            // passer must be a starter
+        if (p.team !== side || !p.ok || p.min < longestInterval.start || p.min > longestInterval.end) return;
+        if (!active11[p.player]) return;            // passer must be active
         var passer = node(p.player);
         passer.x += p.x; passer.y += p.y; passer.n++; passer.passes++;
-        if (p.recv && starter[p.recv]) {           // receiver must be a starter too
+        if (p.recv && active11[p.recv]) {           // receiver must be active too
           var r = node(p.recv);
           r.x += p.ex; r.y += p.ey; r.n++; r.passes++;
           var key = [p.player, p.recv].sort().join("|");
@@ -845,7 +873,7 @@
       Object.keys(nodes).forEach(function (k) {
         var nd = nodes[k]; if (nd.n) { nd.x /= nd.n; nd.y /= nd.n; }
       });
-      return { nodes: nodes, links: links, cutoff: cutoff };
+      return { nodes: nodes, links: links, start: longestInterval.start, end: longestInterval.end };
     }
 
     function draw() {
@@ -906,7 +934,7 @@
       });
       var teamName = state.side === "home" ? D.home.name : D.away.name;
       note.textContent = teamName + " · " + Object.keys(net.nodes).length + " players · " +
-        nLinks + " passing links (min " + state.minLink + ") · positions up to the first sub (" + net.cutoff + "')";
+        nLinks + " passing links (min " + state.minLink + ") · positions during minutes " + net.start + "–" + net.end + "'";
       document.getElementById("nwDir").textContent =
         (state.side === "home" ? teamName + " attacking →" : "← " + teamName + " attacking");
     }
@@ -933,10 +961,10 @@
     var host = document.getElementById("mv-avgpos");
     if (!host) return;
     var maxMin = D.maxMin || 90;
-    var info = { home: {}, away: {} };           // name -> {num, on, off} per side
+    var info = { home: {}, away: {} };           // name -> {name, num, on, off} per side
     ["home", "away"].forEach(function (sd) {
       D.lineups[sd].starters.concat(D.lineups[sd].subs).forEach(function (p) {
-        info[sd][p.name] = { num: p.num, on: (p.on != null ? p.on : 0), off: (p.off != null ? p.off : maxMin) };
+        info[sd][p.name] = { name: p.name, num: p.num, on: (p.on != null ? p.on : 0), off: (p.off != null ? p.off : maxMin) };
       });
     });
 
@@ -983,10 +1011,72 @@
       });
       (D.dribbles || []).forEach(function (d) { if (d.team === side && inWin(d.min)) add(d.player, d.x, d.y); });
       (D.shots || []).forEach(function (s) { if (s.team === side && inWin(s.min)) add(s.player, s.x, s.y); });
+
+      var startersMap = {};
+      D.lineups[side].starters.forEach(function (p) {
+        startersMap[p.name] = true;
+      });
+
+      var activeRepresentatives = {};
+      if (state.win !== 0) {
+        var slots = [];
+        D.lineups[side].starters.forEach(function (p) {
+          var infoP = info[side][p.name];
+          if (infoP) {
+            slots.push([infoP]);
+          }
+        });
+
+        var sortedSubs = D.lineups[side].subs.map(function (p) {
+          return info[side][p.name];
+        }).filter(Boolean).sort(function (a, b) {
+          return a.on - b.on;
+        });
+
+        sortedSubs.forEach(function (sub) {
+          var minDiff = Infinity;
+          var bestSlotIdx = -1;
+          slots.forEach(function (slotPlayers, slotIdx) {
+            slotPlayers.forEach(function (p) {
+              var diff = Math.abs(p.off - sub.on);
+              if (diff < minDiff) {
+                minDiff = diff;
+                bestSlotIdx = slotIdx;
+              }
+            });
+          });
+          if (bestSlotIdx !== -1) {
+            slots[bestSlotIdx].push(sub);
+          }
+        });
+
+        slots.forEach(function (slotPlayers) {
+          var maxDuration = -1;
+          var rep = null;
+          slotPlayers.forEach(function (p) {
+            var duration = Math.max(0, Math.min(hi, p.off) - Math.max(lo, p.on));
+            if (duration > maxDuration) {
+              maxDuration = duration;
+              rep = p;
+            }
+          });
+          if (rep) {
+            activeRepresentatives[rep.name] = true;
+          }
+        });
+      }
+
       var out = [];
       Object.keys(acc).forEach(function (name) {
         var a = acc[name], pi = info[side][name];
         if (!a.n || !pi || !(pi.on < hi && pi.off > lo)) return;   // must be on the pitch in window
+
+        if (state.win === 0) {
+          if (!startersMap[name]) return;
+        } else {
+          if (!activeRepresentatives[name]) return;
+        }
+
         out.push({ name: name, x: a.x / a.n, y: a.y / a.n, n: a.n, num: pi.num });
       });
       return { players: out, lo: lo, hi: hi };
