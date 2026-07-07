@@ -15,6 +15,9 @@ epl/matches/**/match_*_cache.json
 __pycache__/
 *.py[cod]
 
+# Model artifact backups (kept local for rollback, e.g. xg_core/xa_artifact.json.bak)
+*.bak
+
 # Local virtual environments
 venv/
 .venv/

@@ -40,11 +40,11 @@ from epl.team_colors import get_team_colors
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 SCALE_Y = 0.80
 
-# xG via the shared xg_core v2 artifact — the SAME scorer xg_model.py routes
-# through, so the PNG infographics and the website report identical xG.
-# (Replaces the hard-coded unified-LR coefficients; retrain with xg_core/train.py.)
+# xG via the shared xg_core_v3 artifact — the SAME event-based scorer xg_model.py
+# routes through, so the PNG infographics and the website report identical xG.
+# (23-feature v3: 5 extras come from each shot's assisting pass, so score per match.)
 sys.path.insert(0, str(_REPO_ROOT))
-from xg_core.score import XGScorer
+from xg_core_v3.score import XGScorer   # v3: 23-feature, event-based (needs the whole match)
 
 _XG_SCORER = XGScorer()
 _XG_LEAGUE = "EPL"
@@ -56,12 +56,13 @@ def _ws_to_sb_x(ws_x: float) -> float:
     else:            return 108.0 + (ws_x - 89) * (12.0 / 11.0)
 
 
-def _estimate_xg(x_sb: float, y_sb: float, is_penalty: bool, is_big_chance: bool,
-                 body_part: str, situation: str = "Open Play",
-                 assisted: bool = False) -> float:
-    return _XG_SCORER.estimate_xg(x_sb, y_sb, is_penalty, is_big_chance,
-                                  body_part, situation, assisted=assisted,
-                                  league=_XG_LEAGUE)
+def _match_xg_map(match_data: dict) -> dict:
+    """id(event) -> calibrated v3 xG for every real shot in the match, via the SAME
+    collision-safe scorer method (match_xg_by_id) the website uses, so the PNG and the
+    dashboard report identical xG. Keyed by id(ev), not WhoScored eventId (which collides
+    within a match — two shots can share one). Own goals and penalty-shootout kicks are
+    excluded (absent from the map)."""
+    return _XG_SCORER.match_xg_by_id(match_data, league=_XG_LEAGUE)
 
 
 def _ascii_name(name: str) -> str:
@@ -133,6 +134,7 @@ _SHOT_TYPES = {"MissedShots", "SavedShot", "ShotOnPost", "BlockedShot", "Goal"}
 
 def build_shot_df(match_data: dict, team_name: str) -> pd.DataFrame:
     tid = _team_id_for_name(match_data, team_name)
+    xg_by_event = _match_xg_map(match_data)
     rows = []
     for ev in match_data.get("events", []):
         if ev.get("teamId") != tid:
@@ -161,7 +163,6 @@ def build_shot_df(match_data: dict, team_name: str) -> pd.DataFrame:
         period_raw = ev.get("period", {}).get("displayName", "")
         period = ("ET" if "Extra" in period_raw else
                   "H2" if "Second" in period_raw else "H1")
-        xg_stored = ev.get("xG")
         rows.append({
             "x":            x_sb,
             "y":            y_sb,
@@ -170,9 +171,7 @@ def build_shot_df(match_data: dict, team_name: str) -> pd.DataFrame:
             "full_name":    _player_full_name(match_data, ev.get("playerId")),
             "is_goal":      type_name == "Goal",
             "is_on_target": type_name in ("SavedShot", "Goal"),
-            "xG":           (xg_stored if xg_stored is not None
-                             else _estimate_xg(x_sb, y_sb, is_penalty, big_chance, body, situation,
-                                               assisted=ev.get("relatedPlayerId") is not None)),
+            "xG":           xg_by_event.get(id(ev), 0.0),
             "body_part":    body,
             "situation":    situation,
             "zone":         zone,

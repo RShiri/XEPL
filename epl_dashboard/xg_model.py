@@ -1,15 +1,20 @@
-"""Shot extraction + xG/xA scoring, routed through the shared xg_core models.
+"""Shot extraction + xG/xA scoring, routed through the shared models.
 
-The models live in <repo root>/xg_core: the v2 calibrated xG artifact
-(LR + monotone-GBM blend + isotonic map, trained on La Liga 25/26 + WC 2026 (shared, league-agnostic))
-and the pass-level xA artifact (P(pass becomes an assist), two-stage +
-isotonic). Scoring is pure python (stdlib); if lightgbm is installed the
-scorers silently upgrade to the full blends — both paths are calibrated.
+xG: the v3 artifact in <repo root>/xg_core_v3 (23 features — the base-14 geometry plus
+9 shot-/assist-context extras; LR + monotone-GBM + market blend, isotonic map; trained
+on La Liga + EPL 4 seasons each + the World Cup). FIVE of the extras come from the
+shot's ASSISTING PASS, so xG must be scored with the whole match's events in hand: call
+match_xg_map(match_data) ONCE per match, then look each shot's xG up via
+shot_xg(ev, xg_by_event). There is deliberately no per-shot scalar path in this module —
+scoring a shot in isolation would silently zero the 9 extras and return degraded xG.
 
-This module keeps the same public surface the builders import (estimate_xg,
-shot_xg, player_xa_from_events, team_xg_from_events, ...); only the engine
-behind it changed. renderer._estimate_xg routes through the same scorer, so
-the site and the PNGs still agree. Retrain with xg_core/train.py + train_xa.py.
+xA: unchanged code — the pass-level xA artifact in <repo root>/xg_core (P(pass becomes
+an assist), two-stage + isotonic). Only the trained file improved, so it is a drop-in.
+
+Scoring is pure python (stdlib); if lightgbm is installed the scorers silently upgrade
+to the full blends — both paths are calibrated. renderer.build_shot_df routes xG through
+the same v3 scorer, so the site and the PNGs still agree. Retrain xG with the XG V3
+trainer; xA with xg_core/train_xa.py.
 """
 import math
 import os
@@ -17,11 +22,11 @@ import sys
 import unicodedata
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from xg_core.score import XGScorer
-from xg_core.xa_score import XAScorer
+from xg_core_v3.score import XGScorer   # v3: 23-feature, event-based (needs the whole match)
+from xg_core.xa_score import XAScorer   # xA unchanged (new artifact is a drop-in)
 
 _LEAGUE = "EPL"           # per-league calibration shift inside the artifacts
-_XG = XGScorer()
+_XG = XGScorer()          # loads xg_core_v3/xg_artifact.json
 _XA = XAScorer()
 
 SCALE_Y = 0.80
@@ -62,12 +67,20 @@ def ws_to_sb_x(ws_x):
         return 108.0 + (ws_x - 89) * (12.0 / 11.0)
 
 
-def estimate_xg(x_sb, y_sb, is_penalty, is_big_chance, body_part,
-                situation="Open Play", assisted=False):
-    """Calibrated xG via the shared xg_core v2 artifact. Penalties are the
-    artifact's empirical constant. Coords in StatsBomb metres."""
-    return _XG.estimate_xg(x_sb, y_sb, is_penalty, is_big_chance, body_part,
-                           situation, assisted=assisted, league=_LEAGUE)
+def match_xg_map(match_data):
+    """id(event) -> calibrated v3 xG for every real shot in this match.
+
+    Score the whole match at once — the v3 model reads each shot's assisting pass, so xG
+    cannot be computed from isolated coordinates — then look each shot up by id(ev) via
+    shot_xg(ev, xg_by_event). Penalties get the artifact's flat constant; own goals and
+    penalty-shootout kicks are excluded (absent from the map).
+
+    Delegates to XGScorer.match_xg_by_id, which keys the map by object identity, NOT
+    WhoScored eventId: eventIds are unique only within a possession chain and DO collide
+    within a match (~15% of EPL matches have two shots sharing one), so an eventId-keyed
+    dict would hand colliding shots each other's xG. Every caller builds this map and
+    iterates shots from the SAME match_data, so the id(ev) identities line up."""
+    return _XG.match_xg_by_id(match_data, league=_LEAGUE)
 
 
 def ascii_name(name):
@@ -106,18 +119,18 @@ def extract_qualifiers(ev):
     return body, situation, zone, big_chance, quals
 
 
-def shot_xg(ev):
-    """Return (xg, meta) for a single shot event using the renderer's model."""
-    x_sb = ws_to_sb_x(ev.get("x", 0))
-    y_sb = 80 - ev.get("y", 0) * SCALE_Y
+def shot_xg(ev, xg_by_event):
+    """Return (xg, meta) for a single shot event.
+
+    xg_by_event MUST be match_xg_map(match_data) for THIS shot's match — v3 xG needs the
+    whole-match context; there is no correct per-shot scalar path. `ev` must be the same
+    event object the map was built from (lookup is by id(ev)). Events absent from the map
+    (own goals, shootout kicks) score 0.0. `meta` (body/situation/zone/big_chance/penalty)
+    is unchanged and still drives the shot maps and tooltips."""
     body, situation, zone, big_chance, quals = extract_qualifiers(ev)
-    is_penalty = situation == "Penalty"
-    if is_penalty:
-        x_sb, y_sb = 108.0, 40.0
-    xg = estimate_xg(x_sb, y_sb, is_penalty, big_chance, body, situation,
-                     assisted=ev.get("relatedPlayerId") is not None)
+    xg = xg_by_event.get(id(ev), 0.0)
     return xg, dict(body=body, situation=situation, zone=zone,
-                    big_chance=big_chance, penalty=is_penalty)
+                    big_chance=big_chance, penalty=situation == "Penalty")
 
 
 def player_xa_from_events(match_data):
@@ -137,6 +150,7 @@ def team_xg_from_events(match_data):
     events = match_data.get("events") or []
     home_id = match_data.get("home", {}).get("teamId")
     away_id = match_data.get("away", {}).get("teamId")
+    xg_by_event = match_xg_map(match_data)
     totals = {home_id: 0.0, away_id: 0.0}
     n = 0
     for ev in events:
@@ -148,7 +162,7 @@ def team_xg_from_events(match_data):
         tid = ev.get("teamId")
         if tid not in totals:
             continue
-        xg, _ = shot_xg(ev)
+        xg, _ = shot_xg(ev, xg_by_event)
         totals[tid] += xg
         n += 1
     if n == 0:
