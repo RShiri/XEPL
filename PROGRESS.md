@@ -23,6 +23,7 @@ the other, so when you add an entry here, consider adding it there too.
 ## Platform updates & changes
 
 <!-- progress:platform -->
+- **2026-08-22** — Scraper panel: added a Commit & push button, made publish-when-done the default, and folded the fixture refresh into the scrape action (optional step — a FotMob outage no longer blocks the scrape). All pushes now go through the local clone's remote instead of git_ops.
 - **2026-08-22** — Added this journal (`PROGRESS.md` + `epl/progress_log.py`) and a
   **Scraper button** in the dashboard, served by the new local control server `server.py`
   (`py server.py` → http://localhost:8779/epl_dashboard/index.html — port **8779** so it can run
