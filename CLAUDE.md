@@ -59,10 +59,11 @@ change it.
   site (the API sends the CORS + Private-Network headers Chrome needs for an https page calling
   loopback). It runs the same commands as the CLI (refresh fixtures · scrape everything not yet
   scraped · scrape specific WhoScored ids · scrape one FotMob id · rebuild · commit + push),
-  streams their output into the panel, and journals the outcome. **One click is enough:** the
-  scrape action refreshes the fixture list first (skipped without failing if FotMob is
-  unreachable) and publishes when done — the "commit & push when it finishes" box is ticked by
-  default, and a **Commit & push** button publishes on its own. Pushing always uses the local
+  streams their output into the panel, and journals the outcome. **The panel is one button** — *⚡ Update
+  everything*: it picks the season (the one with unscraped played matches, else the newest),
+  refreshes the fixture list, scrapes what's missing, rebuilds and pushes; the refresh is an
+  optional step so a FotMob outage doesn't block the scrape. Season/action pickers, id and limit
+  fields and a **Commit & push** button live behind **Advanced ▾**. Pushing always uses the local
   clone's own remote, never `git_ops`' `XWORLDCUPTWIT_REPO`. The browser never sends a
   command — it picks an action name and `server.py` builds the argv (`server.ACTIONS`).
   Front-end: `epl_dashboard/control.js`, which injects nothing when no server answers, so the
