@@ -15,6 +15,8 @@ from __future__ import annotations
 import os, re, sys, time, argparse, subprocess
 from pathlib import Path
 
+_PROGRESS_STARTED = time.time()
+
 _REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_REPO))
 if hasattr(sys.stdout, "reconfigure"):
@@ -236,6 +238,14 @@ def main():
         try: d.quit()
         except Exception: pass
     print(f"\n{_now()} Done: {saved} saved, {skipped} already had data, {unmatched} unmatched, {failed} failed.", flush=True)
+    try:
+        from epl.progress_log import log_scrape
+        log_scrape(season=args.season, target="resilient sweep", saved=saved, failed=failed,
+                   skipped=skipped, duration_s=time.time() - _PROGRESS_STARTED,
+                   trigger="scrape_resilient.py",
+                   note=(f"{unmatched} id(s) not in the schedule" if unmatched else ""))
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

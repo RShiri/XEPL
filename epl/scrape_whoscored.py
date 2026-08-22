@@ -27,6 +27,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from epl.scraper import build_match_json, _fotmob_unavailable_stub, EPL_WS_BASES
+from epl.progress_log import log_scrape
 
 SCHED_DIR = _REPO / "epl" / "schedules"
 MATCH_DIR = _REPO / "epl" / "matches"
@@ -257,6 +258,7 @@ def main():
 
     schedule = load_schedule(args.season)
     print(f"Season {args.season}: {len(schedule)} fixtures in schedule.")
+    started = time.time()
     driver = make_driver()
     saved = skipped = unmatched = failed = 0
     try:
@@ -297,6 +299,14 @@ def main():
         except Exception:
             pass
     print(f"\nDone: {saved} saved, {skipped} already had data, {unmatched} unmatched, {failed} failed.")
+    # Journal the run so PROGRESS.md always reflects what was actually scraped.
+    log_scrape(
+        season=args.season,
+        target=(f"WhoScored ids {args.ids}" if args.ids else "fixtures sweep"),
+        saved=saved, failed=failed, skipped=skipped,
+        duration_s=time.time() - started, trigger="scrape_whoscored.py",
+        note=(f"{unmatched} id(s) not in the schedule" if unmatched else ""),
+    )
 
 
 if __name__ == "__main__":

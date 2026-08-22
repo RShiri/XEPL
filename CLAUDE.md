@@ -51,3 +51,20 @@ change it.
   reports `0-0` for some games (17 in 2022-23, 9 in 2023-24, 1 in 2024-25) and null for unplayed
   fixtures. `build_data` prefers the rich WhoScored score whenever a match has scraped events (it
   matches the event-derived score for every match, every season); the schedule is only the fallback.
+
+## Scraper button + PROGRESS.md
+- `py server.py` serves the dashboard **and** a loopback control API (`/api/*`) on **port 8779**
+  (XLALIGA uses 8778, so both can run at once): http://localhost:8779/epl_dashboard/index.html.
+  While it runs, a **⚡ Scraper** button appears in the dashboard header — locally and on the live
+  site (the API sends the CORS + Private-Network headers Chrome needs for an https page calling
+  loopback). It runs the same commands as the CLI (refresh fixtures · scrape everything not yet
+  scraped · scrape specific WhoScored ids · scrape one FotMob id · rebuild · commit + push),
+  streams their output into the panel, and journals the outcome. The browser never sends a
+  command — it picks an action name and `server.py` builds the argv (`server.ACTIONS`).
+  Front-end: `epl_dashboard/control.js`, which injects nothing when no server answers, so the
+  public site is untouched. Optional shared secret: `EPL_CONTROL_TOKEN`.
+- **`PROGRESS.md`** is the running journal: every scrape is appended automatically (from
+  `run_match.py`, `scrape_whoscored.py`, `scrape_resilient.py`, `backfill.py` and the button),
+  plus platform changes and what worked / what didn't. Append with
+  `py epl/progress_log.py {scrape|platform|lesson|show}` or the panel's note box. XLALIGA keeps
+  the same journal — lessons usually transfer between the two.
