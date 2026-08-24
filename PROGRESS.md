@@ -43,6 +43,7 @@ the other, so when you add an entry here, consider adding it there too.
 ## Lessons — what worked / what didn't
 
 <!-- progress:lessons -->
+- ❌ **Didn't work** — Skipping the per-match dashboard refresh in batches silently dropped the Match Centre pages: matches_detail/<id>.js was ONLY written by the per-match path, and the end-of-batch rebuild ran the other five builders but not that one. The batch rebuild now runs build_match_details.main() too.  (2026-08-24)
 - ✅ **Worked** — Two cheap wins on scrape time and stability: remember that undetected-chromedriver is broken after the FIRST failure (it was retried at every browser launch — 3x per match), and stop launching a browser for Understat after it returns nothing twice. Roughly halves the browser launches per match.  (2026-08-24)
 - ❌ **Didn't work** — backfill rebuilt the ENTIRE dashboard after every match (renderer's refresh hook re-reads every season and rewrites every derived file). For a 14-match batch that is 14 full rebuilds racing a live Chrome. Batches now set EPL_SKIP_DASHBOARD_REFRESH=1 and rebuild once at the end.  (2026-08-24)
 - ❌ **Didn't work** — FotMob's season payload carries NO round field — confirmed with --dump-sample: each match has only id, home, away, status, pageUrl and an empty tournament.stage. Matchday has to be reconstructed; don't go looking for the field again.  (2026-08-24)
