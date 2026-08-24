@@ -701,6 +701,35 @@ def build_schedule(season: str, start: str | None = None, end: str | None = None
     return dedupe_replays(list(by_id.values()))
 
 
+def _check_team_assets(matches: "list[dict]") -> None:
+    """Warn about clubs with no colour or crest — promoted sides every August.
+
+    Cheap to check here, and much cheaper than noticing it when a PNG renders grey or a
+    crest 404s on the live site.
+    """
+    teams = sorted({t for m in matches for t in (m["home"], m["away"]) if t})
+    if not teams:
+        return
+    try:
+        sys.path.insert(0, str(_HERE.parent))
+        from epl.team_colors import EPL_TEAM_COLORS
+        no_colour = [t for t in teams if t not in EPL_TEAM_COLORS]
+    except Exception as exc:
+        print(f"  (couldn't read team colours: {exc})")
+        no_colour = []
+    crest_dir = _HERE.parent / "team_logos" / "epl"
+    have = {p.stem for p in crest_dir.glob("*.png")} if crest_dir.is_dir() else set()
+    no_crest = [t for t in teams if t not in have]
+    if no_colour:
+        print(f"  ⚠ no team colour for: {', '.join(no_colour)}  "
+              f"(add them to epl/team_colors.py — the PNGs fall back to grey)")
+    if no_crest:
+        print(f"  ⚠ no local crest for: {', '.join(no_crest)}  "
+              f"(run: py epl/download_crests.py — the site falls back to FotMob's CDN)")
+    if not (no_colour or no_crest):
+        print(f"  colours + crests present for all {len(teams)} clubs.")
+
+
 def _summarise(matches: list[dict]) -> None:
     finished = [m for m in matches if m["finished"]]
     teams: dict[str, int] = {}
@@ -774,6 +803,7 @@ def main() -> None:
     newly_finished = (sum(1 for m in matches if m.get("finished"))
                       - sum(1 for m in existing if m.get("finished")))
     _summarise(matches)
+    _check_team_assets(matches)
 
     payload = {
         "season": args.season,
