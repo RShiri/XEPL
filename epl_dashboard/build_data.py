@@ -251,8 +251,14 @@ def build_season(season):
 
 
 def _default_season(seasons):
-    """Newest season with at least one played match; else the newest we have."""
-    played = [s for s in sorted(seasons) if (seasons[s].get("counts") or {}).get("played")]
+    """Newest season with at least one played match out of a real, (near-)complete fixture
+    list; else the newest we have. The >=100 floor keeps a season with only a handful of
+    fixtures on disk (an incremental build_schedule.py sweep just starting, or a few
+    hand-added preview matches) from briefly becoming the default before its full 380-match
+    schedule is pulled — landing new visitors on a near-empty table."""
+    played = [s for s in sorted(seasons)
+              if (seasons[s].get("counts") or {}).get("played")
+              and (seasons[s].get("counts") or {}).get("total", 0) >= 100]
     return (played or sorted(seasons))[-1]
 
 

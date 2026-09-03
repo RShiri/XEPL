@@ -12,12 +12,21 @@
 - **Populated — four seasons complete.** `2022-23`, `2023-24`, `2024-25` and `2025-26` are fully
   scraped (**380/380** matches each, 1,520 total): schedule spines in `epl/schedules/`, raw scrapes
   in `epl/matches/<season>/`, and the shipped `epl_dashboard/{data.js,players.js,shots.js}` +
-  `matches_detail/*.js` carry the full rich xG/shot/player layer. `epl/schedules/SCHEDULE_2026-27.json`
-  is still the empty placeholder — the scraper pipeline (`build_schedule.py`, `scraper.py`) was
-  brought up to date for 2026/27 (ported from XLALIGA's own 26/27 readiness work: the FotMob
-  endpoint migration, matchday reconstruction, incremental sweeps — see the gotchas below), but
-  every FotMob/ESPN endpoint is blocked from this sandboxed session's network, so `--full` still
-  needs to be run once on a machine with real network access to actually pull the season in.
+  `matches_detail/*.js` carry the full rich xG/shot/player layer. The scraper pipeline
+  (`build_schedule.py`, `scraper.py`) was brought up to date for 2026/27 (ported from XLALIGA's own
+  26/27 readiness work: the FotMob endpoint migration, matchday reconstruction, incremental sweeps
+  — see the gotchas below), but every FotMob/ESPN endpoint is blocked from this sandboxed session's
+  network, so `--full` still needs to be run once on a machine with real network access to actually
+  pull the season in. **`epl/schedules/SCHEDULE_2026-27.json` currently holds 3 HAND-ADDED
+  placeholder records** (matchweek 1: Arsenal 3-0 Coventry City, Hull City 2-0 Manchester United,
+  Newcastle United 2-2 Liverpool — real results, found via web research since FotMob itself isn't
+  reachable from here) as a preview that the promoted-club pipeline works end to end. Each has a
+  negative `fotmob_id` and `"_placeholder": true`. **Delete these 3 records before the first real
+  `--full` sweep** — real FotMob ids are always positive, so `merge_matches` would add the real
+  records alongside these instead of replacing them, double-counting those 3 matches in the
+  standings. `epl/team_colors.py` already has real kit colours for the three promoted clubs
+  (Coventry City, Hull City, Ipswich Town, replacing relegated Burnley/West Ham United/Wolverhampton
+  Wanderers) so nothing needs fixing there once the real schedule lands.
 - **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need
   FotMob/WhoScored, which are firewalled in some CI/cloud environments, this one included — see
   the FotMob endpoint gotcha below). Swap the `--season` value (e.g. `2026-27`):

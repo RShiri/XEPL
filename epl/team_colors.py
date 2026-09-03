@@ -5,9 +5,9 @@ exact name, then case-insensitively, then accent-folded, then falls back to a ne
 
 ``WC2026_TEAM_COLORS`` is kept as an alias so the ported ``renderer.py`` imports unchanged.
 
-2026/27 promoted clubs: add their colours here once build_schedule.py's --season 2026-27 run
-warns about a team with none (``epl/build_schedule.py``'s ``_check_team_assets``) — they
-aren't guessed here since which three clubs actually came up isn't confirmed yet.
+Every club that has ever been in a scraped season stays here, even after relegation
+(Burnley/West Ham United/Wolverhampton Wanderers went down at the end of 2025/26) — the
+2022-23..2025-26 seasons' standings/PNGs still need their colours.
 """
 
 import unicodedata
@@ -33,6 +33,10 @@ EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "Tottenham Hotspur":      {"primary": "#132257", "secondary": "#FFFFFF"},
     "West Ham United":        {"primary": "#7A263A", "secondary": "#1BB1E7"},
     "Wolverhampton Wanderers": {"primary": "#FDB913", "secondary": "#231F20"},
+    # promoted for 2026/27 (replacing Burnley, West Ham United, Wolverhampton Wanderers)
+    "Coventry City":          {"primary": "#059DD9", "secondary": "#FFFFFF"},
+    "Hull City":              {"primary": "#F18A01", "secondary": "#000000"},
+    "Ipswich Town":           {"primary": "#3A64A3", "secondary": "#FFFFFF"},
     # common alias spellings from FotMob / WhoScored / Understat
     "Bournemouth":            {"primary": "#DA291C", "secondary": "#000000"},
     "Brighton":               {"primary": "#0057B8", "secondary": "#FFCD00"},
@@ -46,6 +50,7 @@ EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "West Ham":               {"primary": "#7A263A", "secondary": "#1BB1E7"},
     "Wolves":                 {"primary": "#FDB913", "secondary": "#231F20"},
     "Leeds":                  {"primary": "#FFCD00", "secondary": "#1D428A"},
+    "Ipswich":                {"primary": "#3A64A3", "secondary": "#FFFFFF"},
 }
 
 # Drop-in alias so the ported renderer.py (which imports WC2026_TEAM_COLORS) works unchanged.
