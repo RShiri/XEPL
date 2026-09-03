@@ -19,21 +19,30 @@ import argparse
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(ROOT, "epl"))
 
+import render_missing
 import build_match_details
 import build_data
 import build_players
 import build_database
+import build_shots
+import build_player_lab
+import build_split
 
 MATCH_DIR = os.path.join(ROOT, "epl", "matches")
 
 
 def build_once():
     t0 = time.time()
+    render_missing.main()   # PNGs for bulk-scraped matches, published to epl_png/
     build_match_details.main()
-    build_data.main()
     build_players.main()
+    build_shots.main()
+    build_player_lab.main()
     build_database.main()
+    build_data.main()
+    build_split.main()      # per-season bundles the site actually loads
     print(f"Site rebuilt in {time.time() - t0:.1f}s")
 
 

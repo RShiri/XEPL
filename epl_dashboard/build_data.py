@@ -21,6 +21,7 @@ import os
 import sys
 import json
 import glob
+import shutil
 import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -69,10 +70,18 @@ def _stat_line(ms):
 
 
 def _find_png(season, fotmob_id):
-    for d in PNG_DIRS:
-        p = os.path.join(d, f"{fotmob_id}.png")
-        if os.path.exists(p):
-            return os.path.relpath(p, os.path.dirname(OUT)).replace("\\", "/")
+    """Link to the PUBLISHED copy (epl_png/, tracked) — a PNG that only exists in the
+    git-ignored epl/output/ works on localhost but 404s on GitHub Pages, so copy it into
+    epl_png/ here and always emit that path."""
+    published, output = (os.path.join(d, f"{fotmob_id}.png") for d in PNG_DIRS)
+    if not os.path.exists(published) and os.path.exists(output):
+        try:
+            os.makedirs(os.path.dirname(published), exist_ok=True)
+            shutil.copy2(output, published)
+        except OSError:
+            return os.path.relpath(output, os.path.dirname(OUT)).replace("\\", "/")
+    if os.path.exists(published):
+        return os.path.relpath(published, os.path.dirname(OUT)).replace("\\", "/")
     return None
 
 
@@ -241,6 +250,12 @@ def build_season(season):
     }
 
 
+def _default_season(seasons):
+    """Newest season with at least one played match; else the newest we have."""
+    played = [s for s in sorted(seasons) if (seasons[s].get("counts") or {}).get("played")]
+    return (played or sorted(seasons))[-1]
+
+
 def main():
     seasons = {}
     for season in ("2022-23", "2023-24", "2024-25", "2025-26", "2026-27"):
@@ -252,7 +267,9 @@ def main():
 
     payload = {
         "generated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "defaultSeason": "2025-26" if "2025-26" in seasons else sorted(seasons)[0],
+        # Land on the newest season that has a played match — a new season takes over
+        # the moment it kicks off, instead of the site sitting on last year forever.
+        "defaultSeason": _default_season(seasons),
         "seasons": seasons,
     }
     with open(OUT, "w", encoding="utf-8") as fh:
