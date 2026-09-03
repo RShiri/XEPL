@@ -21,10 +21,11 @@
   placeholder records** (matchweek 1: Arsenal 3-0 Coventry City, Hull City 2-0 Manchester United,
   Newcastle United 2-2 Liverpool — real results, found via web research since FotMob itself isn't
   reachable from here) as a preview that the promoted-club pipeline works end to end. Each has a
-  negative `fotmob_id` and `"_placeholder": true`. **Delete these 3 records before the first real
-  `--full` sweep** — real FotMob ids are always positive, so `merge_matches` would add the real
-  records alongside these instead of replacing them, double-counting those 3 matches in the
-  standings. `epl/team_colors.py` already has real kit colours for the three promoted clubs
+  negative `fotmob_id` and `"_placeholder": true`. No manual cleanup needed before the first real
+  `--full` sweep — `merge_matches`/`_drop_superseded_placeholders` auto-drop a placeholder the
+  moment a real (positive-id) record shows up for the same (home, away, date), so they can't
+  double-count a match in the standings; any placeholder for a fixture the sweep hasn't reached
+  yet is left alone. `epl/team_colors.py` already has real kit colours for the three promoted clubs
   (Coventry City, Hull City, Ipswich Town, replacing relegated Burnley/West Ham United/Wolverhampton
   Wanderers) so nothing needs fixing there once the real schedule lands.
 - **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need

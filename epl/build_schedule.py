@@ -526,8 +526,29 @@ def merge_matches(old: "list[dict]", new: "list[dict]") -> "list[dict]":
         if prev and prev.get("finished") and not m.get("finished"):
             continue
         by_id[m["fotmob_id"]] = m
-    return sorted(by_id.values(), key=lambda r: (r["matchday"] or 99,
-                                                 r["kickoff_utc"] or "", r["fotmob_id"]))
+    merged = _drop_superseded_placeholders(by_id.values())
+    return sorted(merged, key=lambda r: (r["matchday"] or 99,
+                                         r["kickoff_utc"] or "", r["fotmob_id"]))
+
+
+def _drop_superseded_placeholders(records) -> "list[dict]":
+    """Auto-heal hand-added preview records once the real sweep catches up.
+
+    A record can be seeded by hand ahead of a real sweep (e.g. a verified result added
+    while FotMob itself was unreachable) with a negative fotmob_id and "_placeholder": true
+    — real FotMob ids are always positive, so it never collides on id. But once a REAL
+    record for the same fixture (home, away, date) shows up from an actual sweep, the
+    placeholder is now redundant and would double-count that match in the standings if
+    left in. Drop it automatically here rather than relying on someone remembering to
+    delete it by hand before the first --full run.
+    """
+    def key(r):
+        return ((r.get("home") or "").strip().lower(), (r.get("away") or "").strip().lower(),
+                r.get("date"))
+
+    records = list(records)
+    real_fixtures = {key(r) for r in records if not r.get("_placeholder") and r["fotmob_id"] >= 0}
+    return [r for r in records if not (r.get("_placeholder") and key(r) in real_fixtures)]
 
 
 def _dedupe_and_canonicalise(by_id: "dict[int, dict]") -> "list[dict]":
