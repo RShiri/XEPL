@@ -3,37 +3,40 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0c0d10" />
 <title>Premier League — Dashboard &amp; xG Lab</title>
-<script>document.write('<link rel="stylesheet" href="styles.css?v=' + Date.now() + '">');</script>
-<noscript><link rel="stylesheet" href="styles.css" /></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body class="epl">
 <header class="site">
   <div class="header-inner">
     <div class="brand">
-      <div class="title">Premier<span>League</span> · Dashboard</div>
-      <div class="sub">Standings · fixtures &amp; results · xG lab · season projection</div>
+      <h1 class="title">Premier<span>League</span></h1>
+      <div class="sub">Dashboard &amp; xG Lab</div>
     </div>
+    <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+        <button role="tab" id="tab-standings" data-view="standings" aria-controls="view-standings" aria-selected="true" class="active">Standings</button>
+        <button role="tab" id="tab-matches" data-view="matches" aria-controls="view-matches" aria-selected="false" tabindex="-1">Matches</button>
+        <button role="tab" id="tab-players" data-view="players" aria-controls="view-players" aria-selected="false" tabindex="-1">Players</button>
+        <button role="tab" id="tab-standouts" data-view="standouts" aria-controls="view-standouts" aria-selected="false" tabindex="-1">Standouts</button>
+        <button role="tab" id="tab-teamlab" data-view="teamlab" aria-controls="view-teamlab" aria-selected="false" tabindex="-1">Team Lab</button>
+        <button role="tab" id="tab-playerlab" data-view="playerlab" aria-controls="view-playerlab" aria-selected="false" tabindex="-1">Player Lab</button>
+        <button role="tab" id="tab-xg" data-view="xg" aria-controls="view-xg" aria-selected="false" tabindex="-1">xG Analysis</button>
+        <button role="tab" id="tab-data" data-view="data" aria-controls="view-data" aria-selected="false" tabindex="-1">Data</button>
+        <button role="tab" id="tab-projection" data-view="projection" aria-controls="view-projection" aria-selected="false" tabindex="-1">Projection</button>
+    </nav>
     <div class="header-right">
       <label class="season-pick">Season <select id="seasonSel"></select></label>
-      <nav class="tabs">
-        <button data-view="standings" class="active">Standings</button>
-        <button data-view="matches">Matches</button>
-        <button data-view="players">Players</button>
-        <button data-view="standouts">Standouts</button>
-        <button data-view="teamlab">Team Lab</button>
-        <button data-view="playerlab">Player Lab</button>
-        <button data-view="xg">xG Analysis</button>
-        <button data-view="data">Data</button>
-        <button data-view="projection">Projection</button>
-      </nav>
     </div>
   </div>
 </header>
 
 <main>
   <!-- STANDINGS -->
-  <section id="view-standings" class="view active">
+  <section id="view-standings" class="view active" role="tabpanel" aria-labelledby="tab-standings">
     <div class="section-head">
       <h2>League Table</h2>
       <p>Live standings built from played matches — ranked by points, then goal difference, then goals for.
@@ -103,7 +106,7 @@
          flat, hardly anyone does. Most players cluster near the average, so the curve peaks there and tails off.
          A player <b>far to the right</b> of the crowd is doing something rare — we measure exactly how rare in
          <b>σ (sigma) over average</b>: +1σ beats ~84% of players, +2σ beats ~98%, +3σ is a genuine outlier.</p>
-      <p class="explainer-note">Dots are coloured <span style="color:var(--goal);font-weight:700">lime</span> once a
+      <p class="explainer-note">Dots are coloured <span style="color:var(--goal);font-weight:700">purple</span> once a
          player is 2σ or more above average. Pick a player to spotlight them in <span
          style="color:#fff;font-weight:700">white</span> and see their percentile.</p>
     </details>
@@ -250,7 +253,7 @@
     <div class="card full-card">
       <h3 id="tlMapTitle">Shot map</h3>
       <p class="hint">Attacking <b>↑</b> (toward the top goal). In <b>Shot dots</b> mode each dot is a shot,
-         sized by xG: <span style="color:var(--goal);font-weight:700">goals lime</span>,
+         sized by xG: <span style="color:var(--goal);font-weight:700">goals purple</span>,
          <span style="color:var(--info);font-weight:700">on-target pale blue</span>, off-target grey. Switch to
          <b>xG heatmap</b> to shade the pitch by where chance-quality is concentrated. Pick a
          <b>Compare</b> team (or two) to line up shot maps side by side.</p>
