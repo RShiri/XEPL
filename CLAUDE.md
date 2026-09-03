@@ -13,12 +13,16 @@
   scraped (**380/380** matches each, 1,520 total): schedule spines in `epl/schedules/`, raw scrapes
   in `epl/matches/<season>/`, and the shipped `epl_dashboard/{data.js,players.js,shots.js}` +
   `matches_detail/*.js` carry the full rich xG/shot/player layer. `epl/schedules/SCHEDULE_2026-27.json`
-  is an empty placeholder awaiting FotMob's 2026/27 fixture release.
+  is still the empty placeholder — the scraper pipeline (`build_schedule.py`, `scraper.py`) was
+  brought up to date for 2026/27 (ported from XLALIGA's own 26/27 readiness work: the FotMob
+  endpoint migration, matchday reconstruction, incremental sweeps — see the gotchas below), but
+  every FotMob/ESPN endpoint is blocked from this sandboxed session's network, so `--full` still
+  needs to be run once on a machine with real network access to actually pull the season in.
 - **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need
-  FotMob/WhoScored, which are firewalled in some CI/cloud environments). Swap the `--season` value
-  (e.g. `2026-27` once fixtures drop):
+  FotMob/WhoScored, which are firewalled in some CI/cloud environments, this one included — see
+  the FotMob endpoint gotcha below). Swap the `--season` value (e.g. `2026-27`):
   ```bash
-  py epl/build_schedule.py --season 2026-27            # FotMob 47 → standings/results spine
+  py epl/build_schedule.py --season 2026-27 --full     # FotMob 47 → standings/results spine (whole season)
   py epl/download_crests.py                             # crests → team_logos/epl/
   py epl/scrape_whoscored.py --season 2026-27           # ~1h, Chrome (rich xG/shot/player layer)
   py epl/render_missing.py --season 2026-27              # PNGs for matches scraped in bulk, publish to epl_png/
@@ -32,7 +36,10 @@
   first, build_split last) in one call. **`build_split.py` must be the LAST step of every
   rebuild** — see the per-season bundles gotcha below; skipping it (or running it out of order)
   leaves the live site on the previous build even though `data.js`/`players.js`/`shots.js` look
-  freshly generated on disk.
+  freshly generated on disk. For a routine refresh once a season is underway,
+  `py epl/build_schedule.py --season 2026-27` (no `--full`) sweeps only what's new — a handful of
+  requests instead of 300+ — or run `py epl/weekly_update.py` for schedule refresh + scrape +
+  push in one command (see the automation gotcha below).
 
 ## Config
 FotMob league **47** (`EPL_FOTMOB_LEAGUE_ID`); WhoScored
@@ -98,3 +105,55 @@ re-derive the accent per fork rather than copying another sport's colour blindly
   only exists in the git-ignored `epl/output/` 404s on GitHub Pages. It's the first step of every
   rebuild (`build_site.py`, `renderer._refresh_web_dashboard_db`); `build_data.py`'s `_find_png()`
   also self-heals by copying an `epl/output/`-only PNG into `epl_png/` the next time it runs.
+- **FotMob's fixture feed moved twice** — `api.fotmob.com/matches?date=` (the original token-free
+  XML feed) went LIVE-ONLY in 2026: root `<live>/<exmatches>`, `?date` is ignored, so it rarely has
+  anything for a past or future date any more. `build_schedule.py` and `scraper.fotmob_fetch_wc_matches`
+  now try `www.fotmob.com/api/data/leagues?id=47&season=` (whole season, one request, carries the
+  round number) and `www.fotmob.com/api/data/matches?date=` (site API, every league that day)
+  first, falling back to the legacy XML endpoint only if those come back empty. Every one of these
+  is blocked from this sandboxed session's network policy (403 via the proxy) — the openfootball
+  static mirror (`raw.githubusercontent.com/openfootball/football.json`) is reachable here but its
+  future-season files can be placeholder/template data, not confirmed fixtures — don't trust it for
+  real team names. Run the scrapers on a machine with real network access.
+- **"Premier League" is not a unique league name on FotMob** — at least a dozen countries (Russia,
+  Egypt, Wales, Canada, Kazakhstan, Ukraine, Belarus, Azerbaijan, …) run a division literally named
+  "Premier League". `_is_epl`/`_is_our_league` (`build_schedule.py`, `scraper.py`) always accept an
+  exact FotMob league id match, but gate the *name* fallback on the England country code (`ccode`)
+  — matching by name alone would occasionally pull in a foreign league's fixtures on a day-sweep.
+- **Matchday isn't always in FotMob's feed.** `build_schedule.py`'s `_fill_missing_rounds` tries,
+  in order: the round field the payload already carries; the fixture order; kickoff order; then
+  earliest-fit packing (each fixture in date order drops into the earliest round with a free slot
+  and neither team in it — robust to postponed/rearranged games, unlike a naive "new round when a
+  team recurs" split, which fragments the season). If nothing validates, matchday is left empty
+  rather than published wrong.
+- **`build_schedule.py` is incremental by default** — with a schedule already on disk it sweeps
+  from a few days before the last finished match to a fortnight ahead and merges in
+  (`sweep_window`/`merge_matches`); `--full` forces the whole season window (needed once, when a
+  season is brand new). `--debug-day YYYY-MM-DD` dumps what a date's feed actually contains and
+  `--probe-endpoints YYYY-MM-DD` tries every known fixture source — reach for these before assuming
+  "no matches" means the season hasn't started.
+- **`EPL_SKIP_DASHBOARD_REFRESH=1`** skips `renderer._refresh_web_dashboard_db()` entirely —
+  `backfill.py` sets it for the whole batch and rebuilds once at the end instead, because the
+  per-match refresh re-reads every season and rewrites every derived file (fourteen full rebuilds
+  racing a live Chrome, for a fourteen-match batch, is how you crash the machine).
+- **A WhoScored failure used to be invisible and permanent** — the match still saved (FotMob shots
+  only, no event stream), so a plain "already scraped" check counted it done and no later run
+  would ever fill in the maps/lineups/pass network. `backfill.py` now classifies each match
+  none/partial/full (`_scrape_state`) and `--redo-partial` retries only the partials.
+- **`PROGRESS.md` is an append-only journal, not hand-maintained prose** — `epl/progress_log.py`
+  (`log_scrape`/`log_platform`/`log_lesson`) is called automatically from `run_match.py`,
+  `scrape_whoscored.py` and `backfill.py`, so every scrape — scheduled task, bulk backfill, or a
+  manual run — leaves a row in the Scrape log table whether it succeeded or not. Write the Platform
+  and Lessons sections by hand or with `py epl/progress_log.py platform "..."` /
+  `... lesson --worked/--failed "..."`. `epl/check_data.py --season <season> [--detail]` reports
+  what each scraped match's raw JSON actually contains (sources, event count, xG, player count) —
+  reach for it before assuming a thin dashboard page means a scrape bug rather than a partial scrape.
+- **Two ways to automate scraping on a Windows machine**: `epl/register_tasks.ps1` registers one
+  Scheduled Task per fixture that runs `run_match.py --fotmob-id <id>` directly (needs `GIT_TOKEN`
+  in `.env` for `git_ops.py`'s auto-push). `epl/register_fixture_tasks.ps1` is the newer,
+  token-free alternative: one Scheduled Task per fixture that instead runs
+  `epl/weekly_update.py --season <season>` at kick-off+3h, which re-sweeps the whole season
+  (fixtures refresh + `backfill.py` for anything newly finished) and pushes with plain `git push`
+  against the local clone's own already-authenticated remote — no token needed. Both can coexist;
+  `weekly_update.py` is also runnable on its own fixed weekly schedule via
+  `epl/register_weekly_task.ps1` as a safety net that catches whatever a missed per-fixture run did.

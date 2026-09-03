@@ -1,10 +1,16 @@
 """
 Premier League 2025/26 — primary/secondary colours for all 20 clubs, for the PNG renderer.
 Sourced from each club's official kit/crest palette. ``get_team_colors`` matches by
-exact name, then case-insensitively, then falls back to a neutral grey.
+exact name, then case-insensitively, then accent-folded, then falls back to a neutral grey.
 
 ``WC2026_TEAM_COLORS`` is kept as an alias so the ported ``renderer.py`` imports unchanged.
+
+2026/27 promoted clubs: add their colours here once build_schedule.py's --season 2026-27 run
+warns about a team with none (``epl/build_schedule.py``'s ``_check_team_assets``) — they
+aren't guessed here since which three clubs actually came up isn't confirmed yet.
 """
+
+import unicodedata
 
 EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "Arsenal":                {"primary": "#EF0107", "secondary": "#FFFFFF"},
@@ -46,6 +52,12 @@ EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
 WC2026_TEAM_COLORS = EPL_TEAM_COLORS
 
 
+def _fold(name: str) -> str:
+    """Case- and accent-insensitive lookup key: e.g. 'Nott'm Forest' variants fold together."""
+    stripped = unicodedata.normalize("NFKD", (name or "").strip())
+    return "".join(c for c in stripped if not unicodedata.combining(c)).casefold()
+
+
 def get_team_colors(team_name: str, fallback_home: bool = True) -> dict[str, str]:
     """Return {'primary': hex, 'secondary': hex} for a team."""
     name_clean = (team_name or "").strip()
@@ -54,5 +66,11 @@ def get_team_colors(team_name: str, fallback_home: bool = True) -> dict[str, str
     lower = name_clean.lower()
     for k, v in EPL_TEAM_COLORS.items():
         if k.lower() == lower:
+            return v
+    # Accent-fold before giving up: a feed occasionally sends a diacritic variant of an
+    # otherwise-known name, and a miss here silently renders the club grey in the PNGs.
+    folded = _fold(name_clean)
+    for k, v in EPL_TEAM_COLORS.items():
+        if _fold(k) == folded:
             return v
     return {"primary": "#6b7a99" if fallback_home else "#4a5870", "secondary": "#FFFFFF"}
