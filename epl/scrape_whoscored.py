@@ -27,6 +27,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from epl.scraper import build_match_json, _fotmob_unavailable_stub, EPL_WS_BASES
+from epl.progress_log import log_scrape
 
 SCHED_DIR = _REPO / "epl" / "schedules"
 MATCH_DIR = _REPO / "epl" / "matches"
@@ -79,11 +80,17 @@ def load_schedule(season):
 
 
 def _plain_driver():
+    import tempfile
     from selenium import webdriver
     o = webdriver.ChromeOptions()
     if os.environ.get("EPL_VISIBLE") != "1":
         o.add_argument("--headless=new")
+    # A fresh --user-data-dir per launch: reusing Chrome's default profile means a run that
+    # left orphaned chrome.exe processes behind (crash, killed task, etc.) holds the profile
+    # lock, and the NEXT launch fails immediately with "connection refused" on the debugger
+    # port — no driver ever actually starts. Isolating the profile makes each run independent.
     for a in ("--no-sandbox", "--disable-dev-shm-usage", "--window-size=1600,1000",
+              "--user-data-dir=" + tempfile.mkdtemp(prefix="epl_chrome_"),
               # Stability + speed on WhoScored's ad/image-heavy pages: no GPU process to crash,
               # no images/extensions/background chatter. matchCentreData is server-rendered into
               # the HTML, so none of this affects what we extract — it just stops headless Chrome
@@ -247,9 +254,18 @@ def already_done(season, fid):
         return False
 
 
+def _newest_season() -> str:
+    """Default season for the CLI: the newest SCHEDULE_*.json on disk."""
+    try:
+        names = sorted(p.stem.replace("SCHEDULE_", "") for p in SCHED_DIR.glob("SCHEDULE_*.json"))
+        return names[-1] if names else "2025-26"
+    except Exception:
+        return "2025-26"
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--season", default="2025-26")
+    ap.add_argument("--season", default=_newest_season())
     ap.add_argument("--ids", help="comma-separated WhoScored ids (skip fixtures harvest)")
     ap.add_argument("--max-back", type=int, default=40, help="matchday pages to navigate back")
     ap.add_argument("--limit", type=int, help="stop after saving N matches")
@@ -257,6 +273,7 @@ def main():
 
     schedule = load_schedule(args.season)
     print(f"Season {args.season}: {len(schedule)} fixtures in schedule.")
+    started = time.time()
     driver = make_driver()
     saved = skipped = unmatched = failed = 0
     try:
@@ -297,6 +314,14 @@ def main():
         except Exception:
             pass
     print(f"\nDone: {saved} saved, {skipped} already had data, {unmatched} unmatched, {failed} failed.")
+    # Journal the run so PROGRESS.md always reflects what was actually scraped.
+    log_scrape(
+        season=args.season,
+        target=(f"WhoScored ids {args.ids}" if args.ids else "fixtures sweep"),
+        saved=saved, failed=failed, skipped=skipped,
+        duration_s=time.time() - started, trigger="scrape_whoscored.py",
+        note=(f"{unmatched} id(s) not in the schedule" if unmatched else ""),
+    )
 
 
 if __name__ == "__main__":

@@ -168,8 +168,10 @@ def _http_get(url: str, headers: dict | None = None, timeout: int = 25):
 
 def fotmob_fetch_wc_matches(dates: "list[str] | None" = None) -> list[dict]:
     """
-    Return WC 2026 matches from FotMob's XML feed (api.fotmob.com/matches?date=YYYYMMDD).
-    FotMob's JSON leagues endpoint is defunct; this XML feed still works.
+    Return matches for a day from FotMob's site API (www.fotmob.com/api/data/matches?date=),
+    falling back to the legacy api.fotmob.com/matches?date= XML feed if that comes back
+    empty (it turned LIVE-ONLY in 2026 — ?date is ignored, so it rarely has anything for a
+    past or future date, but is kept in case the migration reverses).
 
     ``dates`` (YYYYMMDD strings) overrides the default scan window. When omitted it
     scans yesterday + today (the live-watch use). Passing explicit dates lets the
@@ -194,9 +196,65 @@ def fotmob_fetch_wc_matches(dates: "list[str] | None" = None) -> list[dict]:
     matches: list[dict] = []
     seen_ids: set = set()
 
+    # FotMob moved the day feed to the site API under /api/data/ (Aug 2026). The old
+    # api.fotmob.com/matches?date= endpoint still answers, but it now returns ONLY matches
+    # in play and ignores ?date — useless for "what finished today". Try the new one first,
+    # keep the old as a fallback in case the migration reverses.
     for date_str in dates_to_check:
+        url = f"https://www.fotmob.com/api/data/matches?date={date_str}"
+        log.info("FotMob: fetching matches for %s …", date_str)
+        payload = None
+        try:
+            resp = scraper.get(url, timeout=20)
+            resp.raise_for_status()
+            payload = resp.json()
+        except Exception as exc:
+            log.warning("FotMob day feed failed (%s): %s", date_str, exc)
+        if isinstance(payload, dict):
+            for league in payload.get("leagues") or []:
+                lid = str(league.get("primaryId") or league.get("id") or "")
+                lname = str(league.get("name", "")).strip()
+                ccode = str(league.get("ccode") or league.get("country") or "").strip().upper()
+                # Several other countries run a division literally named "Premier League"
+                # (RUS, EGY, WAL, CAN, KAZ, UKR, BLR, AZE, …) — gate the name fallback on
+                # England so a day-sweep never silently pulls in a foreign one.
+                if lid != str(EPL_FOTMOB_ID) and (
+                        lname.lower() not in EPL_FOTMOB_NAMES or ccode not in ("", "ENG", "ENGLAND")):
+                    continue
+                for m in league.get("matches") or []:
+                    mid = str(m.get("id") or "")
+                    if not mid or mid in seen_ids:
+                        continue
+                    seen_ids.add(mid)
+                    st = m.get("status") or {}
+                    utc_time = None
+                    try:
+                        utc_time = datetime.fromisoformat(
+                            str(st.get("utcTime", "")).replace("Z", "+00:00"))
+                    except Exception:
+                        pass
+                    score = str(st.get("scoreStr") or "")
+                    h_score, _, a_score = (p.strip() for p in score.partition("-")) if "-" in score \
+                        else ("0", "", "0")
+                    is_finished = bool(st.get("finished")) or (
+                        utc_time is not None
+                        and (now_utc - utc_time).total_seconds() > 115 * 60)
+                    matches.append({
+                        "id":     int(mid),
+                        "home":   {"name": (m.get("home") or {}).get("name", ""),
+                                   "id": (m.get("home") or {}).get("id")},
+                        "away":   {"name": (m.get("away") or {}).get("name", ""),
+                                   "id": (m.get("away") or {}).get("id")},
+                        "status": {"scoreStr": f"{h_score} - {a_score}",
+                                   "finished": is_finished,
+                                   "utcTime": utc_time.isoformat() if utc_time else ""},
+                        "_league": lname,
+                    })
+
+    # Only reach for the retired endpoint if the current one gave us nothing at all.
+    for date_str in ([] if matches else dates_to_check):
         url = f"https://api.fotmob.com/matches?date={date_str}"
-        log.info("FotMob XML: fetching matches for %s …", date_str)
+        log.info("FotMob (legacy XML fallback): fetching %s …", date_str)
         try:
             resp = scraper.get(url, timeout=20)
             resp.raise_for_status()
@@ -248,7 +306,7 @@ def fotmob_fetch_wc_matches(dates: "list[str] | None" = None) -> list[dict]:
                     "_league":  league_name,
                 })
 
-    log.info("FotMob XML: found %d EPL matches across checked dates", len(matches))
+    log.info("FotMob: found %d EPL match(es) across checked dates", len(matches))
     return matches
 
 
@@ -869,6 +927,26 @@ def _parse_fotmob_venue(fm_data: dict) -> dict:
 # WHOSCORED – Selenium (full event stream)
 # ══════════════════════════════════════════════════════════════════════════
 
+# undetected-chromedriver dies on every Chrome version bump (its bundled driver only
+# matches one major). Retrying it per browser launch costs ~5s and a "patching driver"
+# dance each time — three times per match in a batch. Remember the first failure and go
+# straight to plain Selenium for the rest of the process.
+_UC_BROKEN = False
+_UNDERSTAT_EMPTY_RUNS = 0
+
+
+def _uc_is_broken() -> bool:
+    return _UC_BROKEN
+
+
+def _mark_uc_broken(exc: Exception) -> None:
+    global _UC_BROKEN
+    if not _UC_BROKEN:
+        _UC_BROKEN = True
+        log.info("undetected-chromedriver unavailable (%s); using plain selenium "
+                 "for the rest of this run", str(exc).splitlines()[0][:120])
+
+
 def whoscored_fetch_match(ws_url: str, timeout: int = 30) -> dict | None:
     """
     Open a WhoScored match URL with Selenium, extract matchCentreData JSON.
@@ -876,6 +954,8 @@ def whoscored_fetch_match(ws_url: str, timeout: int = 30) -> dict | None:
     """
     driver = None
     try:
+        if _uc_is_broken():
+            raise RuntimeError("undetected-chromedriver already known broken this run")
         import undetected_chromedriver as uc
         options = uc.ChromeOptions()
         if os.environ.get("EPL_VISIBLE") != "1":
@@ -888,7 +968,7 @@ def whoscored_fetch_match(ws_url: str, timeout: int = 30) -> dict | None:
         # undetected-chromedriver breaks on Chrome version bumps (ImportError OR
         # SessionNotCreatedException); plain Selenium + Selenium Manager is the robust
         # fallback and clears WhoScored's Cloudflare fine in practice.
-        log.info("undetected-chromedriver unavailable (%s); using plain selenium", _uc_exc)
+        _mark_uc_broken(_uc_exc)
         from selenium import webdriver
         from selenium.webdriver.chrome.options import Options
         options = Options()
@@ -1020,6 +1100,8 @@ def whoscored_search_match_id(home_name: str, away_name: str) -> int | None:
 
     driver = None
     try:
+        if _uc_is_broken():
+            raise RuntimeError("undetected-chromedriver already known broken this run")
         import undetected_chromedriver as uc
         options = uc.ChromeOptions()
         if os.environ.get("EPL_VISIBLE") != "1":
@@ -1028,7 +1110,7 @@ def whoscored_search_match_id(home_name: str, away_name: str) -> int | None:
         options.add_argument("--disable-dev-shm-usage")
         driver = uc.Chrome(options=options)
     except Exception as _uc_exc:
-        log.info("undetected-chromedriver unavailable (%s); using plain selenium", _uc_exc)
+        _mark_uc_broken(_uc_exc)
         from selenium import webdriver
         from selenium.webdriver.chrome.options import Options
         options = Options()
@@ -1400,7 +1482,8 @@ def fetch_and_save(fotmob_id: int, season: str = "2025-26", fotmob_only: bool = 
     # every match to get xG / shots / rosters; disable with UNDERSTAT_FALLBACK=0. It's a
     # Selenium fetch, so it runs inside the same run-lock the WhoScored scrape holds.
     us_data = None
-    if os.environ.get("UNDERSTAT_FALLBACK", "1") != "0":
+    global _UNDERSTAT_EMPTY_RUNS
+    if os.environ.get("UNDERSTAT_FALLBACK", "1") != "0" and _UNDERSTAT_EMPTY_RUNS < 2:
         around = ""
         if xml_match:
             around = (xml_match.get("status", {}).get("utcTime", "") or "")[:10]
@@ -1409,6 +1492,13 @@ def fetch_and_save(fotmob_id: int, season: str = "2025-26", fotmob_only: bool = 
             us_data = understat_fetch_match_details(home_name, away_name, around or None, season)
         except Exception as exc:
             log.warning("Understat fetch failed for %s vs %s: %s", home_name, away_name, exc)
+        if not us_data:
+            _UNDERSTAT_EMPTY_RUNS += 1
+            if _UNDERSTAT_EMPTY_RUNS == 2:
+                log.info("Understat returned nothing twice — skipping it for the rest of this "
+                         "run. Set UNDERSTAT_FALLBACK=1 in a fresh run to try again.")
+        else:
+            _UNDERSTAT_EMPTY_RUNS = 0
 
     ws_data = None
     if not fotmob_only:

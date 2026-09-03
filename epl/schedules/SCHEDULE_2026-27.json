@@ -3,6 +3,52 @@
   "competition": "Premier League",
   "fotmob_league_id": "47",
   "generated_utc": "",
-  "_note": "Placeholder. Fixtures not released yet. Once FotMob lists the 2026/27 Premier League schedule, run:  py epl/build_schedule.py --season 2026-27  to fill this in, then rebuild the dashboard.",
-  "matches": []
+  "_note": "3 real matchweek-1 results were added by hand (web research, no network access to FotMob from this session) as a preview — negative fotmob_id, \"_placeholder\": true. No manual cleanup needed: build_schedule.py's merge_matches/_drop_superseded_placeholders automatically drops a placeholder the moment a real (positive-id) record shows up for the same (home, away, date), so running  py epl/build_schedule.py --season 2026-27 --full  on a machine with real network access just replaces these three in place instead of double-counting them.",
+  "matches": [
+    {
+      "fotmob_id": -1,
+      "_placeholder": true,
+      "matchday": 1,
+      "date": "2026-08-21",
+      "kickoff_utc": "2026-08-21T19:00:00+00:00",
+      "home": "Arsenal",
+      "away": "Coventry City",
+      "home_id": null,
+      "away_id": null,
+      "home_score": 3,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
+    },
+    {
+      "fotmob_id": -2,
+      "_placeholder": true,
+      "matchday": 1,
+      "date": "2026-08-22",
+      "kickoff_utc": "2026-08-22T14:00:00+00:00",
+      "home": "Hull City",
+      "away": "Manchester United",
+      "home_id": null,
+      "away_id": null,
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
+    },
+    {
+      "fotmob_id": -3,
+      "_placeholder": true,
+      "matchday": 1,
+      "date": "2026-08-23",
+      "kickoff_utc": "2026-08-23T15:30:00+00:00",
+      "home": "Newcastle United",
+      "away": "Liverpool",
+      "home_id": null,
+      "away_id": null,
+      "home_score": 2,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
+    }
+  ]
 }

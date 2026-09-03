@@ -1,10 +1,16 @@
 """
 Premier League 2025/26 — primary/secondary colours for all 20 clubs, for the PNG renderer.
 Sourced from each club's official kit/crest palette. ``get_team_colors`` matches by
-exact name, then case-insensitively, then falls back to a neutral grey.
+exact name, then case-insensitively, then accent-folded, then falls back to a neutral grey.
 
 ``WC2026_TEAM_COLORS`` is kept as an alias so the ported ``renderer.py`` imports unchanged.
+
+Every club that has ever been in a scraped season stays here, even after relegation
+(Burnley/West Ham United/Wolverhampton Wanderers went down at the end of 2025/26) — the
+2022-23..2025-26 seasons' standings/PNGs still need their colours.
 """
+
+import unicodedata
 
 EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "Arsenal":                {"primary": "#EF0107", "secondary": "#FFFFFF"},
@@ -27,6 +33,10 @@ EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "Tottenham Hotspur":      {"primary": "#132257", "secondary": "#FFFFFF"},
     "West Ham United":        {"primary": "#7A263A", "secondary": "#1BB1E7"},
     "Wolverhampton Wanderers": {"primary": "#FDB913", "secondary": "#231F20"},
+    # promoted for 2026/27 (replacing Burnley, West Ham United, Wolverhampton Wanderers)
+    "Coventry City":          {"primary": "#059DD9", "secondary": "#FFFFFF"},
+    "Hull City":              {"primary": "#F18A01", "secondary": "#000000"},
+    "Ipswich Town":           {"primary": "#3A64A3", "secondary": "#FFFFFF"},
     # common alias spellings from FotMob / WhoScored / Understat
     "Bournemouth":            {"primary": "#DA291C", "secondary": "#000000"},
     "Brighton":               {"primary": "#0057B8", "secondary": "#FFCD00"},
@@ -40,10 +50,17 @@ EPL_TEAM_COLORS: dict[str, dict[str, str]] = {
     "West Ham":               {"primary": "#7A263A", "secondary": "#1BB1E7"},
     "Wolves":                 {"primary": "#FDB913", "secondary": "#231F20"},
     "Leeds":                  {"primary": "#FFCD00", "secondary": "#1D428A"},
+    "Ipswich":                {"primary": "#3A64A3", "secondary": "#FFFFFF"},
 }
 
 # Drop-in alias so the ported renderer.py (which imports WC2026_TEAM_COLORS) works unchanged.
 WC2026_TEAM_COLORS = EPL_TEAM_COLORS
+
+
+def _fold(name: str) -> str:
+    """Case- and accent-insensitive lookup key: e.g. 'Nott'm Forest' variants fold together."""
+    stripped = unicodedata.normalize("NFKD", (name or "").strip())
+    return "".join(c for c in stripped if not unicodedata.combining(c)).casefold()
 
 
 def get_team_colors(team_name: str, fallback_home: bool = True) -> dict[str, str]:
@@ -54,5 +71,11 @@ def get_team_colors(team_name: str, fallback_home: bool = True) -> dict[str, str
     lower = name_clean.lower()
     for k, v in EPL_TEAM_COLORS.items():
         if k.lower() == lower:
+            return v
+    # Accent-fold before giving up: a feed occasionally sends a diacritic variant of an
+    # otherwise-known name, and a miss here silently renders the club grey in the PNGs.
+    folded = _fold(name_clean)
+    for k, v in EPL_TEAM_COLORS.items():
+        if _fold(k) == folded:
             return v
     return {"primary": "#6b7a99" if fallback_home else "#4a5870", "secondary": "#FFFFFF"}
