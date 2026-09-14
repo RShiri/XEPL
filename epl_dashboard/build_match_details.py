@@ -109,9 +109,38 @@ def _player_rating(p):
         return None
 
 
-def _lineup(side, ex, xg_map=None, xa_map=None):
+def _norm_player(name):
+    """Loose match key for a player name across providers (accents/case/whitespace
+    differ — e.g. WhoScored's 'Kylian Mbappe' vs FotMob's 'K. Mbappe'). Keeps only the
+    last token (surname), which varies least across providers' naming conventions."""
+    a = ascii_name(name or "").lower().strip()
+    parts = [p for p in a.replace(".", " ").split() if p]
+    return parts[-1] if parts else a
+
+
+def _fotmob_photo_lookup(match_data):
+    """(side, normalized surname) -> FotMob player id, for headshot URLs
+    (images.fotmob.com/image_resources/playerimages/<id>.png).
+
+    No shared player id exists across providers, so this matches by team side +
+    surname — best-effort, not guaranteed 1:1. A surname that appears more than once
+    on the same side in this match is dropped rather than guessed at: a wrong photo is
+    worse than a missing one."""
+    counts, ids = {}, {}
+    for entry in match_data.get("_fotmob_player_ids") or []:
+        fmid = entry.get("fotmob_id")
+        if fmid is None:
+            continue
+        key = (entry.get("team"), _norm_player(entry.get("player")))
+        counts[key] = counts.get(key, 0) + 1
+        ids[key] = fmid
+    return {k: v for k, v in ids.items() if counts[k] == 1}
+
+
+def _lineup(side, ex, xg_map=None, xa_map=None, side_label=None, photo_lookup=None):
     xg_map = xg_map or {}
     xa_map = xa_map or {}
+    photo_lookup = photo_lookup or {}
     starters, subs = [], []
     for p in side.get("players", []):
         pid = p.get("playerId")
@@ -125,9 +154,12 @@ def _lineup(side, ex, xg_map=None, xa_map=None):
             mins = ex["end_min"] - on_m
         else:
             mins = 0
+        fmid = photo_lookup.get((side_label, _norm_player(p.get("name", ""))))
         entry = {
             "num": p.get("shirtNo"),
             "name": ascii_name(p.get("name", "")),
+            "photo": (f"https://images.fotmob.com/image_resources/playerimages/{fmid}.png"
+                      if fmid else None),
             "pos": p.get("position", ""),
             "motm": bool(p.get("isManOfTheMatch")),
             "rating": _player_rating(p),
@@ -404,6 +436,7 @@ def extract(match_data):
 
     meta = match_data.get("meta", {})
     mid_date = meta.get("date", "")
+    photo_lookup = _fotmob_photo_lookup(match_data)
 
     return {
         "home": {"name": norm(home.get("name", "Home")), "raw": home.get("name", ""),
@@ -422,8 +455,8 @@ def extract(match_data):
         "saves": saves,
         "goals": sorted(goals, key=lambda g: g["min"]),
         "shootout": _shootout(match_data, side_of),
-        "lineups": {"home": _lineup(home, ex, xg_map, xa_map),
-                    "away": _lineup(away, ex, xg_map, xa_map)},
+        "lineups": {"home": _lineup(home, ex, xg_map, xa_map, "home", photo_lookup),
+                    "away": _lineup(away, ex, xg_map, xa_map, "away", photo_lookup)},
     }
 
 

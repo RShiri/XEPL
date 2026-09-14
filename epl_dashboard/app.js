@@ -110,6 +110,15 @@
     return '<img class="crest ' + (cls || "") + '" src="' + esc(url) +
       '" alt="" width="22" height="22" loading="lazy" onerror="this.style.visibility=\'hidden\'" title="' + safe + '">';
   }
+  // Player headshot (FotMob, matched by team+surname at build time — see build_players.py).
+  // Not every player has one (name-matching isn't perfect); a plain placeholder dot is a
+  // less code fallback than swapping in a broken-image icon.
+  function photoImg(p, cls) {
+    var url = p && p.photo;
+    if (!url) return '<span class="ph-photo ' + (cls || "") + ' noimg" aria-hidden="true"></span>';
+    return '<img class="ph-photo ' + (cls || "") + '" src="' + esc(url) +
+      '" alt="" width="22" height="22" loading="lazy" onerror="this.style.visibility=\'hidden\'">';
+  }
   function fmtDate(d) {
     if (!d) return "";
     var dt = new Date(d + "T00:00:00");
@@ -1837,7 +1846,7 @@
     var rows = PLAYERS.slice().sort(function (a, b) { return metric(b) - metric(a); }).slice(0, 50);
     var body = rows.map(function (p, i) {
       return "<tr><td class='pos'>" + (i + 1) + "</td>" +
-        "<td class='team'><div class='team-cell'>" + logoImg(p.team) + "<span class='nm'>" + esc(p.name) + "</span></div></td>" +
+        "<td class='team'><div class='team-cell'>" + photoImg(p) + logoImg(p.team) + "<span class='nm'>" + esc(p.name) + "</span></div></td>" +
         "<td>" + esc(p.team) + "</td><td>" + (p.mp || 0) + "</td><td>" + (p.g || 0) + "</td><td>" + (p.a || 0) + "</td>" +
         "<td>" + (p.xg != null ? p.xg.toFixed(2) : "–") + "</td><td>" + (p.xa != null ? p.xa.toFixed(2) : "–") + "</td>" +
         "<td>" + (p.rating != null ? p.rating.toFixed(2) : "–") + "</td></tr>";
