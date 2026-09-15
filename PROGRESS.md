@@ -10,6 +10,7 @@ other, so when you add an entry here, consider adding it there too.
 ## Platform updates & changes
 
 <!-- progress:platform -->
+- **2026-09-15** — Shipped xT (per-90, progressive-only) and integrated xgot_core into build_match_details.py/build_players.py, mirroring XLALIGA. Verified live: Bruno Fernandes tops xT-added, Donnarumma tops goals-prevented.
 - **2026-09-15** — Mirrored XLALIGA's goalkeeper goals-prevented, progressive passes/carries, and PPDA (PLAN_new_models.md items 2-4) -- same implementation, see XLALIGA's PROGRESS.md for rationale.
 - **2026-09-15** — Added FotMob per-shot xG/xGOT capture (_fotmob_shot_xg_list) to epl/scraper.py, mirroring XLALIGA (added there 2026-09-14); backfilled across all raw matches. Feeds XG V3's new xgot_core model as a market anchor (corr 0.893 vs FotMob's own xGOT); not yet consumed by anything in epl_dashboard itself.
 - **2026-09-15** — Added player headshot photos: FotMob player id captured per lineup (_fotmob_player_ids, scraper.py), matched to WhoScored-keyed player records by team+surname in build_players.py (Players table) and build_match_details.py (Match Centre lineups); backfilled across all ~1559 already-scraped matches via a one-off HTTP re-fetch (epl/backfill_fotmob_player_ids.py). 98% of players matched a photo.
