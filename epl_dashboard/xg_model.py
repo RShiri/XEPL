@@ -24,10 +24,12 @@ import unicodedata
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from xg_core_v3.score import XGScorer   # v3: 23-feature, event-based (needs the whole match)
 from xg_core.xa_score import XAScorer   # xA unchanged (new artifact is a drop-in)
+from xgot_core.score import XGOTScorer  # placement-based xGOT (on-target shots only)
 
 _LEAGUE = "EPL"           # per-league calibration shift inside the artifacts
 _XG = XGScorer()          # loads xg_core_v3/xg_artifact.json
 _XA = XAScorer()
+_XGOT = XGOTScorer()
 
 SCALE_Y = 0.80
 SHOT_TYPES = {"MissedShots", "SavedShot", "ShotOnPost", "BlockedShot", "Goal"}
@@ -81,6 +83,27 @@ def match_xg_map(match_data):
     dict would hand colliding shots each other's xG. Every caller builds this map and
     iterates shots from the SAME match_data, so the id(ev) identities line up."""
     return _XG.match_xg_by_id(match_data, league=_LEAGUE)
+
+
+def match_xgot_by_event(match_data):
+    """id(event) -> calibrated xGOT for every on-target shot (Goal/SavedShot,
+    non-penalty) in the match. Same id(event)-not-eventId reasoning as
+    match_xg_map (eventId collides across ~15% of matches) — xgot_core needs the
+    assisting pass in hand too. Off-target shots and penalties are absent from
+    the map (xGOT isn't defined for them); look up with .get(id(ev))."""
+    evs = match_data.get("events", [])
+    byid = {e.get("eventId"): e for e in evs}
+    prev_pass = None
+    out = {}
+    for ev in evs:
+        t = ev.get("type", {})
+        dn = t.get("displayName") if isinstance(t, dict) else None
+        if dn == "Pass":
+            prev_pass = ev
+        xgot = _XGOT.xgot_from_shot_event(ev, byid, prev_pass, league=_LEAGUE)
+        if xgot is not None:
+            out[id(ev)] = xgot
+    return out
 
 
 def ascii_name(name):

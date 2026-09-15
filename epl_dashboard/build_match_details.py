@@ -23,7 +23,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 sys.path.insert(0, ROOT)
 
-from xg_model import (SHOT_TYPES, shot_xg, match_xg_map, player_full_name, ascii_name,
+from xg_model import (SHOT_TYPES, shot_xg, match_xg_map, match_xgot_by_event, player_full_name, ascii_name,
                       is_shootout, player_xa_from_events)
 
 # raw scrapes are git-ignored and absent in this clone; EPL_MATCH_DIR lets a
@@ -264,6 +264,7 @@ def extract(match_data):
     # per-player shot xG + expected assists (xA) for the line-up cards
     xa_map = player_xa_from_events(match_data)
     xg_by_event = match_xg_map(match_data)   # v3 xG once per match; look up per shot by eventId
+    xgot_by_event = match_xgot_by_event(match_data)
     xg_map = {}
     for _ev in match_data.get("events", []):
         _t = _ev.get("type", {})
@@ -353,6 +354,10 @@ def extract(match_data):
                 "sec": ev.get("second", 0),
                 "player": player_full_name(match_data, ev.get("playerId")),
                 "xg": xg,
+                # Our own placement-based xGOT model (xgot_core, trained in XG V3) --
+                # null for off-target shots/penalties/shots missing goal-mouth
+                # qualifiers (xGOT isn't defined for those).
+                "xgot_model": xgot_by_event.get(id(ev)),
                 "goal": tname == "Goal",
                 "onTarget": tname in ("Goal", "SavedShot"),
                 "blocked": tname == "BlockedShot",
