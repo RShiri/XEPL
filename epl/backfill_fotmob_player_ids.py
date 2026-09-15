@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """One-off backfill: refetch FotMob matchDetails for every already-scraped match and
-patch in ``_fotmob_player_ids`` (used for player headshots — see
-PROMPT_PLAYER_PHOTOS.md) without touching anything else in the raw JSON.
+patch in ``_fotmob_player_ids`` (player headshots — see PROMPT_PLAYER_PHOTOS.md) and
+``_fotmob_shots`` (per-shot xG/xGOT — see PLAN_new_models.md item 1) without touching
+anything else in the raw JSON.
 
-Needed because this field didn't exist when older matches were scraped: scraper.py's
-_fotmob_player_ids() only started being called on 2026-09-15. This is a plain HTTP
-fetch per match (no browser), same endpoint scraper.py already uses.
+Needed because neither field existed when older matches were scraped:
+_fotmob_shot_xg_list() and _fotmob_player_ids() were both only added to epl/scraper.py
+on 2026-09-15 (mirroring laliga/scraper.py). This is a plain HTTP fetch per match (no
+browser), same endpoint scraper.py already uses — one fetch backfills both fields,
+since they come off the same FotMob response.
 
 Usage:
     py epl/backfill_fotmob_player_ids.py                  # every season, resumable
@@ -26,7 +29,9 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
-from epl.scraper import fotmob_fetch_match_details, _fotmob_player_ids  # noqa: E402
+from epl.scraper import (  # noqa: E402
+    fotmob_fetch_match_details, _fotmob_player_ids, _fotmob_shot_xg_list,
+)
 
 MATCH_DIR = REPO_ROOT / "epl" / "matches"
 
@@ -39,13 +44,23 @@ def _target_files(season: str | None):
         yield Path(f)
 
 
+def _fotmob_team_ids(fm_data: dict) -> tuple:
+    """Same derivation as build_match_json(): header.teams[0/1].id."""
+    teams = fm_data.get("header", {}).get("teams", [{}, {}])
+    home = teams[0] if len(teams) > 0 else {}
+    away = teams[1] if len(teams) > 1 else {}
+    return home.get("id"), away.get("id")
+
+
 def _process(path: Path):
     try:
         d = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         return "read_error", path, str(exc)
 
-    if d.get("_fotmob_player_ids"):
+    needs_ids = not d.get("_fotmob_player_ids")
+    needs_shots = not d.get("_fotmob_shots")
+    if not needs_ids and not needs_shots:
         return "already_has", path, None
 
     if not path.stem.isdigit():
@@ -55,11 +70,22 @@ def _process(path: Path):
     if fm_data.get("_fotmob_unavailable"):
         return "fotmob_unavailable", path, None
 
-    ids = _fotmob_player_ids(fm_data)
-    if not ids:
-        return "no_ids_found", path, None
+    patched_any = False
+    if needs_ids:
+        ids = _fotmob_player_ids(fm_data)
+        if ids:
+            d["_fotmob_player_ids"] = ids
+            patched_any = True
+    if needs_shots:
+        home_id, away_id = _fotmob_team_ids(fm_data)
+        shots = _fotmob_shot_xg_list(fm_data, home_id, away_id)
+        if shots:
+            d["_fotmob_shots"] = shots
+            patched_any = True
 
-    d["_fotmob_player_ids"] = ids
+    if not patched_any:
+        return "no_data_found", path, None
+
     path.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return "patched", path, None
 
