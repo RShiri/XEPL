@@ -2,7 +2,7 @@
   "season": "2026-27",
   "competition": "Premier League",
   "fotmob_league_id": "47",
-  "generated_utc": "2026-09-14T15:29:52.484029+00:00",
+  "generated_utc": "2026-09-19T13:54:20.286230+00:00",
   "matches": [
     {
       "fotmob_id": 5795363,
@@ -559,10 +559,10 @@
       "away": "Newcastle United",
       "home_id": "8463",
       "away_id": "10261",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 4,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795456,
@@ -573,10 +573,10 @@
       "away": "Chelsea",
       "home_id": "9937",
       "away_id": "8455",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795464,
@@ -587,10 +587,10 @@
       "away": "Aston Villa",
       "home_id": "8586",
       "away_id": "10252",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 3,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795457,
