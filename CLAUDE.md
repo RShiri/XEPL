@@ -9,25 +9,19 @@
   `team_logos/epl/` crests, `epl_png/` published PNGs.
 
 ## CURRENT STATE
-- **Populated — four seasons complete.** `2022-23`, `2023-24`, `2024-25` and `2025-26` are fully
-  scraped (**380/380** matches each, 1,520 total): schedule spines in `epl/schedules/`, raw scrapes
-  in `epl/matches/<season>/`, and the shipped `epl_dashboard/{data.js,players.js,shots.js}` +
-  `matches_detail/*.js` carry the full rich xG/shot/player layer. The scraper pipeline
-  (`build_schedule.py`, `scraper.py`) was brought up to date for 2026/27 (ported from XLALIGA's own
-  26/27 readiness work: the FotMob endpoint migration, matchday reconstruction, incremental sweeps
-  — see the gotchas below), but every FotMob/ESPN endpoint is blocked from this sandboxed session's
-  network, so `--full` still needs to be run once on a machine with real network access to actually
-  pull the season in. **`epl/schedules/SCHEDULE_2026-27.json` currently holds 3 HAND-ADDED
-  placeholder records** (matchweek 1: Arsenal 3-0 Coventry City, Hull City 2-0 Manchester United,
-  Newcastle United 2-2 Liverpool — real results, found via web research since FotMob itself isn't
-  reachable from here) as a preview that the promoted-club pipeline works end to end. Each has a
-  negative `fotmob_id` and `"_placeholder": true`. No manual cleanup needed before the first real
-  `--full` sweep — `merge_matches`/`_drop_superseded_placeholders` auto-drop a placeholder the
-  moment a real (positive-id) record shows up for the same (home, away, date), so they can't
-  double-count a match in the standings; any placeholder for a fixture the sweep hasn't reached
-  yet is left alone. `epl/team_colors.py` already has real kit colours for the three promoted clubs
-  (Coventry City, Hull City, Ipswich Town, replacing relegated Burnley/West Ham United/Wolverhampton
-  Wanderers) so nothing needs fixing there once the real schedule lands.
+- **Populated — four seasons complete, 2026-27 live and real.** `2022-23`, `2023-24`, `2024-25` and
+  `2025-26` are fully scraped (**380/380** matches each, 1,520 total). `2026-27` is in progress with
+  **46/380 matches played (through matchday 6, as of 2026-09-20)** — all real FotMob results with
+  the full WhoScored xG/shot/player layer scraped in, no placeholders remain (the 3 hand-added
+  preview records from the promoted-club pipeline test were superseded automatically the first time
+  a real `--full` sweep ran on a machine with actual network access; this project's sandboxed dev
+  sessions are firewalled from FotMob/WhoScored, but a real machine is not — reach for one whenever
+  a season needs real data pulled in, rather than hand-verifying scores via web research). Schedule
+  spines live in `epl/schedules/`, raw scrapes in `epl/matches/<season>/`, and the shipped
+  `epl_dashboard/{data.js,players.js,shots.js}` + `matches_detail/*.js` carry the full rich layer
+  for all five seasons. `epl/team_colors.py` and `team_logos/epl/` already have real kit colours
+  and crests for the three promoted clubs (Coventry City, Hull City, Ipswich Town, replacing
+  relegated Burnley/West Ham United/Wolverhampton Wanderers).
 - **To add or refresh a season** — run on a machine with network + Chrome (the scrapers need
   FotMob/WhoScored, which are firewalled in some CI/cloud environments, this one included — see
   the FotMob endpoint gotcha below). Swap the `--season` value (e.g. `2026-27`):
@@ -145,7 +139,15 @@ re-derive the accent per fork rather than copying another sport's colour blindly
 - **`EPL_SKIP_DASHBOARD_REFRESH=1`** skips `renderer._refresh_web_dashboard_db()` entirely —
   `backfill.py` sets it for the whole batch and rebuilds once at the end instead, because the
   per-match refresh re-reads every season and rewrites every derived file (fourteen full rebuilds
-  racing a live Chrome, for a fourteen-match batch, is how you crash the machine).
+  racing a live Chrome, for a fourteen-match batch, is how you crash the machine). **`build_site.py`
+  does NOT set this env var before its own `render_missing.main()` step** — if a season has a
+  backlog of bulk-scraped matches that were never rendered (e.g. `scrape_whoscored.py` ran for
+  weeks without anyone running the renderer), plain `py epl_dashboard/build_site.py` hits the exact
+  same cascade on that whole backlog even though it's not `backfill.py`: 33 unrendered matches took
+  over 2 hours and was still going. Clear any backlog first with
+  `EPL_SKIP_DASHBOARD_REFRESH=1 py epl/render_missing.py --season <season>` (seconds per match
+  instead of minutes), *then* run `build_site.py` (or the remaining seven builders directly) — don't
+  reach for plain `build_site.py` as the first move on a season that hasn't been rendered in a while.
 - **A WhoScored failure used to be invisible and permanent** — the match still saved (FotMob shots
   only, no event stream), so a plain "already scraped" check counted it done and no later run
   would ever fill in the maps/lineups/pass network. `backfill.py` now classifies each match

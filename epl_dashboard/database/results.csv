@@ -38,3 +38,10 @@ match_id,date,stage,venue,home,away,home_score,away_score,home_xg,away_xg,xg_est
 5795453,2026-09-12,,,Sunderland,Arsenal,0,2,2.03,1.88,1
 5795448,2026-09-13,,,Coventry City,Brighton & Hove Albion,0,5,1.01,2.42,1
 5795452,2026-09-13,,,Manchester United,Manchester City,0,1,0.93,0.86,1
+5795450,2026-09-14,,,Leeds United,Newcastle United,4,1,1.85,0.77,1
+5795456,2026-09-18,,,Brentford,Chelsea,3,0,2.18,0.79,1
+5795464,2026-09-19,,,Tottenham Hotspur,Aston Villa,2,3,1.42,1.58,1
+5795457,2026-09-19,,,Brighton & Hove Albion,Arsenal,3,0,1.66,1.25,1
+5795458,2026-09-19,,,Everton,Ipswich Town,1,0,2.03,0.94,1
+5795462,2026-09-19,,,Newcastle United,Hull City,2,1,1.38,1.19,1
+5795463,2026-09-19,,,Nottingham Forest,Coventry City,0,1,1.28,0.57,1

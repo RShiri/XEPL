@@ -1085,6 +1085,39 @@ match_id,date,team,opponent,player_id,player,position,started,minutes,goals,assi
 5795449,2026-09-12,Ipswich Town,Crystal Palace,361694,Zian Flemming,Sub,0,33,1,0,0,0,7.1,0.64,0.0,3,2,4,2,0,11,0,0,3,0,1,1,1,0
 5795449,2026-09-12,Ipswich Town,Crystal Palace,369712,Florentino,Sub,0,19,0,0,0,0,6.6,0.0,0.0,0,0,19,12,2,27,1,1,0,1,0,0,1,0
 5795449,2026-09-12,Ipswich Town,Crystal Palace,411335,Jaden Philogene,Sub,0,34,0,0,0,0,6.0,0.02,0.0,1,1,11,8,0,22,0,0,0,0,0,0,2,0
+5795450,2026-09-14,Leeds United,Newcastle United,404852,James Trafford,GK,1,94,0,0,0,0,7.1,0.0,0.0,0,0,47,33,0,59,0,0,1,0,0,4,0,4
+5795450,2026-09-14,Leeds United,Newcastle United,439533,Tarik Muharemovic,DC,1,94,0,1,0,0,7.8,0.0,0.01,0,0,59,52,1,76,1,2,3,0,0,8,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,243534,Nico Elvedi,DC,1,94,0,0,0,0,6.5,0.03,0.0,1,0,61,54,0,75,1,0,0,0,0,8,1,0
+5795450,2026-09-14,Leeds United,Newcastle United,301441,James Justin,DC,1,94,0,0,0,0,7.0,0.0,0.3,0,0,47,34,2,62,3,0,3,0,0,3,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,354291,Jayden Bogle,DMR,1,82,0,0,0,0,7.2,0.12,0.03,2,2,19,15,1,39,4,0,0,0,2,1,1,0
+5795450,2026-09-14,Leeds United,Newcastle United,330549,Gabriel Gudmundsson,DML,1,72,0,0,0,0,7.2,0.0,0.11,0,0,30,24,0,53,3,1,0,1,1,0,1,0
+5795450,2026-09-14,Leeds United,Newcastle United,401073,Anton Stach,MC,1,87,0,0,0,0,7.5,0.35,0.05,1,0,32,29,3,49,3,2,0,1,2,1,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,423347,Ao Tanaka,MC,1,71,0,0,0,0,7.3,0.06,0.0,1,0,43,41,0,54,2,1,1,1,0,0,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,322418,Ethan Ampadu,MC,1,94,0,0,0,0,7.0,0.04,0.0,1,0,48,45,0,63,1,2,2,0,0,0,1,0
+5795450,2026-09-14,Leeds United,Newcastle United,376090,Noah Okafor,FW,1,71,1,0,0,0,8.3,0.06,0.09,2,1,20,17,1,39,3,0,2,0,0,1,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,141469,Dominic Calvert-Lewin,FW,1,77,2,0,1,0,8.9,1.11,0.0,4,3,14,10,0,26,0,0,4,1,1,1,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,389064,Melvin Bard,Sub,0,22,0,0,0,0,6.3,0.0,0.0,0,0,6,4,1,9,1,1,1,0,1,0,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,347340,Lukas Nmecha,Sub,0,17,0,0,0,0,5.9,0.0,0.0,0,0,3,1,0,5,0,0,0,0,0,0,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,371012,Brenden Aaronson,Sub,0,23,0,0,0,0,5.9,0.0,0.0,0,0,5,3,0,9,0,0,0,0,0,0,1,0
+5795450,2026-09-14,Leeds United,Newcastle United,342811,Sean Longstaff,Sub,0,7,0,0,0,0,5.9,0.0,0.0,0,0,1,1,0,3,0,0,0,0,0,0,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,302313,Daniel James,Sub,0,12,0,0,0,0,6.3,0.08,0.0,2,0,0,0,0,7,0,0,0,3,1,0,0,0
+5795450,2026-09-14,Leeds United,Newcastle United,333044,Harry Wilson,Sub,0,23,0,0,0,0,6.1,0.0,0.01,0,0,5,5,0,9,2,0,0,0,0,1,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,415682,Lukas Hornicek,GK,1,94,0,0,0,0,6.1,0.0,0.0,0,0,31,19,0,39,0,0,0,0,0,3,0,3
+5795450,2026-09-14,Newcastle United,Leeds United,418203,Amar Dedic,DR,1,57,0,0,0,0,6.0,0.0,0.0,0,0,28,22,0,42,3,0,1,0,0,3,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,393355,Malick Thiaw,DC,1,94,0,0,0,0,6.2,0.0,0.0,0,0,43,34,0,58,0,1,4,0,1,9,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,379732,Sven Botman,DC,1,94,0,0,0,0,6.4,0.0,0.0,0,0,52,45,0,72,3,1,3,0,1,14,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,430294,Lewis Hall,DL,1,94,0,0,0,0,6.8,0.02,0.0,1,1,50,49,0,83,5,0,1,3,0,2,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,422939,Nico Gonzalez,DMC,1,18,0,0,0,0,6.2,0.0,0.0,0,0,8,6,0,9,1,0,0,0,0,0,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,474264,Lewis Miley,DMC,1,79,0,0,0,0,5.4,0.0,0.01,0,0,60,52,0,66,2,1,1,0,0,1,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,141486,Jacob Murphy,AMR,1,56,0,0,1,0,5.8,0.0,0.11,0,0,13,8,0,28,2,0,1,1,1,0,2,0
+5795450,2026-09-14,Newcastle United,Leeds United,296240,Yoane Wissa,AMC,1,94,0,0,0,0,5.8,0.2,0.0,1,0,15,9,2,31,1,0,1,0,4,2,3,0
+5795450,2026-09-14,Newcastle United,Leeds United,331382,Harvey Barnes,AML,1,94,0,0,0,0,6.4,0.41,0.18,2,2,23,19,1,35,0,1,2,0,1,2,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,475462,Matias Fernandez-Pardo,FW,1,57,0,0,0,0,6.0,0.0,0.0,0,0,12,8,1,19,1,0,1,0,1,0,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,546589,Aladji Bamba,Sub,0,15,0,0,0,0,6.1,0.0,0.0,0,0,4,3,0,8,2,0,0,0,1,0,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,552573,Sean Steur,Sub,0,76,0,0,0,0,5.4,0.0,0.01,0,0,54,49,1,62,2,1,0,0,1,1,1,0
+5795450,2026-09-14,Newcastle United,Leeds United,342563,Joe Willock,Sub,0,37,0,0,0,0,6.7,0.06,0.07,2,1,11,11,1,24,1,0,0,0,0,1,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,415174,Tino Livramento,Sub,0,37,0,0,1,0,6.2,0.0,0.0,0,0,16,12,0,24,2,0,0,0,1,1,0,0
+5795450,2026-09-14,Newcastle United,Leeds United,551965,Bazoumana Toure,Sub,0,38,1,0,0,0,7.3,0.08,0.01,1,1,13,11,0,24,1,0,1,2,1,0,0,0
 5795451,2026-09-12,Liverpool,Fulham,114147,Alisson Becker,GK,1,94,0,0,0,0,7.0,0.0,0.0,0,0,28,22,0,40,0,0,0,0,0,0,0,3
 5795451,2026-09-12,Liverpool,Fulham,384711,Ronald Araujo,DR,1,71,0,0,0,0,6.8,0.0,0.0,0,0,32,25,0,48,1,1,3,0,0,1,1,0
 5795451,2026-09-12,Liverpool,Fulham,468827,Jeremy Jacquet,DC,1,94,0,0,0,0,7.9,0.0,0.01,0,0,87,75,0,96,1,1,5,1,1,2,0,0
@@ -1202,3 +1235,188 @@ match_id,date,team,opponent,player_id,player,position,started,minutes,goals,assi
 5795454,2026-09-12,Everton,Tottenham Hotspur,424495,Jake O'Brien,Sub,0,19,0,0,0,0,6.1,0.0,0.0,0,0,2,1,0,3,0,0,0,0,0,1,0,0
 5795454,2026-09-12,Everton,Tottenham Hotspur,388651,Hayden Hackney,Sub,0,19,0,0,0,0,6.2,0.0,0.02,0,0,3,3,1,7,0,0,0,0,1,1,0,0
 5795454,2026-09-12,Everton,Tottenham Hotspur,113069,Jack Grealish,Sub,0,29,0,0,0,0,6.2,0.0,0.0,0,0,10,8,0,17,2,0,0,0,1,2,1,0
+5795456,2026-09-18,Brentford,Chelsea,322176,Caoimhin Kelleher,GK,1,96,0,0,0,0,7.3,0.0,0.0,0,0,34,27,0,43,0,0,1,0,0,2,0,2
+5795456,2026-09-18,Brentford,Chelsea,470031,Michael Kayode,DR,1,68,0,0,0,0,6.5,0.0,0.14,0,0,19,12,0,32,1,1,1,0,0,0,0,0
+5795456,2026-09-18,Brentford,Chelsea,533784,Jannik Schuster,DC,1,96,0,1,0,0,8.3,0.0,0.6,0,0,31,25,1,49,1,0,3,0,1,12,0,0
+5795456,2026-09-18,Brentford,Chelsea,321085,Kristoffer Ajer,DC,1,96,0,0,0,0,7.3,0.0,0.05,0,0,46,43,1,62,1,3,0,0,0,6,2,0
+5795456,2026-09-18,Brentford,Chelsea,368512,Keane Lewis-Potter,DL,1,80,0,0,0,0,7.2,0.08,0.01,2,1,29,17,1,52,1,2,1,1,1,2,2,0
+5795456,2026-09-18,Brentford,Chelsea,298689,Vitaly Janelt,DMC,1,96,0,0,0,0,7.0,0.02,0.01,1,0,44,39,0,56,5,0,0,0,0,1,0,0
+5795456,2026-09-18,Brentford,Chelsea,444304,Yehor Yarmoliuk,DMC,1,68,0,0,0,0,7.0,0.04,0.07,1,1,36,30,1,49,4,0,0,0,0,2,2,0
+5795456,2026-09-18,Brentford,Chelsea,400610,Jaidon Anthony,AMR,1,80,1,0,0,0,7.2,0.86,0.02,1,1,12,9,1,25,0,0,2,0,0,1,0,0
+5795456,2026-09-18,Brentford,Chelsea,401168,Mikkel Damsgaard,AMC,1,86,0,0,0,0,7.3,0.03,0.27,1,0,48,35,1,68,7,1,2,1,1,1,2,0
+5795456,2026-09-18,Brentford,Chelsea,407260,Kevin Schade,AML,1,96,0,0,0,0,6.8,0.46,0.03,3,1,18,13,0,41,1,0,2,1,1,2,2,0
+5795456,2026-09-18,Brentford,Chelsea,443784,Igor Thiago,FW,1,96,1,0,1,0,7.3,0.48,0.02,3,1,22,19,1,39,1,0,1,0,4,0,1,0
+5795456,2026-09-18,Brentford,Chelsea,422183,Dango Ouattara,Sub,0,16,0,0,0,0,6.3,0.0,0.0,0,0,1,1,0,2,0,0,0,0,1,0,0,0
+5795456,2026-09-18,Brentford,Chelsea,442971,Mamadou Sangare,Sub,0,28,0,0,1,0,6.4,0.0,0.0,0,0,1,1,0,5,1,0,1,0,1,1,0,0
+5795456,2026-09-18,Brentford,Chelsea,401385,Fabio Carvalho,Sub,0,10,1,0,0,0,6.9,0.2,0.0,1,1,2,2,0,5,0,0,0,0,0,0,0,0
+5795456,2026-09-18,Brentford,Chelsea,402367,Aaron Hickey,Sub,0,28,0,0,0,0,6.7,0.0,0.0,0,0,2,1,0,7,0,0,1,1,0,3,0,0
+5795456,2026-09-18,Brentford,Chelsea,479288,El Hadji Malick Diouf,Sub,0,16,0,0,0,0,6.3,0.0,0.0,0,0,4,2,0,7,0,0,0,0,0,1,0,0
+5795456,2026-09-18,Chelsea,Brentford,102248,Emiliano Martinez,GK,1,96,0,0,0,0,6.3,0.0,0.0,0,0,32,22,1,41,0,0,0,0,0,0,0,3
+5795456,2026-09-18,Chelsea,Brentford,401130,Maxence Lacroix,DC,1,96,0,0,0,0,6.4,0.2,0.01,1,0,63,56,0,79,1,1,4,0,0,8,0,0
+5795456,2026-09-18,Chelsea,Brentford,373946,Wesley Fofana,DC,1,70,0,0,0,0,7.1,0.0,0.0,0,0,21,19,0,45,2,6,2,0,0,7,0,0
+5795456,2026-09-18,Chelsea,Brentford,421351,Levi Colwill,DC,1,96,0,0,0,0,6.0,0.0,0.0,0,0,70,61,0,82,0,2,2,0,0,5,0,0
+5795456,2026-09-18,Chelsea,Brentford,337916,Pedro Neto,DMR,1,86,0,0,0,0,6.3,0.14,0.02,2,1,19,16,0,41,3,0,0,1,2,0,1,0
+5795456,2026-09-18,Chelsea,Brentford,448468,Pep Chavarria,DML,1,96,0,0,0,0,6.6,0.03,0.03,1,0,59,52,2,91,3,2,1,0,2,4,0,0
+5795456,2026-09-18,Chelsea,Brentford,419341,Valentin Barco,MC,1,86,0,0,0,0,6.5,0.04,0.0,1,0,52,48,0,65,3,2,1,0,0,0,1,0
+5795456,2026-09-18,Chelsea,Brentford,68659,Jordan Henderson,MC,1,96,0,0,0,0,6.2,0.0,0.05,0,0,76,68,0,92,1,0,0,1,0,1,0,0
+5795456,2026-09-18,Chelsea,Brentford,362824,Morgan Rogers,AMC,1,96,0,0,0,0,6.6,0.19,0.06,4,1,42,35,1,67,1,0,4,3,0,2,1,0
+5795456,2026-09-18,Chelsea,Brentford,395692,Cole Palmer,AMC,1,96,0,0,0,0,6.6,0.14,0.1,2,0,30,25,2,55,5,0,0,3,1,0,3,0
+5795456,2026-09-18,Chelsea,Brentford,39308,Danny Welbeck,FW,1,70,0,0,0,0,6.3,0.0,0.1,0,0,14,12,2,17,2,0,1,0,1,1,0,0
+5795456,2026-09-18,Chelsea,Brentford,509068,Geovany Quenda,Sub,0,26,0,0,0,0,5.8,0.05,0.0,1,0,11,10,0,14,0,0,0,0,0,0,0,0
+5795456,2026-09-18,Chelsea,Brentford,518604,Josh Acheampong,Sub,0,26,0,0,0,0,5.9,0.0,0.0,0,0,12,11,0,16,1,0,0,0,1,0,0,0
+5795456,2026-09-18,Chelsea,Brentford,510728,Estevao,Sub,0,10,0,0,0,0,5.9,0.0,0.0,0,0,4,3,0,5,0,0,0,0,0,0,0,0
+5795456,2026-09-18,Chelsea,Brentford,640690,Mahdi Nicoll-Jazuli,Sub,0,10,0,0,0,0,6.3,0.0,0.0,0,0,9,8,0,11,2,0,2,0,0,0,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,400138,Bart Verbruggen,GK,1,96,0,0,0,0,6.8,0.0,0.0,0,0,40,22,0,43,0,0,0,0,0,0,0,2
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,321958,Ferdi Kadioglu,DR,1,75,0,0,1,0,6.8,0.04,0.0,1,0,23,21,1,38,0,0,0,1,0,2,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,533010,Luka Vuskovic,DC,1,96,0,0,0,0,7.5,0.0,0.0,0,0,35,28,0,53,2,1,2,0,4,8,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,355609,Pascal Struijk,DC,1,85,0,0,1,0,7.2,0.06,0.0,1,0,50,44,0,59,2,0,3,0,0,2,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,260809,Olivier Boscagli,DL,1,96,0,0,0,0,7.4,0.01,0.01,1,0,25,17,0,47,4,3,2,0,1,2,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,71824,Pascal Gro,DMC,1,96,1,1,0,0,8.6,0.1,0.25,2,1,32,25,2,45,3,2,0,0,1,1,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,539663,Chema Andres,DMC,1,84,1,0,0,0,8.0,0.43,0.07,2,1,34,27,0,43,0,2,5,0,2,0,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,446133,Diego Gomez,AMR,1,85,0,0,0,0,7.6,0.0,0.02,0,0,31,21,2,47,6,1,4,0,2,0,1,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,470690,Yasin Ayari,AMC,1,96,0,0,0,0,6.9,0.11,0.07,2,0,21,19,1,32,1,2,1,0,0,0,1,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,392647,Maxim De Cuyper,AML,1,96,0,0,1,0,7.7,0.02,0.24,1,0,24,16,2,44,4,0,0,1,1,3,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,533923,Charalampos Kostoulas,FW,1,75,1,0,1,0,7.8,0.16,0.0,4,2,18,13,1,38,2,0,0,0,1,0,1,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,423518,Michael Svoboda,Sub,0,11,0,0,0,0,6.1,0.0,0.0,0,0,2,2,0,4,1,0,0,0,0,0,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,342889,Matt O'Riley,Sub,0,11,0,0,0,0,6.1,0.42,0.0,1,1,1,1,0,5,0,0,0,0,0,2,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,362433,Georginio Rutter,Sub,0,21,0,0,0,0,6.2,0.27,0.0,1,0,4,2,0,13,1,0,1,2,0,0,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,395954,Costinha,Sub,0,21,0,0,0,0,6.2,0.0,0.09,0,0,2,1,0,3,1,0,1,0,1,1,0,0
+5795457,2026-09-19,Brighton & Hove Albion,Arsenal,533015,Malick Yalcouye,Sub,0,12,0,0,0,0,6.7,0.03,0.19,1,0,1,1,1,4,1,0,0,0,0,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,276366,David Raya,GK,1,96,0,0,0,0,5.8,0.0,0.0,0,0,46,31,0,59,1,0,0,0,0,0,0,2
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,388650,Jurrien Timber,DR,1,59,0,0,0,0,5.7,0.0,0.0,0,0,25,22,0,46,2,0,0,0,1,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,334087,Gabriel Magalhaes,DC,1,96,0,0,0,0,6.5,0.0,0.06,0,0,64,57,1,80,3,0,1,0,1,5,3,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,301440,Ezri Konsa,DC,1,96,0,0,0,0,5.7,0.08,0.0,1,0,67,66,1,77,0,1,1,0,1,3,1,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,386519,Riccardo Calafiori,DL,1,96,0,0,0,0,6.0,0.05,0.02,2,0,42,33,2,67,3,0,5,0,0,2,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,338780,Bruno Guimaraes,DMC,1,59,0,0,0,0,5.7,0.0,0.0,0,0,39,33,0,50,0,1,0,1,0,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,332325,Declan Rice,DMC,1,96,0,0,1,0,6.5,0.02,0.02,1,0,60,53,1,75,2,2,0,2,1,0,1,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,367185,Bukayo Saka,AMR,1,80,0,0,0,0,6.8,0.46,0.53,2,1,21,16,3,39,2,0,0,3,0,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,247454,Martin degaard,AMC,1,72,0,0,0,0,5.7,0.06,0.0,1,0,44,40,0,51,0,0,0,0,2,1,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,399296,Christos Tzolis,AML,1,72,0,0,0,0,5.9,0.0,0.05,0,0,22,19,0,34,2,0,2,0,0,1,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,326413,Kai Havertz,FW,1,96,0,0,0,0,6.2,0.5,0.0,2,1,27,23,0,42,0,1,2,1,1,1,1,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,238916,Mikel Merino,Sub,0,37,0,0,0,0,6.1,0.0,0.05,0,0,22,17,0,28,1,0,1,1,1,1,1,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,372424,Martin Zubimendi,Sub,0,37,0,0,0,0,6.3,0.07,0.0,2,0,15,9,0,33,1,1,3,0,0,0,2,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,362815,Viktor Gyokeres,Sub,0,24,0,0,0,0,6.2,0.0,0.17,0,0,5,4,1,8,0,0,0,0,3,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,332403,Eberechi Eze,Sub,0,24,0,0,0,0,6.3,0.0,0.01,0,0,9,7,0,12,0,0,1,1,0,0,0,0
+5795457,2026-09-19,Arsenal,Brighton & Hove Albion,571994,Max Dowman,Sub,0,16,0,0,0,0,6.1,0.0,0.05,0,0,3,3,1,5,0,0,0,0,0,0,1,0
+5795458,2026-09-19,Everton,Ipswich Town,110189,Jordan Pickford,GK,1,98,0,0,0,0,7.7,0.0,0.0,0,0,50,35,0,61,0,0,0,0,0,1,0,4
+5795458,2026-09-19,Everton,Ipswich Town,255169,Ainsley Maitland-Niles,DR,1,90,0,0,0,0,7.8,0.0,0.07,0,0,34,30,2,56,3,0,1,2,0,4,1,0
+5795458,2026-09-19,Everton,Ipswich Town,131464,James Tarkowski,DC,1,98,0,0,0,0,8.3,0.01,0.0,1,0,49,43,1,67,1,4,5,0,0,7,0,0
+5795458,2026-09-19,Everton,Ipswich Town,381045,Jarrad Branthwaite,DC,1,98,0,0,0,0,7.4,0.0,0.0,0,0,65,53,0,85,0,2,3,0,1,10,1,0
+5795458,2026-09-19,Everton,Ipswich Town,345516,Vitalii Mykolenko,DL,1,98,0,0,1,0,7.1,0.04,0.01,1,0,67,57,0,87,4,1,2,0,1,1,0,0
+5795458,2026-09-19,Everton,Ipswich Town,367781,James Garner,DMC,1,98,0,0,0,0,6.3,0.12,0.04,2,0,61,55,1,73,1,1,0,0,0,3,0,0
+5795458,2026-09-19,Everton,Ipswich Town,535879,Harrison Armstrong,DMC,1,98,0,0,1,0,7.0,0.11,0.26,2,0,45,38,2,55,2,1,0,1,2,0,1,0
+5795458,2026-09-19,Everton,Ipswich Town,379688,Brennan Johnson,AMR,1,65,0,0,0,0,6.4,0.51,0.0,2,0,15,7,0,26,3,0,1,1,1,1,0,0
+5795458,2026-09-19,Everton,Ipswich Town,391256,Kiernan Dewsbury-Hall,AMC,1,90,0,0,0,0,6.2,0.38,0.28,6,0,44,40,2,65,3,0,1,0,0,0,1,0
+5795458,2026-09-19,Everton,Ipswich Town,113069,Jack Grealish,AML,1,78,0,0,0,0,6.8,0.0,0.18,0,0,55,47,5,61,1,0,0,0,0,0,0,0
+5795458,2026-09-19,Everton,Ipswich Town,537713,Thierno Barry,FW,1,98,1,0,0,0,7.2,0.67,0.01,3,1,13,11,1,27,1,1,4,0,1,1,1,0
+5795458,2026-09-19,Everton,Ipswich Town,424495,Jake O'Brien,Sub,0,8,0,0,0,0,6.1,0.0,0.0,0,0,1,1,0,3,0,0,0,0,0,1,0,0
+5795458,2026-09-19,Everton,Ipswich Town,438067,Tyler Dibling,Sub,0,33,0,0,0,0,6.5,0.15,0.13,3,1,3,3,2,9,1,0,0,0,0,0,0,0
+5795458,2026-09-19,Everton,Ipswich Town,523597,Tyrique George,Sub,0,20,0,0,0,0,6.0,0.04,0.01,1,0,8,7,0,11,0,0,0,0,0,0,0,0
+5795458,2026-09-19,Everton,Ipswich Town,388651,Hayden Hackney,Sub,0,8,0,0,0,0,5.9,0.0,0.0,0,0,3,3,0,4,2,0,0,0,0,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,140906,Christian Walton,GK,1,98,0,0,0,0,6.3,0.0,0.0,0,0,54,27,0,63,0,0,1,0,0,2,0,1
+5795458,2026-09-19,Ipswich Town,Everton,433937,Abdoul Ouattara,DR,1,98,0,0,0,0,6.9,0.02,0.0,1,1,56,48,1,71,3,3,0,0,0,2,0,0
+5795458,2026-09-19,Ipswich Town,Everton,300359,Issa Diop,DC,1,98,0,0,0,0,7.0,0.06,0.01,1,0,73,68,1,85,0,2,3,0,1,5,0,0
+5795458,2026-09-19,Ipswich Town,Everton,362826,Dara O'Shea,DC,1,98,0,0,0,0,7.1,0.0,0.0,0,0,53,44,1,66,1,2,6,1,0,5,0,0
+5795458,2026-09-19,Ipswich Town,Everton,366211,Leif Davis,DL,1,98,0,0,0,0,6.0,0.37,0.0,1,0,30,22,0,59,0,1,1,0,1,3,1,0
+5795458,2026-09-19,Ipswich Town,Everton,299684,Exequiel Palacios,DMC,1,80,0,0,0,0,6.2,0.0,0.0,0,0,56,52,0,69,1,1,0,0,1,0,1,0
+5795458,2026-09-19,Ipswich Town,Everton,297395,Sasa Lukic,DMC,1,72,0,0,0,0,6.6,0.0,0.24,0,0,54,49,1,63,1,1,1,1,3,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,430985,Abdul Fatawu,AMR,1,98,0,0,2,1,5.4,0.02,0.18,2,1,14,11,1,31,0,2,0,2,2,0,1,0
+5795458,2026-09-19,Ipswich Town,Everton,417747,Julio Enciso,AMC,1,73,0,0,0,0,6.2,0.21,0.04,3,1,18,13,1,28,0,0,0,1,0,0,1,0
+5795458,2026-09-19,Ipswich Town,Everton,363516,Jack Clarke,AML,1,65,0,0,0,0,6.5,0.0,0.2,0,0,24,22,2,34,1,1,1,1,0,1,2,0
+5795458,2026-09-19,Ipswich Town,Everton,429556,Emersonn,FW,1,80,0,0,0,0,6.2,0.07,0.01,2,1,9,4,0,20,2,0,3,0,0,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,377287,Daizen Maeda,Sub,0,25,0,0,0,0,6.2,0.0,0.01,0,0,4,4,0,6,1,0,1,0,0,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,361694,Zian Flemming,Sub,0,18,0,0,1,0,6.0,0.06,0.0,1,0,5,3,1,9,1,0,0,0,2,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,369712,Florentino,Sub,0,26,0,0,0,0,5.6,0.0,0.0,0,0,9,8,0,9,0,0,0,0,1,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,411335,Jaden Philogene,Sub,0,33,0,0,0,0,6.3,0.04,0.0,1,0,8,7,0,16,1,0,0,2,1,0,0,0
+5795458,2026-09-19,Ipswich Town,Everton,122294,Chuba Akpom,Sub,0,18,0,0,0,0,6.1,0.08,0.0,1,0,5,4,0,10,0,0,2,0,0,0,0,0
+5795462,2026-09-19,Newcastle United,Hull City,415682,Lukas Hornicek,GK,1,96,0,0,0,0,6.6,0.0,0.0,0,0,25,15,0,44,0,0,0,0,0,3,0,3
+5795462,2026-09-19,Newcastle United,Hull City,474264,Lewis Miley,DR,1,96,0,0,0,0,6.3,0.0,0.02,0,0,69,66,1,95,4,2,1,0,0,4,2,0
+5795462,2026-09-19,Newcastle United,Hull City,393355,Malick Thiaw,DC,1,96,0,0,0,0,7.0,0.0,0.0,0,0,84,76,0,99,0,1,3,0,0,11,0,0
+5795462,2026-09-19,Newcastle United,Hull City,379732,Sven Botman,DC,1,96,0,0,0,0,7.4,0.2,0.0,1,1,74,66,0,99,1,3,4,0,1,14,0,0
+5795462,2026-09-19,Newcastle United,Hull City,430294,Lewis Hall,DL,1,96,1,0,0,0,7.6,0.09,0.05,2,1,68,63,2,114,2,0,0,1,1,6,4,0
+5795462,2026-09-19,Newcastle United,Hull City,552573,Sean Steur,DMC,1,65,0,0,0,0,7.2,0.0,0.01,0,0,57,51,2,64,3,0,0,1,0,2,0,0
+5795462,2026-09-19,Newcastle United,Hull City,342563,Joe Willock,DMC,1,86,1,0,0,0,7.6,0.11,0.04,2,1,51,47,0,70,3,1,0,2,0,0,1,0
+5795462,2026-09-19,Newcastle United,Hull City,141486,Jacob Murphy,AMR,1,96,0,0,1,0,7.1,0.04,0.03,2,0,17,14,1,41,2,0,0,1,0,3,0,0
+5795462,2026-09-19,Newcastle United,Hull City,296240,Yoane Wissa,AMC,1,96,0,0,0,0,6.2,0.84,0.0,2,1,23,16,0,32,1,0,3,1,1,1,0,0
+5795462,2026-09-19,Newcastle United,Hull City,331382,Harvey Barnes,AML,1,96,0,2,0,0,8.1,0.06,0.08,2,1,29,25,3,51,2,0,2,2,0,4,0,0
+5795462,2026-09-19,Newcastle United,Hull City,475462,Matias Fernandez-Pardo,FW,1,73,0,0,0,0,6.3,0.04,0.0,1,0,11,8,0,16,3,0,0,0,0,0,0,0
+5795462,2026-09-19,Newcastle United,Hull City,546589,Aladji Bamba,Sub,0,10,0,0,0,0,6.3,0.0,0.0,0,0,2,2,0,6,1,0,1,0,0,2,0,0
+5795462,2026-09-19,Newcastle United,Hull City,82726,Fabian Schar,Sub,0,31,0,0,0,0,6.4,0.0,0.0,0,0,12,11,1,20,0,0,0,0,1,3,0,0
+5795462,2026-09-19,Newcastle United,Hull City,551965,Bazoumana Toure,Sub,0,23,0,0,0,0,5.9,0.0,0.0,0,0,1,0,0,10,1,0,1,0,0,1,2,0
+5795462,2026-09-19,Hull City,Newcastle United,397331,Konstantinos Tzolakis,GK,1,96,0,0,1,0,7.3,0.0,0.0,0,0,29,17,0,46,1,0,1,0,0,0,0,3
+5795462,2026-09-19,Hull City,Newcastle United,301415,Lewie Coyle,DR,1,96,0,0,0,0,5.9,0.0,0.02,0,0,43,31,0,63,1,1,0,0,0,0,1,0
+5795462,2026-09-19,Hull City,Newcastle United,108632,John Egan,DC,1,77,0,0,0,0,6.2,0.0,0.0,1,1,21,19,0,27,2,0,0,0,0,1,0,0
+5795462,2026-09-19,Hull City,Newcastle United,247815,Semi Ajayi,DC,1,96,0,0,0,0,6.3,0.02,0.0,1,0,44,36,0,54,3,1,2,1,0,1,1,0
+5795462,2026-09-19,Hull City,Newcastle United,606532,Lucas Herrington,DC,1,96,0,0,0,0,6.7,0.02,0.02,1,0,51,47,2,63,2,1,2,0,0,5,0,0
+5795462,2026-09-19,Hull City,Newcastle United,362831,Ryan Giles,DL,1,96,0,0,1,0,6.6,0.0,0.05,0,0,24,19,2,50,1,1,1,0,1,3,0,0
+5795462,2026-09-19,Hull City,Newcastle United,457802,Mohamed Belloumi,MR,1,82,0,1,1,0,7.6,0.38,0.21,5,2,30,23,2,65,7,0,1,3,3,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,105742,Matt Crooks,MC,1,45,0,0,1,0,6.0,0.0,0.28,0,0,14,13,1,20,3,0,0,0,0,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,349981,Regan Slater,MC,1,77,0,0,0,0,6.0,0.08,0.04,1,0,29,25,2,38,1,1,1,1,0,0,1,0
+5795462,2026-09-19,Hull City,Newcastle United,366114,Sorba Thomas,ML,1,62,0,0,0,0,5.3,0.12,0.05,2,0,19,15,1,33,1,0,0,0,1,0,3,0
+5795462,2026-09-19,Hull City,Newcastle United,138695,Oliver McBurnie,FW,1,96,0,0,0,0,6.8,0.23,0.01,4,0,22,15,1,39,2,1,5,0,2,2,1,0
+5795462,2026-09-19,Hull City,Newcastle United,393137,Lucas Gourna-Douath,Sub,0,19,0,0,0,0,6.1,0.03,0.01,1,0,11,9,1,17,2,0,0,0,1,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,399014,Mohamed-Ali Cho,Sub,0,34,1,0,0,0,7.5,0.08,0.15,1,1,7,5,2,12,0,0,1,1,1,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,362192,Joe Gelhardt,Sub,0,14,0,0,0,0,6.5,0.11,0.0,3,0,9,6,0,19,0,0,0,3,0,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,416208,Tim Iroegbunam,Sub,0,51,0,0,0,0,6.7,0.12,0.0,2,0,21,16,1,29,2,0,2,1,1,0,0,0
+5795462,2026-09-19,Hull City,Newcastle United,511691,Robinio Vaz,Sub,0,19,0,0,0,0,6.0,0.0,0.0,0,0,8,6,1,13,0,0,0,0,0,0,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,78386,Matz Sels,GK,1,96,0,0,0,0,6.2,0.0,0.0,0,0,21,12,0,31,0,0,0,0,0,0,0,2
+5795463,2026-09-19,Nottingham Forest,Coventry City,445424,Murillo,DC,1,96,0,0,0,0,7.4,0.05,0.05,2,0,69,64,2,92,2,3,4,1,0,7,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,443545,Jair Cunha,DC,1,96,0,0,1,0,6.4,0.03,0.0,1,0,53,43,1,70,4,0,4,0,3,6,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,443663,Ousmane Diomande,DC,1,72,0,0,0,0,6.3,0.04,0.0,1,0,42,34,0,50,0,0,3,0,3,4,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,400496,Daniel Munoz,DMR,1,82,0,0,0,0,6.2,0.07,0.0,2,0,38,32,0,51,3,0,3,0,1,2,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,386969,Neco Williams,DML,1,96,0,0,0,0,7.1,0.09,0.17,3,1,55,46,4,86,1,0,2,0,1,1,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,262856,Xaver Schlager,MC,1,96,0,0,0,0,6.7,0.08,0.07,2,0,55,47,0,70,2,0,2,2,1,2,2,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,425576,James McAtee,MC,1,82,0,0,0,0,6.5,0.21,0.01,4,1,49,43,1,68,2,0,0,0,0,1,1,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,398414,Dan Ndoye,AMC,1,58,0,0,0,0,5.9,0.22,0.06,3,0,9,7,2,23,1,0,0,0,0,1,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,332867,Morgan Gibbs-White,AMC,1,96,0,0,0,0,7.1,0.0,0.27,0,0,56,49,6,72,0,0,1,1,0,0,1,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,401254,Liam Delap,FW,1,96,0,0,1,0,6.7,0.18,0.2,4,0,19,14,2,44,1,0,1,4,2,2,3,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,397497,Igor Jesus,Sub,0,38,0,0,0,0,6.2,0.31,0.0,2,1,18,16,0,26,1,0,1,1,1,0,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,394888,Luca Netz,Sub,0,14,0,0,0,0,6.1,0.0,0.01,0,0,8,8,1,12,0,0,0,0,0,0,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,73380,Chris Wood,Sub,0,24,0,0,0,0,6.2,0.0,0.0,0,0,6,3,0,7,0,0,1,1,0,0,0,0
+5795463,2026-09-19,Nottingham Forest,Coventry City,328075,Ibrahim Sangare,Sub,0,14,0,0,0,0,6.0,0.0,0.0,0,0,10,9,0,14,0,0,1,0,0,0,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,421944,Carl Rushworth,GK,1,96,0,0,0,0,6.7,0.0,0.0,0,0,48,24,1,55,0,0,0,0,0,0,0,2
+5795463,2026-09-19,Coventry City,Nottingham Forest,342499,Ethan Pinnock,DC,1,96,0,0,0,0,8.0,0.0,0.01,0,0,21,17,0,46,1,2,6,0,0,12,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,395615,Bobby Thomas,DC,1,96,0,0,0,0,7.9,0.04,0.05,1,0,30,29,0,47,3,2,1,0,1,8,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,534073,Stephen Mfuni,DC,1,96,0,0,0,0,7.3,0.0,0.0,0,0,32,26,0,45,2,1,4,1,1,5,1,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,561984,Caleb Yirenkyi,DMR,1,90,0,0,0,0,6.7,0.0,0.0,0,0,34,31,1,48,2,0,1,1,5,2,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,318767,Jay Dasilva,DML,1,96,1,0,0,0,8.0,0.25,0.03,2,1,24,18,1,41,0,2,0,3,1,1,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,404109,Frank Onyeka,MC,1,96,0,0,0,0,6.7,0.0,0.0,0,0,29,22,0,42,3,2,0,0,1,2,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,138584,Matt Grimes,MC,1,96,0,0,0,0,7.1,0.03,0.04,1,0,32,26,1,46,5,1,2,0,1,3,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,381107,Jack Rudoni,AMC,1,73,0,0,0,0,7.2,0.06,0.12,1,0,28,23,1,50,1,1,1,1,0,2,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,342899,Ephron Mason-Clark,AMC,1,45,0,0,0,0,6.3,0.03,0.07,1,0,11,8,3,19,0,0,1,0,0,0,1,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,331235,Brandon Thomas-Asante,FW,1,96,0,0,0,0,7.5,0.11,0.0,3,1,11,5,0,46,4,4,4,2,0,2,1,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,425118,Loum Tchaouna,Sub,0,51,0,0,0,0,6.3,0.06,0.0,1,1,6,4,0,11,1,0,0,0,0,0,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,383605,Joel Latibeaudiere,Sub,0,6,0,0,0,0,6.2,0.0,0.0,0,0,0,0,0,2,0,0,0,0,0,1,0,0
+5795463,2026-09-19,Coventry City,Nottingham Forest,396483,Ellis Simms,Sub,0,23,0,0,0,0,6.2,0.0,0.0,0,0,5,3,0,5,0,0,2,0,0,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,457006,Antonin Kinsky,GK,1,98,0,0,0,0,5.9,0.0,0.0,0,0,21,16,0,28,0,0,0,0,0,0,0,3
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,362352,Pedro Porro,DR,1,18,0,0,0,0,6.2,0.02,0.0,1,0,12,7,0,19,1,0,0,0,0,0,1,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,365402,Jan Paul van Hecke,DC,1,98,1,0,1,0,7.6,0.2,0.27,1,1,68,59,2,83,6,2,0,0,1,3,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,425229,Micky van de Ven,DC,1,98,0,0,0,0,6.4,0.03,0.0,1,0,80,74,0,93,2,1,2,0,0,2,1,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,115726,Andy Robertson,DL,1,98,0,1,0,0,6.2,0.0,0.14,0,0,65,54,4,84,2,0,0,0,1,1,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,343501,Sandro Tonali,DMC,1,83,0,0,0,0,6.7,0.09,0.26,3,0,65,59,1,81,7,1,0,0,0,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,303657,Rodrigo Bentancur,DMC,1,83,0,0,0,0,6.5,0.0,0.01,0,0,67,59,0,84,8,2,1,0,1,1,2,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,397821,Savio,AMR,1,98,0,0,0,0,7.8,0.24,0.13,3,3,41,34,4,81,0,2,0,4,2,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,447231,Mateus Fernandes,AMC,1,45,0,0,0,0,5.8,0.09,0.0,2,0,26,23,0,38,1,2,0,0,1,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,394749,Omar Marmoush,AML,1,98,0,0,0,0,6.2,0.05,0.0,1,0,23,21,0,40,3,0,0,3,1,0,4,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,136459,Dominic Solanke,FW,1,65,0,0,0,0,6.5,0.06,0.0,2,0,15,14,1,26,2,0,1,0,0,1,2,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,400166,Mohammed Kudus,Sub,0,53,0,1,0,0,7.6,0.06,0.13,2,0,24,19,1,41,4,0,0,5,0,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,505295,Lucas Bergvall,Sub,0,15,0,0,0,0,6.2,0.0,0.0,0,0,11,9,0,13,2,0,0,0,0,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,429922,Archie Gray,Sub,0,80,0,0,0,0,6.3,0.2,0.0,1,1,30,28,0,45,4,0,0,1,1,1,1,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,375621,Conor Gallagher,Sub,0,15,1,0,0,0,7.3,0.3,0.0,1,1,11,9,0,15,3,0,0,0,1,0,0,0
+5795464,2026-09-19,Tottenham Hotspur,Aston Villa,137015,James Maddison,Sub,0,33,0,0,0,0,6.7,0.07,0.01,2,1,22,19,0,34,4,0,1,0,0,0,1,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,447570,Zion Suzuki,GK,1,98,0,0,0,0,7.4,0.0,0.0,0,0,38,21,0,55,0,0,0,0,0,3,0,5
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,331924,Aaron Wan-Bissaka,DR,1,45,0,0,0,0,6.6,0.0,0.0,0,0,17,16,0,33,3,2,0,1,0,1,1,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,100008,Victor Lindelof,DC,1,98,0,0,0,0,6.3,0.0,0.0,0,0,28,26,1,37,0,1,0,0,0,4,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,123167,Tyrone Mings,DC,1,98,0,0,0,0,7.0,0.0,0.0,0,0,45,41,0,58,1,1,1,0,1,11,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,402046,Matteo Ruggeri,DL,1,98,0,0,0,0,7.1,0.03,0.0,1,0,35,31,1,68,1,5,1,1,0,8,2,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,403693,Joao Gomes,DMC,1,98,0,0,0,0,7.4,0.0,0.01,0,0,26,24,1,48,6,3,0,2,3,1,2,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,331790,Boubacar Kamara,DMC,1,83,0,0,0,0,7.3,0.06,0.0,1,0,43,36,1,50,4,0,1,1,2,1,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,318449,John McGinn,AMR,1,83,0,0,0,0,6.9,0.0,0.08,0,0,19,12,3,34,0,1,0,0,1,1,3,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,532577,Johan Manzambi,AMC,1,71,1,1,0,0,8.4,0.76,0.09,4,2,18,16,2,41,1,0,0,1,0,1,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,260592,Emiliano Buendia,AML,1,98,1,0,0,0,8.8,0.14,0.09,3,2,36,29,3,60,12,2,2,2,1,0,2,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,426050,Nicolas Jackson,FW,1,87,1,0,1,0,8.3,0.58,0.02,6,2,12,12,1,43,0,0,0,6,1,1,3,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,535536,Ibrahim Mbaye,Sub,0,15,0,0,0,0,5.7,0.0,0.0,0,0,0,0,0,3,1,0,0,0,1,0,2,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,322043,Matty Cash,Sub,0,53,0,0,1,0,6.0,0.0,0.0,0,0,4,2,0,11,1,0,0,0,1,3,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,92547,Ross Barkley,Sub,0,15,0,0,0,0,5.8,0.0,0.0,0,0,8,7,0,12,0,0,0,0,1,1,3,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,317506,Tammy Abraham,Sub,0,11,0,0,0,0,6.0,0.0,0.0,0,0,5,5,0,5,0,0,1,0,0,0,0,0
+5795464,2026-09-19,Aston Villa,Tottenham Hotspur,576066,George Hemmings,Sub,0,27,0,0,0,0,5.8,0.0,0.0,0,0,2,2,0,6,1,0,0,0,1,0,2,0

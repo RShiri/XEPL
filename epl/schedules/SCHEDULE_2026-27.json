@@ -2,7 +2,7 @@
   "season": "2026-27",
   "competition": "Premier League",
   "fotmob_league_id": "47",
-  "generated_utc": "2026-09-19T13:54:20.286230+00:00",
+  "generated_utc": "2026-09-20T04:57:52.022618+00:00",
   "matches": [
     {
       "fotmob_id": 5795363,
@@ -601,10 +601,10 @@
       "away": "Arsenal",
       "home_id": "10204",
       "away_id": "9825",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795458,
@@ -615,10 +615,10 @@
       "away": "Ipswich Town",
       "home_id": "8668",
       "away_id": "9902",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795462,
@@ -629,10 +629,10 @@
       "away": "Hull City",
       "home_id": "10261",
       "away_id": "8667",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795463,
@@ -643,10 +643,10 @@
       "away": "Coventry City",
       "home_id": "10203",
       "away_id": "8669",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795455,
