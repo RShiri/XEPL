@@ -8,6 +8,7 @@ per-match tasks in register_tasks.ps1.
 Steps (season auto-detected as the newest SCHEDULE_*.json on disk, i.e.
 whichever season is currently in progress):
     1. epl/build_schedule.py --season <season>   (FotMob sweep, no browser)
+       + epl/fetch_team_stats.py --season <season> (FotMob team distance per match)
     2. epl/backfill.py --season <season>         (WhoScored scrape of any
        newly-finished match + a full dashboard rebuild — see backfill.py)
     3. git add -A && git commit && git push          (only if something changed;
@@ -70,6 +71,9 @@ def main() -> None:
     print(f"── Weekly update — season {season} ──")
 
     rc1 = _run([PY, "epl/build_schedule.py", "--season", season])
+    # FotMob's "Total distance per match" team stat (tracking data the event scrape can't give).
+    # Best-effort: a miss keeps the previous file and never fails the weekly run.
+    _run([PY, "epl/fetch_team_stats.py", "--season", season])
     rc2 = _run([PY, "epl/backfill.py", "--season", season])
 
     pushed = False

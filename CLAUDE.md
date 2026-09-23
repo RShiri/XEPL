@@ -148,6 +148,14 @@ re-derive the accent per fork rather than copying another sport's colour blindly
   `EPL_SKIP_DASHBOARD_REFRESH=1 py epl/render_missing.py --season <season>` (seconds per match
   instead of minutes), *then* run `build_site.py` (or the remaining seven builders directly) — don't
   reach for plain `build_site.py` as the first move on a season that hasn't been rendered in a while.
+- **Distance covered (Team Lab "avg km per game") is FotMob's team stat, not the scrape** — it's
+  tracking data, so no WhoScored/Opta event ever carries it. `epl/fetch_team_stats.py --season <s>`
+  finds the "distance" entry among the team stats in FotMob's league payload (falls back to guessed
+  `data.fotmob.com/stats/47/season/<id>/<name>.json` URLs) and writes the tracked
+  `epl/team_stats/DISTANCE_<season>.json`; `build_data.build_distance` maps it onto schedule names by
+  FotMob team id → `LL_DATA.seasons[s].distance`. `weekly_update.py` runs it before `backfill.py`.
+  If FotMob renames the stat, `--dump` lists what the payload offers. FotMob only has it for recent
+  seasons — older seasons show the empty state.
 - **A WhoScored failure used to be invisible and permanent** — the match still saved (FotMob shots
   only, no event stream), so a plain "already scraped" check counted it done and no later run
   would ever fill in the maps/lineups/pass network. `backfill.py` now classifies each match

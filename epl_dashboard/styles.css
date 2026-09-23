@@ -217,6 +217,9 @@ table.rank tbody td.team { text-align: left; }
 table.rank tbody td .delta.pos { color: var(--positive); font-weight: 600; }
 table.rank tbody td .delta.neg { color: var(--negative); font-weight: 600; }
 table.rank.players { min-width: 920px; }
+table.rank.dist thead th { cursor: default; }
+table.rank.dist td.dist-bar { width: 38%; min-width: 120px; }
+@media (max-width: 600px) { table.rank.dist .dist-bar { display: none; } }
 table.rank.players tbody tr:hover td { background: var(--plate-2); }
 table.db-team { min-width: 720px; }
 table.db-team tbody td.team { text-align: left; }
