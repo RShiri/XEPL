@@ -148,6 +148,12 @@ re-derive the accent per fork rather than copying another sport's colour blindly
   `EPL_SKIP_DASHBOARD_REFRESH=1 py epl/render_missing.py --season <season>` (seconds per match
   instead of minutes), *then* run `build_site.py` (or the remaining seven builders directly) — don't
   reach for plain `build_site.py` as the first move on a season that hasn't been rendered in a while.
+- **Box entries (Team Lab "Box entries · per game") are derived, not scraped** — `build_data._box_entries`
+  reads `epl_dashboard/matches_detail/<id>.js` and counts completed open-play passes + successful
+  take-ons that start outside the opponent's box (x≥83, 21.1≤y≤78.9) and end inside it; corners are
+  excluded. Stored per match as `m.box = [home, away]`; `app.js renderBoxTable` averages made/allowed per
+  team. WhoScored has no carry events, so dribble-free carries into the box aren't counted — the
+  numbers run below Opta's "box entries". Needs `build_match_details.py` before `build_data.py`.
 - **Distance covered (Team Lab "avg km per game") is FotMob's team stat, not the scrape** — it's
   tracking data, so no WhoScored/Opta event ever carries it. `epl/fetch_team_stats.py --season <s>`
   finds the "distance" entry among the team stats in FotMob's league payload (falls back to guessed
