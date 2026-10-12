@@ -65,7 +65,8 @@ def _dump(obj):
 # and a single shared query string keeps this simple. match_export.js (the browser-drawn
 # match PNG exporter) and winprob_params.js (win-probability model coefficients) are also
 # plain <script src> tags on match.html, so they need the same treatment.
-ASSET_FILES = ["styles.css", "app.js", "match.css", "match.js", "match_export.js", "winprob_params.js"]
+ASSET_FILES = ["styles.css", "app.js", "match.css", "match.js", "match_export.js", "winprob_params.js",
+               "portfolio-theme.css", "portfolio-content.js"]
 HTML_FILES = ["index.html", "match.html"]
 
 
