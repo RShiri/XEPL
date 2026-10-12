@@ -87,6 +87,7 @@ html[data-site-style="c"] nav.tabs button.active,
 html[data-site-style="c"] nav.tabs button[aria-selected="true"],
 html[data-site-style="c"] .mv-nav a.current { background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
 html[data-site-style="c"] .season-pick select { font-weight: 600; font-size: 14px; }
+html[data-site-style="c"] nav.tabs button { padding: 0 14px; font-size: 13.5px; margin: 0; }
 
 /* section headings: portfolio "// TITLE" */
 html[data-site-style="c"] .section-head h2 { font-weight: 700; letter-spacing: 0.03em; gap: 10px; }

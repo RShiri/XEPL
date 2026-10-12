@@ -50,6 +50,8 @@ window.RS_I18N = {
   "Premier": "פרמייר", "League": "ליג",
   "Dashboard & xG Lab": "דשבורד ומעבדת xG",
   "Standings": "טבלה", "Matches": "משחקים", "Players": "שחקנים", "Standouts": "בולטים",
+  "Compare with": "השוואה עם", "Third team": "קבוצה שלישית", "Copy link": "העתקת קישור", "Link copied": "הקישור הועתק",
+  "Copy a link that opens this player": "העתקת קישור שפותח את השחקן הזה",
   "Team Lab": "מעבדת קבוצות", "Player Lab": "מעבדת שחקנים", "xG Analysis": "ניתוח xG",
   "Data": "נתונים", "Projection": "תחזית", "Season": "עונה",
   "Dashboard sections": "אזורי הדשבורד",
