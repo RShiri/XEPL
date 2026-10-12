@@ -61,6 +61,7 @@ other, so when you add an entry here, consider adding it there too.
 <!-- progress:scrapes -->
 | When | Season | Trigger | Target | Result | Took | Notes |
 |---|---|---|---|---|---|---|
+| 2026-10-13 01:47 | 2026-27 | backfill.py | 14 match(es) | ✅ 14 saved | 26m 21s | — |
 | 2026-09-20 08:10 | 2026-27 | scrape_whoscored.py | fixtures sweep | ⚠️ 7 saved, 39 already had data, 4 failed | 10m 43s | — |
 | 2026-07-07 | 2022-23 | bulk backfill (historic) | full season · 380 matches | ✅ 380 saved | — | — |
 | 2026-07-07 | 2023-24 | bulk backfill (historic) | full season · 380 matches | ✅ 380 saved | — | — |
