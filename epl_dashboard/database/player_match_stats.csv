@@ -1420,3 +1420,33 @@ match_id,date,team,opponent,player_id,player,position,started,minutes,goals,assi
 5795464,2026-09-19,Aston Villa,Tottenham Hotspur,92547,Ross Barkley,Sub,0,15,0,0,0,0,5.8,0.0,0.0,0,0,8,7,0,12,0,0,0,0,1,1,3,0
 5795464,2026-09-19,Aston Villa,Tottenham Hotspur,317506,Tammy Abraham,Sub,0,11,0,0,0,0,6.0,0.0,0.0,0,0,5,5,0,5,0,0,1,0,0,0,0,0
 5795464,2026-09-19,Aston Villa,Tottenham Hotspur,576066,George Hemmings,Sub,0,27,0,0,0,0,5.8,0.0,0.0,0,0,2,2,0,6,1,0,0,0,1,0,2,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,130304,Walter Benitez,GK,1,94,0,0,0,0,7.1,0.0,0.0,0,0,41,23,0,51,0,0,0,0,0,2,0,4
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,133464,Jefferson Lerma,DC,1,71,1,0,1,0,7.2,0.63,0.0,3,2,43,30,0,55,4,0,3,0,3,6,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,395401,Chris Richards,DC,1,94,0,0,0,0,7.2,0.04,0.0,1,0,48,41,1,65,0,2,5,0,1,5,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,531676,Jaydee Canvot,DC,1,94,0,0,0,0,7.0,0.0,0.0,0,0,37,32,0,53,4,1,3,0,0,5,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,444136,Anan Khalaili,DMR,1,94,0,0,0,0,5.9,0.08,0.19,2,0,26,18,1,46,4,1,2,0,1,1,1,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,389579,Tyrick Mitchell,DML,1,94,0,0,0,0,7.8,0.02,0.0,1,1,23,16,0,54,7,1,1,0,0,4,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,411078,Quinten Timber,MC,1,94,0,0,0,0,7.2,0.08,0.05,1,0,36,24,1,62,2,0,1,2,3,2,3,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,430774,Adam Wharton,MC,1,94,0,1,0,0,7.7,0.0,0.37,0,0,52,42,3,66,3,0,1,0,0,1,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,344166,Daichi Kamada,AMC,1,89,1,0,0,0,7.4,0.52,0.05,1,1,25,20,1,37,2,1,0,0,1,1,2,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,403865,Yeremy Pino,AMC,1,82,1,0,1,0,7.5,0.33,0.14,1,1,29,25,3,48,4,0,0,0,1,1,1,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,333048,Jrgen Strand Larsen,FW,1,82,0,0,0,0,7.2,0.55,0.27,3,2,15,11,0,33,1,0,1,0,0,2,1,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,535735,Honest Ahanor,Sub,0,23,0,0,0,0,6.3,0.0,0.0,0,0,5,5,0,9,0,0,1,0,0,4,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,322670,Ismaila Sarr,Sub,0,12,0,0,0,0,6.0,0.0,0.0,0,0,4,2,0,5,0,0,0,0,0,0,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,345845,Eddie Nketiah,Sub,0,12,0,0,0,0,6.0,0.0,0.0,0,0,1,1,0,2,0,0,0,0,1,0,0,0
+5795469,2026-10-11,Crystal Palace,Nottingham Forest,357427,Dwight McNeil,Sub,0,5,0,0,0,0,6.0,0.0,0.0,0,0,1,0,0,2,0,0,0,0,0,0,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,78386,Matz Sels,GK,1,94,0,0,0,0,6.8,0.0,0.0,0,0,22,17,1,33,0,0,0,0,0,1,0,4
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,445424,Murillo,DC,1,94,0,0,1,0,6.8,0.2,0.0,4,2,60,50,0,84,3,2,2,0,1,4,1,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,315543,Ola Aina,DC,1,82,0,0,1,0,6.5,0.03,0.0,1,0,43,35,0,74,2,2,1,2,1,5,2,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,443663,Ousmane Diomande,DC,1,94,0,0,0,0,6.4,0.1,0.0,1,0,60,57,0,69,1,1,4,0,1,3,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,400496,Daniel Munoz,DMR,1,94,0,0,0,0,6.7,0.34,0.18,2,0,49,37,2,75,3,1,4,0,4,4,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,386969,Neco Williams,DML,1,94,0,0,0,0,6.9,0.19,0.16,3,0,54,48,1,74,1,1,0,0,0,0,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,262856,Xaver Schlager,MC,1,65,0,0,0,0,6.3,0.13,0.06,3,0,35,30,1,44,2,1,0,1,1,1,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,425576,James McAtee,MC,1,94,0,0,0,0,6.3,0.04,0.04,1,0,55,41,2,69,0,3,0,0,0,0,1,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,398414,Dan Ndoye,AMC,1,71,1,0,0,0,7.0,1.1,0.05,4,2,15,12,1,38,0,0,0,4,0,0,2,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,332867,Morgan Gibbs-White,AMC,1,94,0,0,0,0,6.7,0.08,0.42,2,0,49,37,3,80,2,0,0,2,0,0,5,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,401254,Liam Delap,FW,1,71,0,0,0,0,5.9,0.91,0.15,2,1,13,5,1,21,0,0,1,0,1,0,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,384005,Arnaud Kalimuendo,Sub,0,12,0,0,0,0,6.1,0.0,0.0,0,0,3,3,0,6,1,0,0,0,0,0,1,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,73380,Chris Wood,Sub,0,23,0,0,0,0,6.0,0.35,0.0,1,1,2,1,0,5,0,0,1,0,1,0,1,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,350088,Callum Hudson-Odoi,Sub,0,23,0,0,0,0,6.1,0.0,0.0,0,0,10,10,0,17,0,0,0,1,0,0,0,0
+5795469,2026-10-11,Nottingham Forest,Crystal Palace,328075,Ibrahim Sangare,Sub,0,29,0,0,0,0,6.3,0.0,0.0,0,0,28,24,1,30,0,0,1,0,0,1,0,0
