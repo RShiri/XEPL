@@ -1,0 +1,129 @@
+{
+ "season": "2026-27",
+ "stat": "Distance per match",
+ "unit": "km/match",
+ "source": "https://data.fotmob.com/stats/47/season/36781/phys_tdc_team.json",
+ "fetched_utc": "2026-10-12T23:39:43+00:00",
+ "teams": [
+  {
+   "team": "Arsenal",
+   "team_id": "9825",
+   "km": 119.36,
+   "matches": 6
+  },
+  {
+   "team": "Fulham",
+   "team_id": "9879",
+   "km": 118.53,
+   "matches": 6
+  },
+  {
+   "team": "Brentford",
+   "team_id": "9937",
+   "km": 117.64,
+   "matches": 6
+  },
+  {
+   "team": "Ipswich Town",
+   "team_id": "9902",
+   "km": 116.04,
+   "matches": 6
+  },
+  {
+   "team": "Leeds United",
+   "team_id": "8463",
+   "km": 115.92,
+   "matches": 6
+  },
+  {
+   "team": "Crystal Palace",
+   "team_id": "9826",
+   "km": 115.29,
+   "matches": 6
+  },
+  {
+   "team": "Newcastle United",
+   "team_id": "10261",
+   "km": 115.1,
+   "matches": 6
+  },
+  {
+   "team": "Sunderland",
+   "team_id": "8472",
+   "km": 115.0,
+   "matches": 6
+  },
+  {
+   "team": "AFC Bournemouth",
+   "team_id": "8678",
+   "km": 114.9,
+   "matches": 6
+  },
+  {
+   "team": "Brighton & Hove Albion",
+   "team_id": "10204",
+   "km": 114.55,
+   "matches": 6
+  },
+  {
+   "team": "Hull City",
+   "team_id": "8667",
+   "km": 114.28,
+   "matches": 6
+  },
+  {
+   "team": "Everton",
+   "team_id": "8668",
+   "km": 113.65,
+   "matches": 6
+  },
+  {
+   "team": "Chelsea",
+   "team_id": "8455",
+   "km": 113.62,
+   "matches": 6
+  },
+  {
+   "team": "Tottenham Hotspur",
+   "team_id": "8586",
+   "km": 112.9,
+   "matches": 6
+  },
+  {
+   "team": "Nottingham Forest",
+   "team_id": "10203",
+   "km": 112.69,
+   "matches": 6
+  },
+  {
+   "team": "Manchester United",
+   "team_id": "10260",
+   "km": 111.91,
+   "matches": 6
+  },
+  {
+   "team": "Aston Villa",
+   "team_id": "10252",
+   "km": 111.69,
+   "matches": 6
+  },
+  {
+   "team": "Coventry City",
+   "team_id": "8669",
+   "km": 111.58,
+   "matches": 6
+  },
+  {
+   "team": "Manchester City",
+   "team_id": "8456",
+   "km": 110.93,
+   "matches": 6
+  },
+  {
+   "team": "Liverpool",
+   "team_id": "8650",
+   "km": 109.48,
+   "matches": 6
+  }
+ ]
+}
