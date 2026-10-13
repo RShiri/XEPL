@@ -13,7 +13,7 @@ FotMob-sourced shot event in a file that lacks the "_fotmob_coords" marker the f
 scraper now writes. Body part / situation tags that the old parser dropped can't be
 recovered offline; a later re-scrape (backfill.py --redo-partial) brings them back.
 
-    py epl/repair_fotmob_shots.py                    # every season, then rebuild by hand
+    py epl/repair_fotmob_shots.py --rebuild          # every season, then rebuild the site
     py epl/repair_fotmob_shots.py --season 2026-27 --dry-run
 
 weekly_update.py runs it before backfill, so the next scheduled run fixes and rebuilds.
@@ -60,6 +60,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Fix FotMob-only shot coordinates in saved matches.")
     ap.add_argument("--season", help="e.g. 2026-27; default = every season folder")
     ap.add_argument("--dry-run", action="store_true", help="report only, write nothing")
+    ap.add_argument("--rebuild", action="store_true",
+                    help="rebuild the dashboard afterwards if any file was converted")
     args = ap.parse_args()
 
     folders = [MATCH_DIR / args.season] if args.season else sorted(
@@ -85,6 +87,10 @@ def main() -> None:
             if not args.dry_run:
                 p.write_text(json.dumps(d, indent=2), encoding="utf-8")
     print(f"{fixed} match file(s) {'need' if args.dry_run else 'got'} the FotMob coordinate fix.")
+    if fixed and args.rebuild and not args.dry_run:
+        print("Rebuilding the dashboard from the converted files …")
+        from epl.renderer import _refresh_web_dashboard_db
+        _refresh_web_dashboard_db()
 
 
 if __name__ == "__main__":
