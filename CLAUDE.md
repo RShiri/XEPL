@@ -173,6 +173,8 @@ re-derive the accent per fork rather than copying another sport's colour blindly
   FotMob team id → `LL_DATA.seasons[s].distance`. `weekly_update.py` runs it before `backfill.py`.
   If FotMob renames the stat, `--dump` lists what the payload offers. FotMob only has it for recent
   seasons — older seasons show the empty state.
+- **WhoScored names clubs shorter than the schedule does** ("leeds", "brighton", "tottenham", "hull", "bournemouth"). `scraper._ws_team_keys` returns the full key plus the short form for the live match search (never shortening the Manchester/Sheffield clubs); a full-name-only key is what left 9 of the first 60 2026-27 matches FotMob-only.
+- **FotMob-only fallback shots**: FotMob shotmap x/y are pitch metres (105x68) from the shooter's attacking side, so `_parse_fotmob_shots` rescales and never flips. The shotmap has no big-chance tag, so those matches run ~30% under FotMob's xG until `backfill.py --redo-partial` (run weekly by `weekly_update.py`) gets the WhoScored stream.
 - **A WhoScored failure used to be invisible and permanent** — the match still saved (FotMob shots
   only, no event stream), so a plain "already scraped" check counted it done and no later run
   would ever fill in the maps/lineups/pass network. `backfill.py` now classifies each match

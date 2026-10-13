@@ -9,8 +9,9 @@ Steps (season auto-detected as the newest SCHEDULE_*.json on disk, i.e.
 whichever season is currently in progress):
     1. epl/build_schedule.py --season <season>   (FotMob sweep, no browser)
        + epl/fetch_team_stats.py --season <season> (FotMob team distance per match)
-    2. epl/backfill.py --season <season>         (WhoScored scrape of any
-       newly-finished match + a full dashboard rebuild — see backfill.py)
+    2. epl/backfill.py --season <season> --redo-partial  (WhoScored scrape of any
+       newly-finished match, a retry of any saved from FotMob alone, and a
+       full dashboard rebuild — see backfill.py)
     3. git add -A && git commit && git push          (only if something changed;
        plain git, NOT git_ops/XWORLDCUPTWIT_REPO — see CLAUDE.md gotchas on why)
 
@@ -121,7 +122,13 @@ def main() -> None:
     # FotMob's "Total distance per match" team stat (tracking data the event scrape can't give).
     # Best-effort: a miss keeps the previous file and never fails the weekly run.
     _run([PY, "epl/fetch_team_stats.py", "--season", season])
-    rc2 = _run([PY, "epl/backfill.py", "--season", season])
+    # Idempotent: converts FotMob-only shots saved by the pre-2026-10-13 scraper (flipped
+    # away side, metres not 0-100) before backfill's rebuild reads them.
+    _run([PY, "epl/repair_fotmob_shots.py", "--season", season, "--rebuild"])
+    # --redo-partial: every run also retries matches still saved from FotMob alone, so a
+    # one-off WhoScored miss gets its pass/dribble maps, lineups and big-chance tags back
+    # on the next run instead of staying thin for the rest of the season.
+    rc2 = _run([PY, "epl/backfill.py", "--season", season, "--redo-partial"])
 
     pushed = False
     push_note = ""
