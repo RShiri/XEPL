@@ -3,7 +3,7 @@
  "stat": "Distance per match",
  "unit": "km/match",
  "source": "https://data.fotmob.com/stats/47/season/36781/phys_tdc_team.json",
- "fetched_utc": "2026-10-12T23:39:43+00:00",
+ "fetched_utc": "2026-10-13T04:00:02+00:00",
  "teams": [
   {
    "team": "Arsenal",
