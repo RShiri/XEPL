@@ -57,6 +57,14 @@ earlier seasons; then Europa, Conference play-off, bottom 3 relegation. Lives in
 `epl_dashboard/app.js` `zoneOf()`/`uclSpots()` AND the projection Monte-Carlo — edit both if you
 change it.
 
+## Projection model
+`app.js` `computeStrengths()`/`priorSeasonStrengths()`/`runProjection()`: Poisson attack/defence
+strengths on a 50/50 goals+xG blend (`XG_W`), shrunk (w=6 games/venue) toward LAST season's
+strengths regressed 40% (`REG`); promoted clubs inherit the relegated trio's average. Last season's
+bundle is fetched in the background and the projection re-renders when it lands. Picked by
+backtest (predict 2024-25/2025-26 finals from MD1-6: ~10.4 pts RMSE vs ~11.6 for the old
+goals-only/flat-prior model) — re-run a backtest before retuning, don't tune to a desired order.
+
 ## Design system — "Broadcast Kinetic"
 The dashboard skin (`epl_dashboard/styles.css`, `match.css`) is a live-sport broadcast-graphics
 identity: carbon ground, ONE signal accent colour (`--accent: #a855f7`, "Premier League purple" —

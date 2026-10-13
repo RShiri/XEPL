@@ -1921,34 +1921,74 @@
     for (var i = 2; i <= k; i++) f *= i;
     return Math.pow(lambda, k) * Math.exp(-lambda) / f;
   }
-  function computeStrengths() {
-    var played = (D.matches || []).filter(function (m) { return m.played; });
+  // Ratings run on a 50/50 blend of goals and xG: six games of goals alone are mostly
+  // finishing variance (a 5-0 and a 4-0 can outweigh a season's worth of chance creation),
+  // xG alone ignores real finishing/keeping quality. Backtested on 2024-25 and 2025-26
+  // (predict the final table from MD1-6): the blend + last-season prior cut the error from
+  // ~11.6 to ~10.4 points per team vs the old goals-only/flat-prior model.
+  var XG_W = 0.5;
+  function blendH(m) { return m.xg_home != null ? (1 - XG_W) * m.hs + XG_W * m.xg_home : m.hs; }
+  function blendA(m) { return m.xg_away != null ? (1 - XG_W) * m.as + XG_W * m.xg_away : m.as; }
+  // Ddata: a season's {matches, standings} (usually the season on screen, but also used
+  // standalone to read a completed season's strengths as next season's prior).
+  // prior: optional {team: {atkH,defH,atkA,defA}} multipliers (1.0 = league average) that
+  // the shrinkage target is built from instead of flat 1.0. Ported from XLALIGA.
+  function computeStrengths(Ddata, prior) {
+    var played = (Ddata.matches || []).filter(function (m) { return m.played; });
     if (played.length < 20) return null;   // too little signal
     var homeG = 0, awayG = 0, n = played.length;
-    played.forEach(function (m) { homeG += m.hs; awayG += m.as; });
+    played.forEach(function (m) { homeG += blendH(m); awayG += blendA(m); });
     var lgHome = homeG / n, lgAway = awayG / n;
     var t = {};
-    (D.standings || []).forEach(function (r) {
+    (Ddata.standings || []).forEach(function (r) {
       t[r.team] = { gfH: 0, gaH: 0, nH: 0, gfA: 0, gaA: 0, nA: 0 };
     });
     played.forEach(function (m) {
       if (!t[m.home] || !t[m.away]) return;
-      t[m.home].gfH += m.hs; t[m.home].gaH += m.as; t[m.home].nH++;
-      t[m.away].gfA += m.as; t[m.away].gaA += m.hs; t[m.away].nA++;
+      var h = blendH(m), a = blendA(m);
+      t[m.home].gfH += h; t[m.home].gaH += a; t[m.home].nH++;
+      t[m.away].gfA += a; t[m.away].gaA += h; t[m.away].nA++;
     });
-    // Attack/defence strengths (home & away split), shrunk toward 1.0 for stability
-    // when a team has few games (prior weight w games of league-average).
-    var w = 4;
+    // Attack/defence strengths (home & away split), shrunk toward a prior for stability
+    // when a team has few games (w games' worth of the shrinkage target per venue). With
+    // no prior the target is flat league average; with one, it's last season's strength
+    // regressed 40% toward the mean (REG) since squads and form change year to year.
+    var w = 6, REG = 0.6;
     var str = {};
     Object.keys(t).forEach(function (tm) {
-      var x = t[tm];
-      var atkH = ((x.gfH + w * lgHome) / (x.nH + w)) / lgHome;
-      var defH = ((x.gaH + w * lgAway) / (x.nH + w)) / lgAway;
-      var atkA = ((x.gfA + w * lgAway) / (x.nA + w)) / lgAway;
-      var defA = ((x.gaA + w * lgHome) / (x.nA + w)) / lgHome;
+      var x = t[tm], p = prior && prior[tm];
+      var pAtkH = p ? 1 + REG * (p.atkH - 1) : 1, pDefH = p ? 1 + REG * (p.defH - 1) : 1;
+      var pAtkA = p ? 1 + REG * (p.atkA - 1) : 1, pDefA = p ? 1 + REG * (p.defA - 1) : 1;
+      var atkH = ((x.gfH + w * lgHome * pAtkH) / (x.nH + w)) / lgHome;
+      var defH = ((x.gaH + w * lgAway * pDefH) / (x.nH + w)) / lgAway;
+      var atkA = ((x.gfA + w * lgAway * pAtkA) / (x.nA + w)) / lgAway;
+      var defA = ((x.gaA + w * lgHome * pDefA) / (x.nA + w)) / lgHome;
       str[tm] = { atkH: atkH, defH: defH, atkA: atkA, defA: defA };
     });
     return { lgHome: lgHome, lgAway: lgAway, str: str };
+  }
+  // Last season's strengths as this season's prior, if that bundle is already loaded
+  // (runProjection fetches it in the background and re-renders once it lands). Promoted
+  // clubs have no row last season, so they inherit the average of the three relegated
+  // clubs they replaced -- a flat league-average prior would rate them mid-table.
+  function priorSeasonStrengths() {
+    var keys = Object.keys((IDX && IDX.seasons) || {}).sort();
+    var i = keys.indexOf(season);
+    var prevKey = i > 0 ? keys[i - 1] : null;
+    var prevD = prevKey && ALL.seasons[prevKey];
+    if (!prevD) return { prevKey: prevKey, str: null };
+    var S = computeStrengths(prevD, null);
+    if (!S) return { prevKey: prevKey, str: null };
+    var rel = (prevD.standings || []).slice(-3).map(function (r) { return S.str[r.team]; })
+      .filter(Boolean);
+    if (rel.length) {
+      var avg = {};
+      ["atkH", "defH", "atkA", "defA"].forEach(function (k) {
+        avg[k] = rel.reduce(function (s, r) { return s + r[k]; }, 0) / rel.length;
+      });
+      (D.standings || []).forEach(function (r) { if (!S.str[r.team]) S.str[r.team] = avg; });
+    }
+    return { prevKey: prevKey, str: S.str };
   }
   function matchLambdas(S, home, away) {
     var h = S.str[home], a = S.str[away];
@@ -1960,8 +2000,23 @@
     do { k++; p *= Math.random(); } while (p > Lp);
     return k - 1;
   }
+  var projectionUsedPrior = false;   // set by runProjection(); read by renderProjection()'s footer
   function runProjection() {
-    var S = computeStrengths();
+    var prior = priorSeasonStrengths();
+    if (prior.prevKey && !prior.str && ALL.seasons[prior.prevKey] === undefined) {
+      // Last season's bundle isn't loaded yet: fetch it in the background and re-render the
+      // projection once it's in (whichever tab is showing -- the projection is rendered
+      // eagerly with the rest of the page, not on tab switch), then put back the footer
+      // text loadSeason overwrote with its "Loading season…" message.
+      var forSeason = season;
+      loadSeason(prior.prevKey, function () {
+        if (season !== forSeason) return;   // user switched season meanwhile
+        renderProjection();
+        setFootNote();
+      });
+    }
+    projectionUsedPrior = !!prior.str;
+    var S = computeStrengths(D, prior.str);
     if (!S) return null;
     var remaining = (D.matches || []).filter(function (m) { return !m.played; });
     var base = {};
@@ -2046,7 +2101,11 @@
     host.innerHTML =
       "<table class='proj'><thead><tr><th>#</th><th class='team'>Team</th><th>Pts now</th><th>Proj pts</th>" +
       "<th>Title</th><th>Top " + uclN + "</th><th>Top " + (uclN + 2) + "</th><th>Relegated</th></tr></thead><tbody>" + body + "</tbody></table>" +
-      "<p class='hint'>Poisson model on this season's goals (home/away attack &amp; defence strengths, shrunk toward league average), " +
+      "<p class='hint'>Poisson model on this season's goals and xG, half each (home/away attack &amp; defence strengths, " +
+      (projectionUsedPrior
+        ? "shrunk toward last season's own strength early on, with promoted clubs starting where the relegated ones left off, and fading to this season's results as more are played"
+        : "shrunk toward league average") +
+      "), " +
       "Monte-Carlo over the " + (D.matches.filter(function (m) { return !m.played; }).length) + " remaining fixtures (3,000 sims).</p>";
   }
 
@@ -2065,17 +2124,35 @@
                    xg: function (p) { return p.xg || 0; }, xa: function (p) { return p.xa || 0; },
                    rating: function (p) { return p.rating || 0; } }[key] || function (p) { return 0; };
     var rows = PLAYERS.slice().sort(function (a, b) { return metric(b) - metric(a); }).slice(0, 50);
+    // Team is folded into the Player cell as a second line (the crest already carries it
+    // visually) instead of its own column, so the wider stat set still fits on a phone.
+    function diffCell(v) {
+      if (v == null) return "<td>–</td>";
+      var cls = v > 0.05 ? "delta pos" : v < -0.05 ? "delta neg" : "delta";
+      return "<td><span class='" + cls + "'>" + (v > 0 ? "+" : "") + v.toFixed(2) + "</span></td>";
+    }
     var body = rows.map(function (p, i) {
       return "<tr><td class='pos'>" + (i + 1) + "</td>" +
-        "<td class='team'><div class='team-cell'>" + photoImg(p) + logoImg(p.team) + "<span class='nm'>" + esc(p.name) + "</span></div></td>" +
-        "<td>" + esc(p.team) + "</td><td>" + (p.mp || 0) + "</td><td>" + (p.g || 0) + "</td><td>" + (p.a || 0) + "</td>" +
+        "<td class='team'><div class='team-cell'>" + photoImg(p) + logoImg(p.team) +
+          "<span class='nm-wrap'><span class='nm'>" + esc(p.name) + "</span><span class='sub'>" + esc(p.team) + "</span></span></div></td>" +
+        "<td>" + (p.mp || 0) + "</td><td>" + (p.g || 0) + "</td><td>" + (p.a || 0) + "</td>" +
+        "<td>" + (p.npg != null ? p.npg : "–") + "</td>" +
         "<td>" + (p.xg != null ? p.xg.toFixed(2) : "–") + "</td><td>" + (p.xa != null ? p.xa.toFixed(2) : "–") + "</td>" +
+        diffCell(p.xg_diff) + diffCell(p.xa_diff) +
+        "<td>" + (p.bc_missed != null ? p.bc_missed : "–") + "</td>" +
+        "<td>" + (p.fwd_eff != null ? p.fwd_eff.toFixed(2) : "–") + "</td>" +
+        "<td>" + (p.pass_pct != null ? p.pass_pct + "%" : "–") + "</td>" +
         "<td>" + (p.rating != null ? p.rating.toFixed(2) : "–") + "</td></tr>";
     }).join("");
-    host.innerHTML = "<table><thead><tr><th>#</th><th class='team'>Player</th><th>Team</th><th title='Matches played'>MP</th><th>G</th><th>A</th>" +
+    host.innerHTML = "<table class='players'><thead><tr><th>#</th><th class='team'>Player</th><th title='Matches played'>MP</th><th>G</th><th>A</th>" +
+      "<th title='Non-penalty goals'>npG</th>" +
       "<th title='Expected Goals — the likelihood of a shot being scored, based on its location, angle and situation'>xG</th>" +
       "<th title=\"Expected Assists — the likelihood that a completed pass leads to a goal, based on the resulting shot's quality\">xA</th>" +
-      "<th>Rating</th></tr></thead><tbody>" + body + "</tbody></table>";
+      "<th title='Goals minus xG — positive means finishing above expected'>xG&Delta;</th>" +
+      "<th title='Assists minus xA — positive means more assists than expected'>xA&Delta;</th>" +
+      "<th title='Big chances (clear goalscoring opportunities) not converted'>BC Miss</th>" +
+      "<th title='Forward efficiency: non-penalty goals ÷ (non-penalty xG + xG value of missed big chances). Above 1.00 = finishing above the chance quality on offer; below 1.00 = wasteful'>Fwd Eff</th>" +
+      "<th>Pass%</th><th>Rating</th></tr></thead><tbody>" + body + "</tbody></table>";
   }
 
   /* ---- Data dump ---- */
@@ -2123,6 +2200,9 @@
     var hud = document.getElementById("hudStatus");
     if (hud) hud.innerHTML = "MD <b>" + (D.counts.current_matchday || 0) + "</b> · <b>" + (D.counts.played || 0) + "</b>/" +
       (D.counts.total || 0) + " played · <b>" + (D.counts.with_xg || 0) + "</b> xG · upd " + esc(String(ALL.generated || "").slice(5, 16));
+    setFootNote();
+  }
+  function setFootNote() {
     var foot = document.getElementById("footNote");
     if (foot) foot.textContent = "Season " + season + " · generated " + ALL.generated + " · " +
       (D.counts.played || 0) + " matches played · " + (D.counts.with_xg || 0) + " with xG · Premier League analytics pipeline.";
