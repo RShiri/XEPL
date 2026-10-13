@@ -79,6 +79,45 @@ _fetched_ids: set[int] = set()  # avoid re-fetching in the same run
 # uses an odd alias.
 FOTMOB_NAME_OVERRIDES: dict[str, str] = {}
 
+# FotMob shotmap coordinates are pitch metres, not WhoScored's 0-100 grid.
+FOTMOB_PITCH_X = 105.0
+FOTMOB_PITCH_Y = 68.0
+FOTMOB_COORDS_VERSION = "ws100"  # stamped on saved matches; see repair_fotmob_shots.py
+
+
+def fotmob_xy_to_ws(x, y) -> tuple[float, float]:
+    """FotMob shotmap x/y (metres, shooting team attacking toward x=105) -> WhoScored's
+    0-100 grid (attacking toward x=100). FotMob already gives every shot from its own
+    team's attacking perspective, exactly like WhoScored events and xg_core's fixed
+    x_sb=120 target, so neither side is flipped."""
+    return (float(x if x is not None else 52.5) * 100.0 / FOTMOB_PITCH_X,
+            float(y if y is not None else 34.0) * 100.0 / FOTMOB_PITCH_Y)
+
+
+# FotMob shotmap labels -> the WhoScored qualifier names xg_core reads
+# (xg_core_v3/features.py extract_qualifiers).
+FOTMOB_SHOT_TYPE_QUAL = {"leftfoot": "LeftFoot", "rightfoot": "RightFoot", "header": "Head"}
+FOTMOB_SITUATION_QUAL = {"penalty": "Penalty", "freekick": "DirectFreekick",
+                         "fastbreak": "FastBreak", "setpiece": "SetPiece",
+                         "throwinsetpiece": "SetPiece", "fromcorner": "FromCorner"}
+
+
+def fotmob_shot_qualifiers(s: dict) -> list[dict]:
+    """WhoScored-style qualifiers for one FotMob shotmap shot: big chance, situation
+    (penalty / free kick / corner / set piece / fast break) and body part. The old
+    mapping only kept penalties and turned every non-right-foot shot, headers
+    included, into "LeftFoot"."""
+    names = []
+    if s.get("isBigChance"):
+        names.append("BigChance")
+    sit = FOTMOB_SITUATION_QUAL.get(re.sub(r"[^a-z]", "", str(s.get("situation") or "").lower()))
+    if sit:
+        names.append(sit)
+    body = FOTMOB_SHOT_TYPE_QUAL.get(re.sub(r"[^a-z]", "", str(s.get("shotType") or "").lower()))
+    if body:
+        names.append(body)
+    return [{"type": {"displayName": n}} for n in names]
+
 # ══════════════════════════════════════════════════════════════════════════
 # SCHEDULE HELPERS – team name resolution without FotMob
 # ══════════════════════════════════════════════════════════════════════════
@@ -813,12 +852,14 @@ def _parse_fotmob_shots(fm_data: dict, home_id: int, away_id: int) -> list[dict]
     events = []
     for s in shots_raw:
         tid = s.get("teamId")
-        # FotMob x/y are 0-100 from attacking perspective; flip away team
-        x = float(s.get("x", 50))
-        y = float(s.get("y", 50))
-        if tid == away_id:
-            x = 100 - x
-            y = 100 - y
+        # No flip for the away side, plus a metres -> 0-100 rescale (fotmob_xy_to_ws).
+        # The old `if tid == away_id: x = 100-x; y = 100-y` re-mirrored already
+        # attacking-perspective away shots back toward their own goal, so in a
+        # FotMob-only match every away shot scored ~0.002 xG, and the missing rescale
+        # left home shots ~15 m off-centre. Seen on all 9 FotMob-only 2026-27 matches,
+        # e.g. Arsenal 2-1 Leeds (5795465): model 0.72 / 0.02 vs FotMob 2.33 / 0.62.
+        # XLALIGA dropped the same flip on 2026-09-13.
+        x, y = fotmob_xy_to_ws(s.get("x"), s.get("y"))
 
         outcome_map = {
             "Goal":          "Goal",
@@ -831,17 +872,7 @@ def _parse_fotmob_shots(fm_data: dict, home_id: int, away_id: int) -> list[dict]
         ev_type = outcome_map.get(s.get("eventType", ""), "MissedShots")
         is_goal = ev_type == "Goal"
 
-        quals = []
-        if s.get("isOnTarget"):
-            pass
-        if s.get("isBigChance"):
-            quals.append({"type": {"displayName": "BigChance"}})
-        bp = s.get("situation", "")
-        if "Penalty" in bp:
-            quals.append({"type": {"displayName": "Penalty"}})
-        foot = s.get("shotType", "")
-        if foot:
-            quals.append({"type": {"displayName": "RightFoot" if "right" in foot.lower() else "LeftFoot"}})
+        quals = fotmob_shot_qualifiers(s)
 
         events.append({
             "id":           float(s.get("id", 0)),
@@ -1522,6 +1553,9 @@ def build_match_json(fm_data: dict, ws_data: dict | None,
         # shot list by build_match_details.py (team+player+minute; no shared id).
         "_fotmob_shots": (_fotmob_shot_xg_list(fm_data, home_id, away_id)
                           if not fotmob_unavailable else []),
+        # Marks FotMob-sourced shot events as already on the WhoScored 0-100 grid, so
+        # epl/repair_fotmob_shots.py never converts this file a second time.
+        "_fotmob_coords": FOTMOB_COORDS_VERSION,
     }
 
 

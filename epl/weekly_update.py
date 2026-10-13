@@ -121,7 +121,10 @@ def main() -> None:
     # FotMob's "Total distance per match" team stat (tracking data the event scrape can't give).
     # Best-effort: a miss keeps the previous file and never fails the weekly run.
     _run([PY, "epl/fetch_team_stats.py", "--season", season])
-    rc2 = _run([PY, "epl/backfill.py", "--season", season])
+    # Idempotent: converts FotMob-only shots saved by the pre-2026-10-13 scraper (flipped
+    # away side, metres not 0-100) before backfill's rebuild reads them.
+    _run([PY, "epl/repair_fotmob_shots.py", "--season", season])
+    rc2 =_run([PY, "epl/backfill.py", "--season", season])
 
     pushed = False
     push_note = ""

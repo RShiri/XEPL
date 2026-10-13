@@ -10,6 +10,7 @@ other, so when you add an entry here, consider adding it there too.
 ## Platform updates & changes
 
 <!-- progress:platform -->
+- **2026-10-13** — Fixed FotMob-only shot coordinates in epl/scraper.py `_parse_fotmob_shots`: dropped the away-side flip (FotMob is already attacking-perspective; XLALIGA removed the same flip 2026-09-13), added the missing metres -> 0-100 rescale (x/105, y/68), and mapped headers/corners/set pieces/free kicks/fast breaks to WhoScored qualifiers (headers used to become LeftFoot). The 9 FotMob-only 2026-27 matches had away xG ~0.02 each; offline re-score of their shots gives r 0.76 vs FotMob team xG (was -0.13). New epl/repair_fotmob_shots.py converts already-saved files once (marker `_fotmob_coords`); weekly_update.py runs it before backfill. Still ~30% under FotMob on those matches: FotMob's shotmap carries no big-chance tag.
 - **2026-10-13** — Weekly update (2026-27): schedule rc=0, backfill rc=0, pushed=True, took 1633s
 - **2026-09-15** — Shipped xT (per-90, progressive-only) and integrated xgot_core into build_match_details.py/build_players.py, mirroring XLALIGA. Verified live: Bruno Fernandes tops xT-added, Donnarumma tops goals-prevented.
 - **2026-09-15** — Mirrored XLALIGA's goalkeeper goals-prevented, progressive passes/carries, and PPDA (PLAN_new_models.md items 2-4) -- same implementation, see XLALIGA's PROGRESS.md for rationale.
