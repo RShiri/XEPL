@@ -119,3 +119,23 @@ match_id,date,team,opponent,side,goals,conceded,possession,shots,sot,passes,pass
 5795472,2026-10-11,Manchester City,Liverpool,away,3,0,65,15,8,604,88,3,2,9,14,54,1.28
 5795468,2026-10-12,Coventry City,Newcastle United,home,4,1,33,9,9,261,71,2,1,4,3,46,1.43
 5795468,2026-10-12,Newcastle United,Coventry City,away,1,4,67,19,12,527,86,3,3,2,10,54,1.84
+5795478,2026-10-17,Everton,Chelsea,home,0,2,47,6,5,452,81,2,2,10,8,43,0.43
+5795478,2026-10-17,Chelsea,Everton,away,2,0,53,18,12,503,84,3,2,5,15,57,1.47
+5795476,2026-10-17,Brentford,Liverpool,home,1,2,40,10,6,362,74,2,1,7,7,46,0.88
+5795476,2026-10-17,Liverpool,Brentford,away,2,1,60,21,9,547,83,1,1,4,13,54,1.64
+5795479,2026-10-17,Fulham,Hull City,home,1,0,76,18,12,752,91,4,4,0,13,55,1.38
+5795479,2026-10-17,Hull City,Fulham,away,0,1,24,5,1,225,64,0,0,5,11,45,0.16
+5795481,2026-10-17,Manchester City,Ipswich Town,home,3,2,70,19,12,753,90,6,3,1,8,48,3.35
+5795481,2026-10-17,Ipswich Town,Manchester City,away,2,3,30,8,3,319,81,3,1,4,16,52,1.86
+5795482,2026-10-17,Newcastle United,Aston Villa,home,0,1,50,16,10,407,83,0,0,2,14,50,0.99
+5795482,2026-10-17,Aston Villa,Newcastle United,away,1,0,50,15,11,431,81,3,2,1,11,50,1.57
+5795475,2026-10-18,AFC Bournemouth,Sunderland,home,2,0,65,29,14,573,83,6,4,0,16,50,4.23
+5795475,2026-10-18,Sunderland,AFC Bournemouth,away,0,2,35,3,0,309,63,0,0,4,7,50,0.07
+5795477,2026-10-18,Brighton & Hove Albion,Crystal Palace,home,5,0,57,17,13,517,85,3,1,1,13,51,2.0
+5795477,2026-10-18,Crystal Palace,Brighton & Hove Albion,away,0,5,43,6,3,384,79,1,1,5,11,49,0.77
+5795480,2026-10-18,Leeds United,Manchester United,home,1,1,61,12,6,532,84,2,1,2,16,45,1.41
+5795480,2026-10-18,Manchester United,Leeds United,away,1,1,39,13,9,354,75,2,1,3,5,55,0.92
+5795483,2026-10-18,Nottingham Forest,Arsenal,home,0,1,26,14,8,252,71,0,0,2,14,51,0.9
+5795483,2026-10-18,Arsenal,Nottingham Forest,away,1,0,74,9,4,687,90,1,1,9,8,49,1.14
+5795484,2026-10-19,Tottenham Hotspur,Coventry City,home,3,1,65,16,9,566,89,0,0,0,15,50,0.86
+5795484,2026-10-19,Coventry City,Tottenham Hotspur,away,1,3,35,12,5,290,78,1,0,2,14,50,0.77

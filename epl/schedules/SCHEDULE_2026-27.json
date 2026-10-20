@@ -2,7 +2,7 @@
   "season": "2026-27",
   "competition": "Premier League",
   "fotmob_league_id": "47",
-  "generated_utc": "2026-10-13T04:00:01.892817+00:00",
+  "generated_utc": "2026-10-20T04:00:02.821574+00:00",
   "matches": [
     {
       "fotmob_id": 5795363,
@@ -853,10 +853,10 @@
       "away": "Chelsea",
       "home_id": "8668",
       "away_id": "8455",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795476,
@@ -867,10 +867,10 @@
       "away": "Liverpool",
       "home_id": "9937",
       "away_id": "8650",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795479,
@@ -881,10 +881,10 @@
       "away": "Hull City",
       "home_id": "9879",
       "away_id": "8667",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795481,
@@ -895,10 +895,10 @@
       "away": "Ipswich Town",
       "home_id": "8456",
       "away_id": "9902",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795482,
@@ -909,10 +909,10 @@
       "away": "Aston Villa",
       "home_id": "10261",
       "away_id": "10252",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795475,
@@ -923,10 +923,10 @@
       "away": "Sunderland",
       "home_id": "8678",
       "away_id": "8472",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795477,
@@ -937,10 +937,10 @@
       "away": "Crystal Palace",
       "home_id": "10204",
       "away_id": "9826",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 5,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795480,
@@ -951,10 +951,10 @@
       "away": "Manchester United",
       "home_id": "8463",
       "away_id": "10260",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795483,
@@ -965,10 +965,10 @@
       "away": "Arsenal",
       "home_id": "10203",
       "away_id": "9825",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795484,
@@ -979,10 +979,10 @@
       "away": "Coventry City",
       "home_id": "8586",
       "away_id": "8669",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795491,
