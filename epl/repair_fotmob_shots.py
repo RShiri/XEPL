@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""One-off (and idempotent) repair of FotMob-only shot coordinates in saved matches.
+
+Before 2026-10-13, epl/scraper.py's _parse_fotmob_shots() stored FotMob shotmap
+coordinates raw (pitch metres, x 0-105 / y 0-68) and mirrored every AWAY shot
+(100-x, 100-y). FotMob already gives each shot from its own team's attacking
+perspective, so away shots ended up in their own half (~0.002 xG each) and home shots
+sat ~15 m off-centre. Only matches saved from FotMob alone (no WhoScored event stream)
+are affected: 9 of the first 60 in 2026-27.
+
+This undoes the flip and rescales to WhoScored's 0-100 grid, in place, for every
+FotMob-sourced shot event in a file that lacks the "_fotmob_coords" marker the fixed
+scraper now writes. Body part / situation tags that the old parser dropped can't be
+recovered offline; a later re-scrape (backfill.py --redo-partial) brings them back.
+
+    py epl/repair_fotmob_shots.py --rebuild          # every season, then rebuild the site
+    py epl/repair_fotmob_shots.py --season 2026-27 --dry-run
+
+weekly_update.py runs it before backfill, so the next scheduled run fixes and rebuilds.
+"""
+from __future__ import annotations
+
+import sys
+import json
+import argparse
+from pathlib import Path
+
+_REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_REPO))
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+from epl.scraper import FOTMOB_COORDS_VERSION, fotmob_xy_to_ws  # noqa: E402
+
+MATCH_DIR = _REPO / "epl" / "matches"
+
+
+def repair_match(d: dict) -> int:
+    """Convert the FotMob-sourced events of one saved match in place.
+    Returns the number of events changed (0 if already converted or nothing to do)."""
+    if d.get("_fotmob_coords") == FOTMOB_COORDS_VERSION:
+        return 0
+    away_tid = (d.get("away") or {}).get("teamId")
+    changed = 0
+    for e in d.get("events") or []:
+        if e.get("_source") != "fotmob":
+            continue
+        x, y = e.get("x"), e.get("y")
+        if x is None or y is None:
+            continue
+        if away_tid is not None and e.get("teamId") == away_tid:
+            x, y = 100.0 - x, 100.0 - y          # undo the old away-side flip
+        e["x"], e["y"] = fotmob_xy_to_ws(x, y)  # metres -> 0-100
+        changed += 1
+    d["_fotmob_coords"] = FOTMOB_COORDS_VERSION
+    return changed
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description="Fix FotMob-only shot coordinates in saved matches.")
+    ap.add_argument("--season", help="e.g. 2026-27; default = every season folder")
+    ap.add_argument("--dry-run", action="store_true", help="report only, write nothing")
+    ap.add_argument("--rebuild", action="store_true",
+                    help="rebuild the dashboard afterwards if any file was converted")
+    args = ap.parse_args()
+
+    folders = [MATCH_DIR / args.season] if args.season else sorted(
+        p for p in MATCH_DIR.iterdir() if p.is_dir()) if MATCH_DIR.is_dir() else []
+    fixed = 0
+    for folder in folders:
+        for p in sorted(folder.glob("*.json")):
+            if p.name.startswith("match_"):
+                continue  # scraper caches, not matches
+            try:
+                d = json.loads(p.read_text(encoding="utf-8"))
+            except Exception as exc:
+                print(f"  ! skipped {p.name}: {exc}")
+                continue
+            if d.get("_fotmob_coords") == FOTMOB_COORDS_VERSION:
+                continue
+            n = repair_match(d)
+            if not n:
+                continue  # WhoScored-only file: leave it untouched (no rewrite, no diff)
+            fixed += 1
+            print(f"  {folder.name}/{p.name}: {n} FotMob shot(s) "
+                  f"{'would be ' if args.dry_run else ''}converted")
+            if not args.dry_run:
+                p.write_text(json.dumps(d, indent=2), encoding="utf-8")
+    print(f"{fixed} match file(s) {'need' if args.dry_run else 'got'} the FotMob coordinate fix.")
+    if fixed and args.rebuild and not args.dry_run:
+        print("Rebuilding the dashboard from the converted files …")
+        from epl.renderer import _refresh_web_dashboard_db
+        _refresh_web_dashboard_db()
+
+
+if __name__ == "__main__":
+    main()
