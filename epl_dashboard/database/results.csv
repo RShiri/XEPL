@@ -69,3 +69,13 @@ match_id,date,stage,venue,home,away,home_score,away_score,home_xg,away_xg,xg_est
 5795480,2026-10-18,,Elland Road,Leeds United,Manchester United,1,1,1.41,0.92,0
 5795483,2026-10-18,,The City Ground,Nottingham Forest,Arsenal,0,1,0.9,1.14,0
 5795484,2026-10-19,,Tottenham Hotspur Stadium,Tottenham Hotspur,Coventry City,3,1,0.86,0.77,0
+5795491,2026-10-23,,Portman Road,Ipswich Town,Nottingham Forest,1,1,0.46,2.29,0
+5795486,2026-10-24,,Villa Park,Aston Villa,Manchester City,2,1,0.61,1.56,0
+5795485,2026-10-24,,Emirates Stadium,Arsenal,Everton,2,0,1.96,0.63,0
+5795488,2026-10-24,,Coventry Building Society Arena,Coventry City,Fulham,0,1,0.51,0.55,0
+5795487,2026-10-24,,Stamford Bridge,Chelsea,Tottenham Hotspur,0,2,0.47,0.74,0
+5795489,2026-10-25,,Selhurst Park,Crystal Palace,Newcastle United,0,2,1.59,0.95,0
+5795490,2026-10-25,,MKM Stadium,Hull City,Brentford,1,1,1.57,1.74,0
+5795492,2026-10-25,,Anfield,Liverpool,Brighton & Hove Albion,2,0,1.2,1.32,0
+5795493,2026-10-25,,Old Trafford,Manchester United,AFC Bournemouth,0,3,1.17,2.15,0
+5795494,2026-10-25,,Stadium of Light,Sunderland,Leeds United,0,0,0.83,0.76,0

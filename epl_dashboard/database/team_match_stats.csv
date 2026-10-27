@@ -139,3 +139,23 @@ match_id,date,team,opponent,side,goals,conceded,possession,shots,sot,passes,pass
 5795483,2026-10-18,Arsenal,Nottingham Forest,away,1,0,74,9,4,687,90,1,1,9,8,49,1.14
 5795484,2026-10-19,Tottenham Hotspur,Coventry City,home,3,1,65,16,9,566,89,0,0,0,15,50,0.86
 5795484,2026-10-19,Coventry City,Tottenham Hotspur,away,1,3,35,12,5,290,78,1,0,2,14,50,0.77
+5795491,2026-10-23,Ipswich Town,Nottingham Forest,home,1,1,49,7,3,486,79,1,0,3,9,48,0.46
+5795491,2026-10-23,Nottingham Forest,Ipswich Town,away,1,1,51,17,6,480,80,4,3,2,11,52,2.29
+5795486,2026-10-24,Aston Villa,Manchester City,home,2,1,36,8,5,314,81,2,0,6,21,50,0.61
+5795486,2026-10-24,Manchester City,Aston Villa,away,1,2,64,15,11,543,90,4,3,0,17,50,1.56
+5795485,2026-10-24,Arsenal,Everton,home,2,0,58,20,14,569,87,3,1,5,11,46,1.96
+5795485,2026-10-24,Everton,Arsenal,away,0,2,42,8,5,401,85,2,2,12,13,54,0.63
+5795488,2026-10-24,Coventry City,Fulham,home,0,1,36,13,5,362,80,0,0,2,9,46,0.51
+5795488,2026-10-24,Fulham,Coventry City,away,1,0,64,12,7,657,90,0,0,2,11,54,0.55
+5795487,2026-10-24,Chelsea,Tottenham Hotspur,home,0,2,31,8,7,288,75,0,0,3,14,42,0.47
+5795487,2026-10-24,Tottenham Hotspur,Chelsea,away,2,0,69,15,11,654,87,1,1,4,14,58,0.74
+5795489,2026-10-25,Crystal Palace,Newcastle United,home,0,2,53,17,9,385,69,2,2,0,12,49,1.59
+5795489,2026-10-25,Newcastle United,Crystal Palace,away,2,0,47,10,6,352,70,2,0,4,10,51,0.95
+5795490,2026-10-25,Hull City,Brentford,home,1,1,42,12,4,328,70,2,1,5,10,55,1.57
+5795490,2026-10-25,Brentford,Hull City,away,1,1,58,14,11,450,82,2,1,1,9,45,1.74
+5795492,2026-10-25,Liverpool,Brighton & Hove Albion,home,2,0,36,13,7,326,69,1,0,1,13,56,1.2
+5795492,2026-10-25,Brighton & Hove Albion,Liverpool,away,0,2,64,18,9,579,84,1,1,3,9,44,1.32
+5795493,2026-10-25,Manchester United,AFC Bournemouth,home,0,3,63,17,10,649,83,0,0,1,13,52,1.17
+5795493,2026-10-25,AFC Bournemouth,Manchester United,away,3,0,37,10,5,374,72,6,3,3,17,48,2.15
+5795494,2026-10-25,Sunderland,Leeds United,home,0,0,50,15,11,379,75,1,1,3,10,47,0.83
+5795494,2026-10-25,Leeds United,Sunderland,away,0,0,50,11,7,368,73,2,2,4,14,53,0.76
