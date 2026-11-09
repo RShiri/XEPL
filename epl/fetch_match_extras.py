@@ -129,6 +129,8 @@ def run_season(season: str) -> int:
     schedule = json.loads((SCHED_DIR / f"SCHEDULE_{season}.json").read_text(encoding="utf-8"))
     ids = [str(m["fotmob_id"]) for m in schedule.get("matches", [])
            if m.get("finished") and str(m.get("fotmob_id", "")).isdigit()]
+    # A schedule can lag behind the scrapes, so anything already scraped counts as finished too.
+    ids += [p.stem for p in (PKG_DIR / "matches" / season).glob("*.json") if p.stem.isdigit() and p.stem not in set(ids)]
     out_file = OUT_DIR / f"MATCH_EXTRAS_{season}.json"
     records = json.loads(out_file.read_text(encoding="utf-8")) if out_file.exists() else {}
     todo = [i for i in ids if i not in records]
