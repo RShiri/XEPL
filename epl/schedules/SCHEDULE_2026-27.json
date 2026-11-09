@@ -2,7 +2,7 @@
   "season": "2026-27",
   "competition": "Premier League",
   "fotmob_league_id": "47",
-  "generated_utc": "2026-10-27T05:00:02.536034+00:00",
+  "generated_utc": "2026-11-09T03:28:17.604446+00:00",
   "matches": [
     {
       "fotmob_id": 5795363,
@@ -1133,10 +1133,10 @@
       "away": "Manchester United",
       "home_id": "8455",
       "away_id": "10260",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795495,
@@ -1147,10 +1147,10 @@
       "away": "Leeds United",
       "home_id": "8678",
       "away_id": "8463",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795497,
@@ -1161,10 +1161,10 @@
       "away": "Nottingham Forest",
       "home_id": "9937",
       "away_id": "10203",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795499,
@@ -1175,10 +1175,10 @@
       "away": "Sunderland",
       "home_id": "8669",
       "away_id": "8472",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795500,
@@ -1189,10 +1189,10 @@
       "away": "Ipswich Town",
       "home_id": "8667",
       "away_id": "9902",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795502,
@@ -1203,10 +1203,10 @@
       "away": "Brighton & Hove Albion",
       "home_id": "8456",
       "away_id": "10204",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795504,
@@ -1217,10 +1217,10 @@
       "away": "Crystal Palace",
       "home_id": "8586",
       "away_id": "9826",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795496,
@@ -1231,10 +1231,10 @@
       "away": "Fulham",
       "home_id": "10252",
       "away_id": "9879",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795501,
@@ -1245,10 +1245,10 @@
       "away": "Arsenal",
       "home_id": "8650",
       "away_id": "9825",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795503,
@@ -1259,10 +1259,10 @@
       "away": "Everton",
       "home_id": "10261",
       "away_id": "8668",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 0,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795508,
@@ -1273,10 +1273,10 @@
       "away": "Coventry City",
       "home_id": "8668",
       "away_id": "8669",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795511,
@@ -1287,10 +1287,10 @@
       "away": "Tottenham Hotspur",
       "home_id": "8463",
       "away_id": "8586",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795505,
@@ -1301,10 +1301,10 @@
       "away": "Hull City",
       "home_id": "9825",
       "away_id": "8667",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795509,
@@ -1315,10 +1315,10 @@
       "away": "Newcastle United",
       "home_id": "9879",
       "away_id": "10261",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795513,
@@ -1329,10 +1329,10 @@
       "away": "Manchester City",
       "home_id": "10203",
       "away_id": "8456",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 3,
+      "away_score": 1,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795506,
@@ -1343,10 +1343,10 @@
       "away": "Brentford",
       "home_id": "10204",
       "away_id": "9937",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 2,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795507,
@@ -1357,10 +1357,10 @@
       "away": "Liverpool",
       "home_id": "9826",
       "away_id": "8650",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 3,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795510,
@@ -1371,10 +1371,10 @@
       "away": "AFC Bournemouth",
       "home_id": "9902",
       "away_id": "8678",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 2,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795514,
@@ -1385,10 +1385,10 @@
       "away": "Chelsea",
       "home_id": "8472",
       "away_id": "8455",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 1,
+      "away_score": 0,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795512,
@@ -1399,10 +1399,10 @@
       "away": "Aston Villa",
       "home_id": "10260",
       "away_id": "10252",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
+      "home_score": 4,
+      "away_score": 4,
+      "status": "F",
+      "finished": true
     },
     {
       "fotmob_id": 5795522,
@@ -2161,20 +2161,6 @@
       "finished": false
     },
     {
-      "fotmob_id": 5795573,
-      "matchday": 16,
-      "date": "2026-12-19",
-      "kickoff_utc": "2026-12-19T15:00:00+00:00",
-      "home": "Nottingham Forest",
-      "away": "Everton",
-      "home_id": "10203",
-      "away_id": "8668",
-      "home_score": null,
-      "away_score": null,
-      "status": "N",
-      "finished": false
-    },
-    {
       "fotmob_id": 5795571,
       "matchday": 16,
       "date": "2026-12-19",
@@ -2197,6 +2183,20 @@
       "away": "Ipswich Town",
       "home_id": "10204",
       "away_id": "9902",
+      "home_score": null,
+      "away_score": null,
+      "status": "N",
+      "finished": false
+    },
+    {
+      "fotmob_id": 5795573,
+      "matchday": 16,
+      "date": "2026-12-20",
+      "kickoff_utc": "2026-12-20T14:00:00+00:00",
+      "home": "Nottingham Forest",
+      "away": "Everton",
+      "home_id": "10203",
+      "away_id": "8668",
       "home_score": null,
       "away_score": null,
       "status": "N",

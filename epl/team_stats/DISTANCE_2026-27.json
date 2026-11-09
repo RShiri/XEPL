@@ -3,127 +3,127 @@
  "stat": "Distance per match",
  "unit": "km/match",
  "source": "https://data.fotmob.com/stats/47/season/36781/phys_tdc_team.json",
- "fetched_utc": "2026-10-27T05:00:03+00:00",
+ "fetched_utc": "2026-11-09T03:28:18+00:00",
  "teams": [
-  {
-   "team": "Arsenal",
-   "team_id": "9825",
-   "km": 119.4,
-   "matches": 8
-  },
   {
    "team": "Fulham",
    "team_id": "9879",
-   "km": 118.97,
-   "matches": 8
+   "km": 119.45,
+   "matches": 10
   },
   {
-   "team": "Brentford",
-   "team_id": "9937",
-   "km": 117.65,
-   "matches": 8
+   "team": "Arsenal",
+   "team_id": "9825",
+   "km": 119.38,
+   "matches": 10
   },
   {
    "team": "Ipswich Town",
    "team_id": "9902",
-   "km": 117.49,
-   "matches": 8
-  },
-  {
-   "team": "AFC Bournemouth",
-   "team_id": "8678",
-   "km": 116.0,
-   "matches": 8
+   "km": 117.37,
+   "matches": 10
   },
   {
    "team": "Leeds United",
    "team_id": "8463",
-   "km": 115.95,
-   "matches": 8
+   "km": 117.28,
+   "matches": 10
   },
   {
-   "team": "Newcastle United",
-   "team_id": "10261",
-   "km": 115.36,
-   "matches": 8
+   "team": "AFC Bournemouth",
+   "team_id": "8678",
+   "km": 116.97,
+   "matches": 10
+  },
+  {
+   "team": "Brentford",
+   "team_id": "9937",
+   "km": 116.43,
+   "matches": 10
   },
   {
    "team": "Brighton & Hove Albion",
    "team_id": "10204",
-   "km": 114.99,
-   "matches": 8
+   "km": 115.95,
+   "matches": 10
+  },
+  {
+   "team": "Newcastle United",
+   "team_id": "10261",
+   "km": 115.8,
+   "matches": 10
   },
   {
    "team": "Hull City",
    "team_id": "8667",
-   "km": 114.45,
-   "matches": 8
-  },
-  {
-   "team": "Crystal Palace",
-   "team_id": "9826",
-   "km": 114.36,
-   "matches": 8
+   "km": 114.84,
+   "matches": 10
   },
   {
    "team": "Nottingham Forest",
    "team_id": "10203",
-   "km": 113.87,
-   "matches": 8
+   "km": 114.34,
+   "matches": 10
   },
   {
    "team": "Sunderland",
    "team_id": "8472",
-   "km": 113.86,
-   "matches": 8
+   "km": 114.27,
+   "matches": 10
   },
   {
    "team": "Tottenham Hotspur",
    "team_id": "8586",
-   "km": 113.5,
-   "matches": 8
+   "km": 114.11,
+   "matches": 10
   },
   {
    "team": "Everton",
    "team_id": "8668",
-   "km": 113.5,
-   "matches": 8
-  },
-  {
-   "team": "Chelsea",
-   "team_id": "8455",
-   "km": 113.19,
-   "matches": 8
-  },
-  {
-   "team": "Coventry City",
-   "team_id": "8669",
-   "km": 112.81,
-   "matches": 8
+   "km": 113.93,
+   "matches": 10
   },
   {
    "team": "Aston Villa",
    "team_id": "10252",
-   "km": 112.39,
-   "matches": 8
+   "km": 113.76,
+   "matches": 10
   },
   {
-   "team": "Manchester United",
-   "team_id": "10260",
-   "km": 112.3,
-   "matches": 8
+   "team": "Chelsea",
+   "team_id": "8455",
+   "km": 113.62,
+   "matches": 10
+  },
+  {
+   "team": "Coventry City",
+   "team_id": "8669",
+   "km": 113.36,
+   "matches": 10
+  },
+  {
+   "team": "Crystal Palace",
+   "team_id": "9826",
+   "km": 113.24,
+   "matches": 10
   },
   {
    "team": "Manchester City",
    "team_id": "8456",
-   "km": 111.99,
-   "matches": 8
+   "km": 112.65,
+   "matches": 10
+  },
+  {
+   "team": "Manchester United",
+   "team_id": "10260",
+   "km": 112.52,
+   "matches": 10
   },
   {
    "team": "Liverpool",
    "team_id": "8650",
-   "km": 111.12,
-   "matches": 8
+   "km": 111.22,
+   "matches": 10
   }
  ]
 }
