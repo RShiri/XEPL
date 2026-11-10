@@ -10,6 +10,7 @@ other, so when you add an entry here, consider adding it there too.
 ## Platform updates & changes
 
 <!-- progress:platform -->
+- **2026-11-09** — Weekly update (2026-27): schedule rc=0, backfill rc=0, pushed=True, took 29965s
 - **2026-10-13** — Weekly update (2026-27): schedule rc=0, backfill rc=0, pushed=True, took 1633s
 - **2026-09-15** — Shipped xT (per-90, progressive-only) and integrated xgot_core into build_match_details.py/build_players.py, mirroring XLALIGA. Verified live: Bruno Fernandes tops xT-added, Donnarumma tops goals-prevented.
 - **2026-09-15** — Mirrored XLALIGA's goalkeeper goals-prevented, progressive passes/carries, and PPDA (PLAN_new_models.md items 2-4) -- same implementation, see XLALIGA's PROGRESS.md for rationale.
